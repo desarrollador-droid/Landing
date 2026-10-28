@@ -1,0 +1,104 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  padding: 1rem 2rem;
+  transition: all 0.3s ease;
+}
+
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.header-brand {
+  display: flex;
+  min-width: 0;
+}
+
+.main-nav ul {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-link {
+  font-weight: 600;
+  color: var(--deep-purple);
+  font-size: 0.95rem;
+  transition: color 0.3s ease;
+  position: relative;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background-color: var(--cyan-neon);
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover,
+.nav-link.is-active {
+  color: var(--primary-purple);
+}
+
+.nav-link:hover::after,
+.nav-link.is-active::after {
+  width: 100%;
+}
+
+.header-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.btn-primary, .btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 1.5rem;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background-color: var(--cyan-neon);
+  color: var(--deep-purple);
+}
+
+.btn-primary:hover {
+  background-color: #00E5C8;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(1, 250, 218, 0.4);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--primary-purple);
+  border: 2px solid var(--primary-purple);
+}
+
+.btn-secondary:hover {
+  background-color: var(--primary-purple);
+  color: var(--white);
+}
+
+@media (max-width: 960px) {
+  .main-nav, .header-actions {
+    display: none;
+  }
+
+  .brand-logo__copy {
+    display: none;
+  }
+}

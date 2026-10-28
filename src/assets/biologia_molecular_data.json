@@ -1,0 +1,351 @@
+{
+  "hero": {
+    "bgImage": "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/julia-koblitz-RlOAwXt2fEA-unsplash-1-scaled.jpg",
+    "tagline1": "DETECTAMOS MÁS DE",
+    "highlight": "500 ESPECIES",
+    "tagline2": "GRAN ESPECTRO",
+    "subtitle": "LOGRANDO RESULTADOS CON ALTA ESPECIFICIDAD",
+    "buttonText": "Descúbrelas",
+    "buttonLink": "https://wa.me/573005143727?text=Hola,%20quisiera%20conocer%20el%20espectro%20completo%20de%20agentes"
+  },
+  "sections": [
+    {
+      "id": "perfiles-qpcr",
+      "title": "Perfiles qPCR",
+      "bannerBg": "#2B017C",
+      "bannerTextColor": "#FFFFFF",
+      "items": [
+        {
+          "frente": "Perfil Joe",
+          "dorso": "Anaplasma spp., Ehrlichia spp., Rickettsia spp., Wolbachia spp., Mycoplasma spp., Bartonella spp., Hepatozoon spp., Babesia spp., Toxoplasma gondii y Filarias diferenciadas (D. immitis, D. repens, D. striata, B. pahangi)"
+        },
+        {
+          "frente": "Perfil Joe , FIV y FeLV",
+          "dorso": "Anaplasma spp, Rickettsia spp, Ehrlichia spp, Mycoplasma spp, Hepatozoon spp, Toxoplasma gondii, Bartonella spp, Babesia spp y Filarias diferenciadas (D. immitis, D. repens, D. striata, Brugia pahangi) y Virus de Inmunodeficiencia Felina (FIV y PFIV), Virus de la Leucemia Felina (FeLV y PFeLV)"
+        },
+        {
+          "frente": "qPCR Cardíaco",
+          "dorso": "AD. immitis, Bartonella spp y Trypanosoma spp"
+        },
+        {
+          "frente": "qPCR Hemotrópico Básico Canino",
+          "dorso": "Anaplasma spp, Ehrlichia spp, Mycoplasma spp, Hepatozoon spp, Babesia spp, Toxoplasma gondii, y Filarias diferenciadas (D. immitis, D. repens, D. striata, Brugia pahangi)"
+        },
+        {
+          "frente": "qPCR Hemotrópico Básico Felino",
+          "dorso": "Anaplasma spp, Rickettsia spp, Ehrlichia spp, Mycoplasma spp, Hepatozoon spp, Toxoplasma gondii y Bartonella spp"
+        },
+        {
+          "frente": "qPCR Fiv,Felv y Hemotrópicos",
+          "dorso": "Virus de Inmunodeficiencia Felina (FIV and PFIV), Virus de la Leucemia Felina (FeLV and PFeLV), Anaplasma spp, Rickettsia spp, Ehrlichia spp, Mycoplasma spp, Hepatozoon spp, Toxoplasma gondii y Bartonella spp"
+        },
+        {
+          "frente": "qPCR Detección de genes de resistencia (Muestra vieja)",
+          "dorso": "Ensayo cuantitativo para el detección in vitro de genes asociados a resistencia a tetraciclinas"
+        },
+        {
+          "frente": "qPCR Fiv yFeLV (Fases virales y Provirales)",
+          "dorso": "Virus de Inmunodeficiencia Felina (FIV and PFIV) y Virus de la Leucemia Felina (FeLV y PFeLV)"
+        },
+        {
+          "frente": "qPCR Detección de genes de resistencia (Muestra nueva)",
+          "dorso": "Ensayo cuantitativo para el detección in vitro de genes asociados a resistencia a tetraciclinasmia Felina (FeLV y PFeLV)"
+        },
+        {
+          "frente": "qPCR Gastrointestinal Canino (Diarreico canino)",
+          "dorso": "Virus de Distemper canino, Coronavirus canino y Parvovirus canino"
+        },
+        {
+          "frente": "qPCR Gastrointestinal Canino PLUS",
+          "dorso": "Trichomona spp, Pentatrichomona spp, Giardia spp, Salmonella spp, Helicobacter spp, Coronavirus canino, Parvovirus canino y Distemper canino"
+        },
+        {
+          "frente": "qPCR Gastrointestinal Felino (Diarreico crónico felino)",
+          "dorso": "Trichomona spp, Pentatrichomona spp, Giardia spp, Salmonella spp y Helicobacter spp"
+        },
+        {
+          "frente": "qPCR Gastrointestinal Felino PLUS",
+          "dorso": "Trichomona spp, Pentatrichomona spp, Giardia spp, Salmonella spp, Helicobacter spp, Coronavirus felino y Panleucopenia felina"
+        },
+        {
+          "frente": "qPCR Hemotrópico Completo",
+          "dorso": "Anaplasma spp, Rickettsia spp, Ehrlichia spp, Mycoplasma spp, Bartonella spp, Hepatozoon spp, Babesia spp, Filarias diferenciadas (D. immitis, D. striata, D. repens, Brugia pahangi), Leptospira spp, Trypanosoma spp y Toxoplasma gondii"
+        },
+        {
+          "frente": "qPCR Hongos + Secuenciación",
+          "dorso": "Ensayo cuantitativo para el diagnóstico in vitro infecciones fúngicas + Secuenciación de ADN"
+        },
+        {
+          "frente": "qPCR Infecto Contagiosas Felina",
+          "dorso": "Virus de Inmunodeficiencia Felina (FIV and PFIV), Virus de la Leucemia Felina (FeLV and PFeLV), Coronavirus Entérico Causante de PIF, Toxoplasma gondii, Mycoplasma spp y Bartonella spp"
+        },
+        {
+          "frente": "qPCR Infecto Contagiosas Felina",
+          "dorso": "Virus de Inmunodeficiencia Felina (FIV and PFIV), Virus de la Leucemia Felina (FeLV and PFeLV), Coronavirus Entérico Causante de PIF, Toxoplasma gondii, Mycoplasma spp y Bartonella spp"
+        },
+        {
+          "frente": "qPCR Neurológico Básico Canin",
+          "dorso": "Anaplasma spp, Ehrlichia spp, Mycoplasma spp, Hepatozoon spp, Babesia spp, Toxoplasma gondii, Filarias diferenciadas (D. immitis, D. repens, D. striata, Brugia pahangi), Cryptococcus spp y Neospora caninum"
+        },
+        {
+          "frente": "qPCR Neurológico Básico Felino",
+          "dorso": "Anaplasma spp, Rickettsia spp, Ehrlichia spp, Mycoplasma spp, Hepatozoon spp, Toxoplasma gondii, Bartonella spp y Neospora caninum"
+        },
+        {
+          "frente": "qPCR Neurológico Completo",
+          "dorso": "Anaplasma spp, Rickettsia spp, Ehrlichia spp, Mycoplasma spp, Bartonella spp, Hepatozoon spp, Babesia spp, Filarias diferenciadas (D. immitis, D. striata, D. repens, Brugia pahangi), Toxoplasma gondii, Borrelia spp, Neospora caninum, Cryptococcus spp, Distemper canino y Parvovirus canin"
+        },
+        {
+          "frente": "qPCR Ocular y Respiratorio Felino",
+          "dorso": "Calicivirus, Herpesvirus, Panleucopenia, Chlamydia spp, Mycoplasma spp y Bartonella spp"
+        },
+        {
+          "frente": "qPCR Perfil Ictérico",
+          "dorso": "Anaplasma spp, Ehrlichia spp, Mycoplasma spp, Bartonella spp, Hepatozoon spp, Babesia spp, Filarias diferenciadas (D. immitis, D. striata, D. repens, Brugia pahan- gi), Leptospira spp y Adenovirus caninotipo 1 y 2a spp"
+        },
+        {
+          "frente": "qPCR Respiratorio Canino Básico",
+          "dorso": "Anaplasma spp, Ehrlichia spp, Mycoplasma spp, Bartonella spp, Distemper canino, Adenovirus canino tipo 1 y 2"
+        },
+        {
+          "frente": "qPCR Respiratorio Canino Completo",
+          "dorso": "Anaplasma spp, Ehrlichia spp, Mycoplasma spp, Bartonella spp Babesia spp, Toxoplasma gondii Filarias (D. immitis, D. repens, D. striata y B. pahangi) Adenovirus tipo 1 y 2, Distemper canino, Herpesvirus"
+        },
+        {
+          "frente": "qPCR reproductor para pequeñas especies",
+          "dorso": "Neospora caninum, Brucella spp, Trichomona spp, Leptospira spp y Herpesvirus canino"
+        },
+        {
+          "frente": "qPCR Rutina Canino",
+          "dorso": "Distemper, Coronavirus, Parvovirus, Anaplasma spp, Ehrlichia spp, Rickettsia spp, Mycoplasma spp, Hepatozoon spp, Toxoplasma gondii, Bartonella spp, Leptospira spp, Babesia spp y Filarias diferenciadas (D. immitis, D. repens, D. striata, Brugia pahangi)"
+        },
+        {
+          "frente": "qPCR Rutina Felino",
+          "dorso": "Virus de Inmunodeficiencia Felina (FIV y PFIV), Virus de la Leucemia Felina (FeLV and PFeLV), Coronavirus Entérico Causante de PIF, Calicivirus, Herpesvirus, Panleucopenia, Chlamydia spp, Anaplasma spp, Ehrlichia spp, Rickettsia spp, Mycoplasma spp, Hepatozoon spp, Toxoplasma gondii, Bartonella spp y Babesia spp"
+        },
+        {
+          "frente": "qPCR FIV, FeLV y Mycoplasma spp",
+          "dorso": "Virus de Inmunodeficiencia Felina (FIV and PFIV), Virus de la Leucemia Felina (FeLV and PFeLV) y Mycoplasma spp"
+        },
+        {
+          "frente": "qPCR Fiv, FeLV, Hemotropico + triple viral",
+          "dorso": "Virus de Inmunodeficiencia Felina (FIV and PFIV), Virus de la Leucemia Felina (FeLV and PFeLV), Calicivirus, Herpesvirus, Panleucopenia, Anaplasma spp, Rickettsia spp, Ehrlichia spp, Mycoplasma spp, Hepatozoon spp, Toxoplasma gondii y Bartonella spp"
+        },
+        {
+          "frente": "qPCR FIV, FeLV y Bartonella spp",
+          "dorso": "Virus de Inmunodeficiencia Felina (FIV and PFIV), Virus de la Leucemia Felina (FeLV and PFeLV) y Bartonella spp"
+        },
+        {
+          "frente": "qPCR FIV, FeLV y Coronavirus Entérico Causante de PIF",
+          "dorso": "Virus de Inmunodeficiencia Felina (FIV and PFIV), Virus de la Leucemia Felina (FeLV y PFeLV) y Coronavirus Entérico Causante de PIF"
+        },
+        {
+          "frente": "qPCR Triple Viral Felino\"",
+          "dorso": "Calicivirus, Herpesvirus y Panleucopenia"
+        },
+        {
+          "frente": "qPCR Viral Felino",
+          "dorso": "C\"Virus de Inmunodeficiencia Felina (FIV and PFIV), Virus de la Leucemia Felina (FeLV and PFeLV), Coronavirus Entérico Causante de PIF, Calicivirus, Herpesvirus y Panleucopenia"
+        }
+      ]
+    },
+    {
+      "id": "individuales",
+      "title": "Individuales",
+      "bannerBg": "#6F2BCC",
+      "bannerTextColor": "#FFFFFF",
+      "items": [
+        {
+          "frente": "qPCR Adenovirus canino tipo 1 y 2",
+          "dorso": "Adenovirus canino tipo 1 y 2"
+        },
+        {
+          "frente": "qPCR Anaplasma spp",
+          "dorso": "Anaplasma spp"
+        },
+        {
+          "frente": "qPCR Babesia spp",
+          "dorso": "Babesia spp"
+        },
+        {
+          "frente": "qPCR Bartonella spp",
+          "dorso": "Bartonella spp"
+        },
+        {
+          "frente": "qPCR Borrelia spp",
+          "dorso": "Borrelia spp"
+        },
+        {
+          "frente": "qPCR Calicivirus Felino",
+          "dorso": "Virus de Calicivirus Felino"
+        },
+        {
+          "frente": "qPCR Chlamydia spp",
+          "dorso": "Chlamydia spp"
+        },
+        {
+          "frente": "qPCR Coronavirus Canino",
+          "dorso": "Virus de Coronavirus canino"
+        },
+        {
+          "frente": "qPCR Coronavirus Entérico Felino Causante de PIF",
+          "dorso": "Coronavirus Entérico Felino Causante de PIF"
+        },
+        {
+          "frente": "qPCR Cryptococcus spp",
+          "dorso": "Cryptococcus spp"
+        },
+        {
+          "frente": "qPCR Dirofilaria spp",
+          "dorso": "Dirofilaria immitis, Dirofilaria striata, Dirofilaria repens y Brugia pahangi"
+        },
+        {
+          "frente": "qPCR Distemper Canino",
+          "dorso": "Virus de Distemper Canino"
+        },
+        {
+          "frente": "qPCR Ehrlichia spp",
+          "dorso": "Ehrlichia spp"
+        },
+        {
+          "frente": "qPCR Escherichia coli",
+          "dorso": "Escherichia coli"
+        },
+        {
+          "frente": "qPCR Giardia spp",
+          "dorso": "Giardia spp"
+        },
+        {
+          "frente": "qPCR Helicobacter spp",
+          "dorso": "Helicobacter spp"
+        },
+        {
+          "frente": "qPCR Hepatozoon spp",
+          "dorso": "Hepatozoon spp"
+        },
+        {
+          "frente": "qPCR Herpesvirus Canino",
+          "dorso": "Virus del Herpesvirus canino"
+        },
+        {
+          "frente": "qPCR Hongos",
+          "dorso": "Ensayo cuantitativo para el diagnóstico in vitro infecciones fúngicas"
+        },
+        {
+          "frente": "qPCR Leishmania spp",
+          "dorso": "Leishmania spp"
+        },
+        {
+          "frente": "qPCR Leptospira spp",
+          "dorso": "Leptospira spp"
+        },
+        {
+          "frente": "qPCR FeLV Fase Viral y Proviral",
+          "dorso": "Virus de la Leucemia Felina (FeLV y PFeLV)"
+        },
+        {
+          "frente": "qPCR Mycoplasma spp",
+          "dorso": "Mycoplasma spp"
+        },
+        {
+          "frente": "qPCR Mycoplasma haemocanis/ haemofelis",
+          "dorso": "Mycoplasma haemocanis/ haemocanis/ haemofelis"
+        },
+        {
+          "frente": "qPCR Neospora caninum",
+          "dorso": "Neospora caninum"
+        },
+        {
+          "frente": "qPCR Panleucopenia Felino",
+          "dorso": "Virus de Panleucopenia Felina"
+        },
+        {
+          "frente": "qPCR Parvovirus Canino",
+          "dorso": "Virus de Parvovirus Canino"
+        },
+        {
+          "frente": "qPCR Pentatrichomona spp",
+          "dorso": "Pentatrichomona spp"
+        },
+        {
+          "frente": "qPCR Rickettsia spp",
+          "dorso": "Rickettsia spp"
+        },
+        {
+          "frente": "qPCR Rinotraqueitis felina (RIF) o Herpes Felino",
+          "dorso": "Virus del Herpesvirus Felino"
+        },
+        {
+          "frente": "qPCR Salmonella spp",
+          "dorso": "Salmonella spp"
+        },
+        {
+          "frente": "qPCR Sida Felino (FIV) Fase Viral y Proviral",
+          "dorso": "Virus de la Inmunodeficiencia Felina (FIV and PFIV)"
+        },
+        {
+          "frente": "qPCR Toxoplasma gondii",
+          "dorso": "Toxoplasma gondii"
+        },
+        {
+          "frente": "PCR Trypanosoma spp",
+          "dorso": "Trypanosoma spp"
+        },
+        {
+          "frente": "qPCR Wolbachia spp",
+          "dorso": "Wolbachia spp"
+        },
+        {
+          "frente": "qPCR Wolbachia spp",
+          "dorso": "Wolbachia spp"
+        }
+      ]
+    },
+    {
+      "id": "ifa",
+      "title": "Inmunofluorescencia Indirecta (IFA)",
+      "bannerBg": "#01FADA",
+      "bannerTextColor": "#2B017C",
+      "items": [
+        {
+          "frente": "IFA Brucella canis IgG",
+          "dorso": "IFA Brucella canis IgG"
+        },
+        {
+          "frente": "IFA Distemper canino IgG",
+          "dorso": "IFA Distemper canino IgG"
+        },
+        {
+          "frente": "IFA Peritonitis infecciosa felina IgG",
+          "dorso": "IFA Peritonitis infecciosa felina IgG"
+        },
+        {
+          "frente": "IFA Neospora caninum IgG",
+          "dorso": "IFA Toxoplasma gondii IgG"
+        },
+        {
+          "frente": "IFA Anaplasma phagocytophilum IgG",
+          "dorso": "IFA Anaplasma phagocytophilum IgG"
+        },
+        {
+          "frente": "IFA Ehrlichia canis IgG",
+          "dorso": "IFA Ehrlichia canis IgG"
+        },
+        {
+          "frente": "IFA Parvovirus IgG",
+          "dorso": "IFA Parvovirus IgG s"
+        },
+        {
+          "frente": "IFA Panleucopenia felina IgG",
+          "dorso": "IFA Panleucopenia felina IgG"
+        }
+      ]
+    }
+  ],
+  "genially": {
+    "title": "Cómo leer los resultados paso a paso",
+    "bannerBg": "#2B017C",
+    "bannerTextColor": "#FFFFFF",
+    "iframeSrc": "https://view.genially.com/682e065567e9422874156eeb"
+  }
+}
