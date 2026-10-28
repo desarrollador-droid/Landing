@@ -82,12 +82,12 @@ function App() {
         <Route path="/pcr-veterinaria-una-tecnica-para-diagnosticos-precisos-en-animales/" element={<PageWrapper><BiologiaMolecular /></PageWrapper>} />
         <Route path="/espectro-de-agentes" element={<PageWrapper><BiologiaMolecular /></PageWrapper>} />
         <Route path="/espectro-de-agentes/" element={<PageWrapper><BiologiaMolecular /></PageWrapper>} />
-        <Route path="/deteccion-molecular-de-hemoparasitos-en-perros-y-gatos-con-qpcr" element={<PageWrapper><BiologiaMolecular /></PageWrapper>} />
-        <Route path="/deteccion-molecular-de-hemoparasitos-en-perros-y-gatos-con-qpcr/" element={<PageWrapper><BiologiaMolecular /></PageWrapper>} />
-        <Route path="/infecciones-persistentes-en-felinos" element={<PageWrapper><BiologiaMolecular /></PageWrapper>} />
-        <Route path="/infecciones-persistentes-en-felinos/" element={<PageWrapper><BiologiaMolecular /></PageWrapper>} />
-        <Route path="/pcr-para-detectar-infecciones-en-felinos" element={<PageWrapper><BiologiaMolecular /></PageWrapper>} />
-        <Route path="/pcr-para-detectar-infecciones-en-felinos/" element={<PageWrapper><BiologiaMolecular /></PageWrapper>} />
+        <Route path="/deteccion-molecular-de-hemoparasitos-en-perros-y-gatos-con-qpcr" element={<PageWrapper><AprendeDetalle profileOverride="perfil-joe" /></PageWrapper>} />
+        <Route path="/deteccion-molecular-de-hemoparasitos-en-perros-y-gatos-con-qpcr/" element={<PageWrapper><AprendeDetalle profileOverride="perfil-joe" /></PageWrapper>} />
+        <Route path="/infecciones-persistentes-en-felinos" element={<PageWrapper><AprendeDetalle profileOverride="joe-vif-vilef" /></PageWrapper>} />
+        <Route path="/infecciones-persistentes-en-felinos/" element={<PageWrapper><AprendeDetalle profileOverride="joe-vif-vilef" /></PageWrapper>} />
+        <Route path="/pcr-para-detectar-infecciones-en-felinos" element={<PageWrapper><AprendeDetalle profileOverride="rutina-felino" /></PageWrapper>} />
+        <Route path="/pcr-para-detectar-infecciones-en-felinos/" element={<PageWrapper><AprendeDetalle profileOverride="rutina-felino" /></PageWrapper>} />
 
         {/* 3. VETERINARIOS */}
         <Route path="/veterinarios" element={<PageWrapper><Veterinarios /></PageWrapper>} />

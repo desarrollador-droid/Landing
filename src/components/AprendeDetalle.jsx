@@ -1,22 +1,24 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 
-export default function AprendeDetalle() {
-  const { profileId } = useParams();
+export default function AprendeDetalle({ profileOverride }) {
+  const { profileId: paramProfileId } = useParams();
+  const profileId = profileOverride || paramProfileId;
 
   const details = {
     "perfil-joe": {
       title: "El Perfil Joe",
-      subtitle: "Panel Molecular Completo",
+      subtitle: "EL PERFIL JOE",
       question: "¿Signos clínicos claros, pero múltiples enfermedades posibles?",
+      questionHtml: '¿Signos clínicos claros, <span class="text-[#01FADA]">pero múltiples enfermedades posibles?</span>',
       description: "Detectamos hemoparásitos con una técnica sistémica, diseñada para escenarios donde no hay una única sospecha diagnóstica.",
       videoTitle: "Evita los falsos negativos por secuestro orgánico.",
       videoParagraphs: [
-        "Muchos patógenos (Ehrlichia, Babesia) se ocultan en endotelio, riñón and bazo.",
-        "El Perfil Joe analiza sedimentos urinarios para capturar el ADN que el riñón filtra, logrando diagnósticos donde la sangre periférica falla."
+        "Muchos patógenos (Ehrlichia, Babesia) se ocultan en endotelio, riñón y bazo. El Perfil Joe analiza sedimentos urinarios para capturar el ADN que el riñón filtra, logrando diagnósticos donde la sangre periférica falla."
       ],
       youtubeId: "UY303FiYxgU",
       formLink: "https://docs.google.com/forms/d/e/1FAIpQLSeDPoSkLRQm7UiFy2f_U_2f8YE4bU85Ap5QixzMqUvQc-A4pA/viewform",
+      ctaText: "SOLICITAR RECOLECCIÓN",
       species: "Caninos y Felinos",
       bulletsTitle: "Panel Molecular Completo",
       bullets: [
@@ -37,7 +39,7 @@ export default function AprendeDetalle() {
           bullets: [
             "Falla si hay carga viral baja en sangre.",
             "No detecta secuestro en órganos.",
-            "Riesgo alto de Falsos Negativos."
+            "Riesgo alto de Falsos Negativos"
           ]
         },
         joe: {
@@ -49,13 +51,15 @@ export default function AprendeDetalle() {
           ]
         }
       },
-      collectionStep1: "Tubo Lila (EDTA) + 1ml Orina."
+      collectionStep1: "Tubo Lila (EDTA) + 1ml Orina.",
+      collectionStep2: "Escríbenos y pasamos hoy mismo.",
+      collectionStep3: "Resultados en tu correo"
     },
     "rutina-felino": {
       title: "Perfil Rutina Felino",
       subtitle: "DETECCIÓN MOLECULAR DE PATÓGENOS SISTÉMICOS EN FELINOS",
       question: "¿Paciente con signos inespecíficos como hiporexia, fiebres intermitentes y letargia, donde el examen físico no es concluyente y los hallazgos en el hemoleucograma no son claros?",
-      description: "Esto puede ser la primera manifestación de infecciones sistémicas silenciosas que avanzan mientras el paciente aparenta estabilidad. Este perfil hace posible detectar de forma temprana agentes virales, bacterianos y parasitarios.",
+      description: "Esto puede ser la primera manifestación de infecciones sistémicas silenciosas que avanzan mientras el paciente aparenta estabilidad, Este perfil hace posible detectar de forma temprana agentes virales, bacterianos y parasitarios.",
       videoTitle: "Evita que las coinfecciones pasen desapercibidas.",
       videoParagraphs: [
         "Muchos agentes infecciosos felinos generan daño progresivo antes de evidenciar alteraciones claras en hemoleucograma o examen físico.",
@@ -65,6 +69,7 @@ export default function AprendeDetalle() {
       ],
       youtubeId: "ixQ7FmzNlQA",
       formLink: "https://docs.google.com/forms/d/e/1FAIpQLSeDPoSkLRQm7UiFy2f_U_2f8YE4bU85Ap5QixzMqUvQc-A4pA/viewform",
+      ctaText: "SOLICITAR RECOLECCIÓN DE MUESTRA",
       species: "felino",
       bulletsTitle: "Componentes del Panel Molecular",
       categorizedBullets: [
@@ -109,11 +114,13 @@ export default function AprendeDetalle() {
           ]
         ]
       },
-      collectionStep1: "Recolecta las matrices necesarias según la sospecha (sangre periférica en tubo lila con EDTA, orina, hisopados o materia fecal)."
+      collectionStep1: "Recolecta las matrices necesarias según la sospecha (sangre periférica en tubo lila con EDTA, orina, hisopados o materia fecal)",
+      collectionStep2: "Escríbenos y pasamos hoy mismo.",
+      collectionStep3: "Recibe el resultado en el correo electrónico registrado en el formulario."
     },
     "joe-vif-vilef": {
       title: "El Perfil Joe + VIF y ViLeF",
-      subtitle: "Diferenciación Inmunitaria Felina",
+      subtitle: "EL PERFIL JOE + VIF y ViLeF",
       questionHtml: '¿Es agente resistente o un <span class="text-[#01FADA]">paciente que no puede defenderse?</span>',
       description: "Cuando las recaídas son constantes, la pregunta clave cambia: no es solo qué patógeno está atacando, sino por qué el sistema inmune no logra contenerlo.",
       videoTitle: "La Evolución del Perfil Joe: Diferenciación inmunitaria",
@@ -122,6 +129,7 @@ export default function AprendeDetalle() {
       ],
       youtubeId: "u3IsKFTDBz0",
       formLink: "https://docs.google.com/forms/d/e/1FAIpQLSeDPoSkLRQm7UiFy2f_U_2f8YE4bU85Ap5QixzMqUvQc-A4pA/viewform",
+      ctaText: "SOLICITAR RECOLECCIÓN",
       species: "Caninos y Felinos",
       bulletsTitle: "Panel Molecular Completo",
       bullets: [
@@ -135,8 +143,8 @@ export default function AprendeDetalle() {
         "Babesia spp.",
         "Toxoplasma gondii",
         "Filarias diferenciadas (D. immitis, D. repens, D. striata, B. pahangi)",
-        "Virus de la leucemia felina (ViLeF) proviral",
-        "Virus de inmunodeficiencia felina (VIF) proviral"
+        "Virus de la leucemia felina (ViLeF)",
+        "Virus de inmunodeficiencia felina (VIF)"
       ],
       table: {
         title: "La Evolución del Perfil Joe: Diferenciación inmunitaria",
@@ -166,7 +174,9 @@ export default function AprendeDetalle() {
           text: "Retrovirus oncogénico que compromete la producción de neutrófilos, macrófagos y anticuerpos. Sin esta contención, la anemia se profundiza y las recaídas se vuelven críticas"
         }
       ],
-      collectionStep1: "Tubo Lila (EDTA) + 1ml Orina."
+      collectionStep1: "Tubo Lila (EDTA) + 1ml Orina.",
+      collectionStep2: "Escríbenos y pasamos hoy mismo.",
+      collectionStep3: "Resultados en tu correo"
     },
     "microbiota-intestinal-clave-salud": {
       title: "Microbiota intestinal: clave para la salud y el bienestar de tus mascotas",
@@ -374,7 +384,7 @@ export default function AprendeDetalle() {
         </span>
 
         {/* Dynamic question structure */}
-        {isJoeVifVilef ? (
+        {data.questionHtml ? (
           <h1 
             className="text-3xl md:text-[40px] font-black font-display uppercase tracking-tight text-white max-w-4xl leading-tight"
             dangerouslySetInnerHTML={{ __html: data.questionHtml }}
@@ -402,7 +412,7 @@ export default function AprendeDetalle() {
           rel="noreferrer"
           className="inline-block bg-[#01FADA] hover:bg-[#6F2BCC] hover:text-white text-[#2B017C] font-black py-4 px-10 rounded-full text-xs uppercase tracking-wider transition-all duration-300 shadow-md"
         >
-          {isJoeVifVilef ? "Solicitar Recolección" : "Solicitar Recolección de Muestra"}
+          {data.ctaText || (isJoeVifVilef ? "Solicitar Recolección" : "Solicitar Recolección de Muestra")}
         </a>
       </section>
 
@@ -610,7 +620,7 @@ export default function AprendeDetalle() {
                 2. Solicitar recolección
               </h5>
               <p className="text-gray-600 text-xs md:text-sm leading-relaxed font-sans font-medium">
-                Escríbenos y pasamos hoy mismo.
+                {data.collectionStep2 || "Escríbenos y pasamos hoy mismo."}
               </p>
             </div>
 
@@ -630,7 +640,7 @@ export default function AprendeDetalle() {
                 3. Recibe resultados
               </h5>
               <p className="text-gray-600 text-xs md:text-sm leading-relaxed font-sans font-medium">
-                Resultados en tu correo registrado.
+                {data.collectionStep3 || "Resultados en tu correo"}
               </p>
             </div>
 
