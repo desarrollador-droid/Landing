@@ -44,10 +44,12 @@ const teamMembers = [
     bio: "Biotecnólogo con Diplomado en herramientas moleculares - curso avanzado en biología molecular y cursos avanzados de investigación en biomedicina."
   },
   {
-    name: "Maria Elena",
+    name: "Maria Helena",
     role: "Analista de laboratorio",
-    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/staff-maria-elena.png",
-    bio: "Médico veterinario zootecnista con diplomado en dermatología veterinaria. Estandarización y análisis de perfiles dermatológicos qPCR."
+    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_100/osdiagnostic/staff-maria-elena-new.jpg",
+    bio: "Médico veterinario zootecnista con diplomado en dermatología veterinaria. Estandarización y análisis de perfiles dermatológicos qPCR.",
+    objectPosition: "center 15%",
+    scale: "scale-100"
   },
   {
     name: "Anderson",
@@ -64,8 +66,10 @@ const teamMembers = [
   {
     name: "Juan Esteban",
     role: "Analista de laboratorio",
-    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/staff-juan-esteban.png",
-    bio: "Médico Veterinario. Especialista en la carga técnica, procesamiento de muestras y validación de controles qPCR."
+    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_100/osdiagnostic/staff-juan-esteban-new.jpg",
+    bio: "Médico Veterinario. Especialista en la carga técnica, procesamiento de muestras y validación de controles qPCR.",
+    objectPosition: "center 22%",
+    scale: "scale-100"
   },
   {
     name: "Farley",

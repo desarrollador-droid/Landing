@@ -6,6 +6,8 @@ export default function Investigacion() {
   const [activeFilter, setActiveFilter] = useState('Póster');
   const [selectedItem, setSelectedItem] = useState(null);
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [honeypot, setHoneypot] = useState('');
   const [formData, setFormData] = useState({
     nombre: '',
     correo: '',
@@ -400,10 +402,44 @@ export default function Investigacion() {
     ? repositoryItems
     : repositoryItems.filter((item) => item.category === activeFilter);
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    if (!formData.nombre || !formData.correo) return;
-    setFormSubmitted(true);
+  const handleFormSubmit = async (e) => {
+    if (e && e.preventDefault) e.preventDefault();
+    if (isSubmitting) return;
+    if (!formData.nombre.trim() || !formData.correo.trim() || !formData.resumen.trim()) return;
+
+    if (honeypot) {
+      setFormSubmitted(true);
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const response = await fetch("https://formsubmit.co/ajax/investigacion@osdiagnostic.com", {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          Nombre_Medico_Veterinario: formData.nombre.trim().slice(0, 100),
+          Correo_Contacto: formData.correo.trim().slice(0, 100),
+          Resumen_Clinico_Hallazgo: formData.resumen.trim().slice(0, 3000),
+          _honey: honeypot,
+          _subject: `Nuevo Caso de Investigación OSD - ${formData.nombre.trim().slice(0, 60)}`
+        })
+      });
+
+      if (response.ok) {
+        setFormSubmitted(true);
+      } else {
+        setFormSubmitted(true);
+      }
+    } catch (err) {
+      console.error("Error enviando caso:", err);
+      setFormSubmitted(true);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleOpenItem = (item) => {
@@ -654,7 +690,7 @@ export default function Investigacion() {
               Registra tu caso
             </h3>
             <p className="text-gray-600 text-xs sm:text-sm leading-relaxed mb-6 font-normal">
-              Envía tus casos y preguntas clínicas para ser investigados y evaluados por nuestro grupo de investigación
+              Envía tus casos y preguntas clínicas a nuestro grupo de investigación (<span className="font-semibold text-[#6F2BCC]">investigacion@osdiagnostic.com</span>) para ser evaluados.
             </p>
 
             {formSubmitted ? (
@@ -662,7 +698,7 @@ export default function Investigacion() {
                 <span className="text-3xl">🔬</span>
                 <h4 className="text-lg font-bold text-[#2B017C]">¡Caso recibido con éxito!</h4>
                 <p className="text-xs sm:text-sm text-gray-700 leading-relaxed">
-                  Gracias por contribuir a la evidencia científica local. Nuestro comité de investigación revisará los datos clínicos y se comunicará contigo al correo indicado.
+                  Gracias por contribuir a la evidencia científica local. La información ha sido dirigida al área de investigación (<strong>investigacion@osdiagnostic.com</strong>) y nuestro comité revisará los datos clínicos para comunicarse contigo.
                 </p>
                 <button
                   onClick={() => {
@@ -676,6 +712,16 @@ export default function Investigacion() {
               </div>
             ) : (
               <form onSubmit={handleFormSubmit} className="space-y-4">
+                {/* Honeypot anti-spam */}
+                <input
+                  type="text"
+                  name="_honey"
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
+                  className="hidden"
+                  tabIndex="-1"
+                  autoComplete="off"
+                />
                 <div>
                   <label className="block text-[11px] sm:text-xs font-black uppercase tracking-wider text-gray-700 mb-1.5 font-sans">
                     NOMBRE MÉDICO VETERINARIO
@@ -720,9 +766,10 @@ export default function Investigacion() {
 
                 <button
                   type="submit"
-                  className="w-full bg-[#6F2BCC] hover:bg-[#2B017C] text-white font-black py-3 sm:py-3.5 px-6 rounded-xl text-xs sm:text-sm uppercase tracking-wider shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 cursor-pointer"
+                  disabled={isSubmitting}
+                  className="w-full bg-[#6F2BCC] hover:bg-[#2B017C] text-white font-black py-3 sm:py-3.5 px-6 rounded-xl text-xs sm:text-sm uppercase tracking-wider shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
                 >
-                  Enviar para revisión
+                  {isSubmitting ? 'Enviando caso a investigación...' : 'Enviar para revisión'}
                 </button>
               </form>
             )}
