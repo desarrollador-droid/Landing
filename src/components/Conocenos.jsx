@@ -12,7 +12,7 @@ const teamMembers = [
     bio: "Bacteriólogo y Laboratorista Clínico de la Universidad de Antioquia. Magister en Ciencias Básicas Biomédicas con Énfasis en Microbiología y Parasitología de la CCBB-UdeA. Doctor en Biotecnología en Salud de la UFRN, Brasil. Una vida profesional dedicada al diseño, estandarización y validación de pruebas moleculares con fines diagnósticos. A lo largo de los 20 años de experiencia en la vida"
   },
   {
-    name: "Valentina Castaño",
+    name: "Valentina",
     role: "Médica Veterinaria",
     image: "https://res.cloudinary.com/oiaig120/image/upload/v1793205178/osdiagnostic/staff-valentina-castano.png",
     bio: "Médica Veterinaria encargada del acompañamiento y asesoría clínica en diagnóstico molecular y pruebas especializadas.",
@@ -110,7 +110,7 @@ const teamMembers = [
     bio: "Logística y recolección rápida de perfiles de diagnóstico molecular en clínicas veterinarias aliadas."
   },
   {
-    name: "Maria Fernanda Rúa",
+    name: "Maria Fernanda",
     role: "Coordinadora Administrativa y Financiera",
     image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_100/osdiagnostic/staff-maria-fernanda.png",
     bio: "Administradora de Empresas, dedicada a la gestión administrativa, financiera y de proyectos, optimizando procesos y asegurando el cumplimiento de los objetivos organizacionales.",
@@ -161,7 +161,7 @@ const teamMembers = [
     name: "Isabela",
     role: "Practicante en análisis y desarrollo de software",
     image: "https://res.cloudinary.com/oiaig120/image/upload/b_white,f_auto,q_100/osdiagnostic/staff-isabela.png",
-    bio: "Practicante en análisis y desarrollo de software, apoyando la innovación tecnológica, el desarrollo y la optimización continua de las plataformas digitales del laboratorio.",
+    bio: "Apoyando la innovación tecnológica, el desarrollo y la optimización continua de las plataformas digitales del laboratorio.",
     objectPosition: "center 15%",
     scale: "scale-100"
   }

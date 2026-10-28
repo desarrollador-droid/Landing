@@ -45,7 +45,7 @@ export default function Footer() {
             </h3>
             <ul className="space-y-1.5 sm:space-y-2.5 text-[10.5px] sm:text-sm md:text-base text-gray-500 font-medium leading-snug">
               <li><Link to="/veterinarios" className="hover:text-osd-purple transition-colors">Inicio</Link></li>
-              <li><a href="https://osdiagnostic.com/laboratorio-de-biologia-molecular-preguntas-frecuentes/" target="_blank" rel="noreferrer" className="hover:text-osd-purple transition-colors">Preguntas frecuentes</a></li>
+              <li><Link to="/preguntas-frecuentes" className="hover:text-osd-purple transition-colors">Preguntas frecuentes</Link></li>
               <li><Link to="/clinica" className="hover:text-osd-purple transition-colors">Servicios</Link></li>
               <li><Link to="/noticias-veterinarias" className="hover:text-osd-purple transition-colors">Newslatter</Link></li>
               <li><Link to="/investigacion" className="hover:text-osd-purple transition-colors">Proyectos de investigación</Link></li>

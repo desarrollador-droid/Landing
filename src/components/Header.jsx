@@ -241,6 +241,13 @@ export default function Header() {
                 Proyectos de investigación
               </Link>
               <Link 
+                to="/preguntas-frecuentes" 
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="py-2 hover:text-osd-purple transition-colors"
+              >
+                Preguntas frecuentes
+              </Link>
+              <Link 
                 to="/noticias-veterinarias" 
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="py-2 hover:text-osd-purple transition-colors"
