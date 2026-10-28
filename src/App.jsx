@@ -156,6 +156,8 @@ function App() {
         <Route path="/preguntas-frecuentes/" element={<PageWrapper><PreguntasFrecuentes /></PageWrapper>} />
         <Route path="/laboratorio-de-biologia-molecular-preguntas-frecuntes" element={<PageWrapper><PreguntasFrecuentes /></PageWrapper>} />
         <Route path="/laboratorio-de-biologia-molecular-preguntas-frecuntes/" element={<PageWrapper><PreguntasFrecuentes /></PageWrapper>} />
+        <Route path="/laboratorio-de-biologia-molecular-preguntas-frecuentes" element={<PageWrapper><PreguntasFrecuentes /></PageWrapper>} />
+        <Route path="/laboratorio-de-biologia-molecular-preguntas-frecuentes/" element={<PageWrapper><PreguntasFrecuentes /></PageWrapper>} />
 
         {/* 11. LEGAL Y PQRS */}
         <Route path="/proteccion-de-datos" element={<PageWrapper><ProteccionDatos /></PageWrapper>} />

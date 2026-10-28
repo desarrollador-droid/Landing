@@ -118,6 +118,10 @@ const seoRoutes = {
     title: 'Servicio de qPCR veterinaria en Colombia',
     description: 'Resuelve tus dudas sobre el servicio de PCR Veterinaria. Conoce tiempos, recolección, perfiles diagnósticos y cómo obtener resultados precisos.'
   },
+  '/laboratorio-de-biologia-molecular-preguntas-frecuentes': {
+    title: 'Servicio de qPCR veterinaria en Colombia',
+    description: 'Resuelve tus dudas sobre el servicio de PCR Veterinaria. Conoce tiempos, recolección, perfiles diagnósticos y cómo obtener resultados precisos.'
+  },
 
   // 12. Conócenos
   '/conocenos': {
