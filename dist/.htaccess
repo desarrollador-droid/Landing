@@ -1,117 +1,27 @@
-# ==============================================================================
-# ON SITE DIAGNOSTIC - CONFIGURACIÓN DE PRODUCCIÓN CPANEL (APACHE)
-# ==============================================================================
+# ------------------------------------------------------------------------------
+# ON SITE DIAGNOSTIC - GODADDY CPANEL APACHE CONFIGURATION
+# ------------------------------------------------------------------------------
 
-# Prioridad absoluta a la SPA de React (index.html) sobre WordPress (index.php)
 DirectoryIndex index.html index.php
 
-# ------------------------------------------------------------------------------
-# 1. SEGURIDAD DEL SERVIDOR Y DIRECTORIOS
-# ------------------------------------------------------------------------------
-# Ocultar firma y versiones del servidor en errores HTTP
-ServerSignature Off
-
-# Deshabilitar exploración de directorios (evita listar archivos en carpetas)
-Options -Indexes
-
-# Bloquear acceso a archivos ocultos, sensibles, respaldos y configuración
-<FilesMatch "(^\.|\.env|\.git|\.md$|\.sql$|\.bak$|\.log$)">
-  <IfModule mod_authz_core.c>
-    Require all denied
-  </IfModule>
-  <IfModule !mod_authz_core.c>
-    Order deny,allow
-    Deny from all
-  </IfModule>
-</FilesMatch>
-
-# ------------------------------------------------------------------------------
-# 2. ENRUTAMIENTO Y REGLAS DE REESCRITURA (SPA FALLBACK & HTTPS)
-# ------------------------------------------------------------------------------
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
 
-  # 1. Forzar HTTPS (Requisito fundamental para SEO y seguridad en Google)
+  # 1. Redirigir a HTTPS
   RewriteCond %{HTTPS} !=on
   RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
 
-  # 2. Redirección canónica de www a sin www (evita contenido duplicado)
-  RewriteCond %{HTTP_HOST} ^www\.osdiagnostic\.com$ [NC]
-  RewriteRule ^(.*)$ https://osdiagnostic.com/$1 [R=301,L]
-
-  # 3. Permitir acceso directo a archivos existentes físicos (imágenes, fuentes, sitemap.xml, robots.txt, css, js)
+  # 2. Servir archivos y carpetas reales directamente
   RewriteCond %{REQUEST_FILENAME} -f [OR]
   RewriteCond %{REQUEST_FILENAME} -d
   RewriteRule ^ - [L]
 
-  # 4. Redirigir todas las demás rutas internas a index.html (SPA Fallback para React Router)
-  RewriteRule ^ index.html [QSA,L]
+  # 3. SPA Fallback hacia index.html para React Router
+  RewriteRule ^ index.html [L]
 </IfModule>
 
-# ------------------------------------------------------------------------------
-# 3. COMPRESIÓN GZIP (mod_deflate) - Acelera la carga de la página (Core Web Vitals)
-# ------------------------------------------------------------------------------
+# Compresión GZIP (acelera la carga)
 <IfModule mod_deflate.c>
-  AddOutputFilterByType DEFLATE text/html
-  AddOutputFilterByType DEFLATE text/plain
-  AddOutputFilterByType text/xml
-  AddOutputFilterByType DEFLATE text/css
-  AddOutputFilterByType DEFLATE text/javascript
-  AddOutputFilterByType DEFLATE application/javascript
-  AddOutputFilterByType DEFLATE application/x-javascript
-  AddOutputFilterByType DEFLATE application/json
-  AddOutputFilterByType DEFLATE application/xml
-  AddOutputFilterByType DEFLATE application/rss+xml
-  AddOutputFilterByType DEFLATE font/ttf
-  AddOutputFilterByType DEFLATE font/otf
-  AddOutputFilterByType DEFLATE font/x-woff
-  AddOutputFilterByType DEFLATE font/woff2
-  AddOutputFilterByType DEFLATE image/svg+xml
-</IfModule>
-
-# ------------------------------------------------------------------------------
-# 4. CABECERAS DE CACHÉ (mod_expires) - Máxima velocidad para visitantes recurrentes
-# ------------------------------------------------------------------------------
-<IfModule mod_expires.c>
-  ExpiresActive On
-  ExpiresDefault "access plus 1 month"
-
-  # HTML nunca en caché para que las actualizaciones se reflejen de inmediato
-  ExpiresByType text/html "access plus 0 seconds"
-
-  # Assets compilados con hash único (1 año de caché)
-  ExpiresByType text/css "access plus 1 year"
-  ExpiresByType application/javascript "access plus 1 year"
-  ExpiresByType image/svg+xml "access plus 1 year"
-  ExpiresByType font/woff2 "access plus 1 year"
-  ExpiresByType font/ttf "access plus 1 year"
-  ExpiresByType application/json "access plus 1 hour"
-  ExpiresByType text/xml "access plus 1 day"
-</IfModule>
-
-# ------------------------------------------------------------------------------
-# 5. CABECERAS DE CIBERSEGURIDAD AVANZADA (mod_headers)
-# ------------------------------------------------------------------------------
-<IfModule mod_headers.c>
-  # Forzar HTTPS estricto en el navegador por 1 año (HSTS con preload)
-  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-
-  # Prevenir MIME-Sniffing (ataques por confusión de tipos de archivo)
-  Header set X-Content-Type-Options "nosniff"
-
-  # Mitigación contra Clickjacking (evita incrustación en iframes maliciosos)
-  Header set X-Frame-Options "SAMEORIGIN"
-
-  # Filtro XSS integrado en navegadores compatibles
-  Header set X-XSS-Protection "1; mode=block"
-
-  # Política de Referrer para no filtrar URLs internas hacia terceros
-  Header set Referrer-Policy "strict-origin-when-cross-origin"
-
-  # Restricción de permisos de hardware del cliente (cámara, micrófono, gps, pagos)
-  Header set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
-
-  # Content-Security-Policy (CSP) estricta adaptada al ecosistema OSD
-  Header set Content-Security-Policy "default-src 'self' https:; script-src 'self' 'unsafe-inline' https://res.cloudinary.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https://res.cloudinary.com https://*.ytimg.com https://i.ytimg.com; frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://docs.google.com; connect-src 'self' https://formsubmit.co https://res.cloudinary.com; object-src 'none'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://formsubmit.co;"
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript application/json image/svg+xml font/woff2
 </IfModule>
