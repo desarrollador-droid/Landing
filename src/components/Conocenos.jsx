@@ -156,6 +156,14 @@ const teamMembers = [
     bio: "Apoya la gestión y asesoría comercial para clínicas veterinarias aliadas, garantizando una atención personalizada y de alta calidad.",
     objectPosition: "center 10%",
     scale: "scale-100"
+  },
+  {
+    name: "Isabela",
+    role: "Practicante en análisis y desarrollo de software",
+    image: "https://res.cloudinary.com/oiaig120/image/upload/b_white,f_auto,q_100/osdiagnostic/staff-isabela.png",
+    bio: "Practicante en análisis y desarrollo de software, apoyando la innovación tecnológica, el desarrollo y la optimización continua de las plataformas digitales del laboratorio.",
+    objectPosition: "center 15%",
+    scale: "scale-100"
   }
 ];
 
