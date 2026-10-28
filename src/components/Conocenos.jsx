@@ -131,9 +131,9 @@ const teamMembers = [
   },
   {
     name: "Carlos Mario",
-    role: "Auxiliar Administrativo",
-    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_100/osdiagnostic/staff-carlos-mario.png",
-    bio: "Experiencia en cartera, enfocado en la gestión de cobros, seguimiento de pagos y atención al cliente.",
+    role: "Analista de datos",
+    image: "https://res.cloudinary.com/oiaig120/image/upload/b_white,c_pad,w_1250,h_1672,f_auto,q_100/osdiagnostic/staff-carlos-mario-datos.png",
+    bio: "Analista de datos enfocado en la estructuración, análisis métrico y optimización operativa de los procesos del laboratorio.",
     objectPosition: "center 12%",
     scale: "scale-100"
   },
@@ -151,6 +151,14 @@ const teamMembers = [
     image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_100/osdiagnostic/staff-carlos-eduardo.png",
     bio: "Lidera la dirección estratégica y operativa, coordinando los esfuerzos científicos y administrativos de la organización.",
     objectPosition: "center 10%",
+    scale: "scale-100"
+  },
+  {
+    name: "Diego",
+    role: "Líder de alianzas",
+    image: "https://res.cloudinary.com/oiaig120/image/upload/b_white,f_auto,q_100/osdiagnostic/staff-diego.png",
+    bio: "Líder de alianzas estratégicas, coordinando relaciones comerciales e institucionales para expandir y fortalecer la red diagnóstica.",
+    objectPosition: "center 15%",
     scale: "scale-100"
   },
   {
@@ -176,17 +184,56 @@ export default function Conocenos() {
   const [triggerAnim, setTriggerAnim] = useState(false);
   const [userRole, setUserRole] = useState('vet');
   const autoPlayRef = useRef(null);
+  const isTransitioningRef = useRef(false);
+  const activeIndexRef = useRef(0);
+  activeIndexRef.current = activeIndex;
 
   useEffect(() => {
     const storedRole = localStorage.getItem('userRole') || 'vet';
     setUserRole(storedRole);
   }, []);
 
+  // Preload all team member images into browser cache to prevent rendering lag
+  useEffect(() => {
+    teamMembers.forEach((m) => {
+      if (m.image) {
+        const img = new Image();
+        img.src = m.image;
+      }
+    });
+  }, []);
+
+  const goToSlide = (nextIndex) => {
+    if (isTransitioningRef.current) return;
+    isTransitioningRef.current = true;
+    setTriggerAnim(true);
+
+    // Phase 1: Wait for text and photo to smoothly fade out (250ms)
+    setTimeout(() => {
+      // Phase 2: Switch data while elements are completely invisible
+      setActiveIndex(nextIndex);
+
+      // Phase 3: Give browser a microtask to paint new image, then fade back in
+      setTimeout(() => {
+        setTriggerAnim(false);
+        isTransitioningRef.current = false;
+      }, 50);
+    }, 250);
+  };
+
+  const handleNext = () => {
+    goToSlide((activeIndexRef.current + 1) % teamMembers.length);
+  };
+
+  const handlePrev = () => {
+    goToSlide((activeIndexRef.current - 1 + teamMembers.length) % teamMembers.length);
+  };
+
   const startAutoPlay = () => {
     stopAutoPlay();
     autoPlayRef.current = setInterval(() => {
       handleNext();
-    }, 3800);
+    }, 4500);
   };
 
   const stopAutoPlay = () => {
@@ -195,27 +242,10 @@ export default function Conocenos() {
     }
   };
 
-  const handleNext = () => {
-    setTriggerAnim(true);
-    setActiveIndex((prev) => (prev + 1) % teamMembers.length);
-  };
-
-  const handlePrev = () => {
-    setTriggerAnim(true);
-    setActiveIndex((prev) => (prev - 1 + teamMembers.length) % teamMembers.length);
-  };
-
   useEffect(() => {
     startAutoPlay();
     return () => stopAutoPlay();
   }, []);
-
-  useEffect(() => {
-    if (triggerAnim) {
-      const timer = setTimeout(() => setTriggerAnim(false), 800);
-      return () => clearTimeout(timer);
-    }
-  }, [triggerAnim]);
 
   const member = teamMembers[activeIndex];
 
@@ -296,14 +326,16 @@ export default function Conocenos() {
           <div className="absolute top-0 left-6 sm:left-12 md:left-20 lg:left-28 xl:left-36 flex space-x-3.5 z-30">
             <button 
               onClick={handlePrev}
-              className="w-10 h-10 rounded-full bg-white border border-gray-200 hover:bg-gray-50 flex items-center justify-center text-gray-700 shadow-sm transition-all"
+              disabled={isTransitioningRef.current}
+              className="w-10 h-10 rounded-full bg-white border border-gray-200 hover:bg-gray-50 flex items-center justify-center text-gray-700 shadow-sm transition-all disabled:opacity-60"
               title="Anterior"
             >
               ❮
             </button>
             <button 
               onClick={handleNext}
-              className="w-10 h-10 rounded-full bg-white border border-gray-200 hover:bg-gray-50 flex items-center justify-center text-gray-700 shadow-sm transition-all"
+              disabled={isTransitioningRef.current}
+              className="w-10 h-10 rounded-full bg-white border border-gray-200 hover:bg-gray-50 flex items-center justify-center text-gray-700 shadow-sm transition-all disabled:opacity-60"
               title="Siguiente"
             >
               ❯
@@ -312,8 +344,8 @@ export default function Conocenos() {
 
           {/* Left Side: Text Profile content */}
           <div 
-            className={`flex-1 text-left space-y-6 pt-16 lg:pt-0 z-20 max-w-2xl relative transition-all duration-700 ease-out ${
-              triggerAnim ? 'translate-y-8 opacity-0' : 'translate-y-0 opacity-100'
+            className={`flex-1 text-left space-y-6 pt-16 lg:pt-0 z-20 max-w-2xl relative transition-all duration-300 ease-in-out ${
+              triggerAnim ? 'translate-y-4 opacity-0' : 'translate-y-0 opacity-100'
             }`}
           >
             <div className="space-y-2">
@@ -337,24 +369,24 @@ export default function Conocenos() {
               
               {/* Outer grey background circle - perfectly concentric and scales with container */}
               <div 
-                className={`w-[110%] h-[110%] rounded-full bg-[#E5E7EB] absolute z-0 transition-all duration-700 ease-out ${
+                className={`w-[110%] h-[110%] rounded-full bg-[#E5E7EB] absolute z-0 transition-all duration-300 ease-out ${
                   triggerAnim ? 'translate-x-[-15px] opacity-40' : 'translate-x-0 opacity-100'
                 }`} 
               />
               
               {/* Three light-grey horizontal pill background capsules connected to the concentric wrapper */}
               <div 
-                className={`absolute right-[90%] w-[42%] h-[6%] bg-[#E5E7EB] rounded-full top-[25%] z-0 transition-all duration-700 ease-out ${
+                className={`absolute right-[90%] w-[42%] h-[6%] bg-[#E5E7EB] rounded-full top-[25%] z-0 transition-all duration-300 ease-out ${
                   triggerAnim ? 'translate-x-[-50px] opacity-40' : 'translate-x-0 opacity-100'
                 }`} 
               />
               <div 
-                className={`absolute right-[95%] w-[58%] h-[6%] bg-[#E5E7EB] rounded-full top-1/2 -translate-y-1/2 z-0 transition-all duration-700 ease-out ${
+                className={`absolute right-[95%] w-[58%] h-[6%] bg-[#E5E7EB] rounded-full top-1/2 -translate-y-1/2 z-0 transition-all duration-300 ease-out ${
                   triggerAnim ? 'translate-x-[-65px] opacity-40' : 'translate-x-0 opacity-100'
                 }`} 
               />
               <div 
-                className={`absolute right-[88%] w-[34%] h-[6%] bg-[#E5E7EB] rounded-full bottom-[25%] z-0 transition-all duration-700 ease-out ${
+                className={`absolute right-[88%] w-[34%] h-[6%] bg-[#E5E7EB] rounded-full bottom-[25%] z-0 transition-all duration-300 ease-out ${
                   triggerAnim ? 'translate-x-[-40px] opacity-40' : 'translate-x-0 opacity-100'
                 }`} 
               />
@@ -364,16 +396,19 @@ export default function Conocenos() {
 
               {/* Main Photo Mask with overlaid green/cyan border - scale-124 hides the purple border perfectly, cyan border overlay is the sole border */}
               <div className="w-full h-full rounded-full bg-white shadow-md overflow-hidden relative z-10">
-                {member.image ? (
-                  <img 
-                    src={member.image} 
-                    alt={member.name} 
-                    className={`w-full h-full object-cover select-none ${member.scale || 'scale-[1.24]'}`}
-                    style={{ objectPosition: member.objectPosition || 'center', imageRendering: '-webkit-optimize-contrast' }}
-                  />
-                ) : (
-                  <div className="text-gray-300 text-6xl select-none flex items-center justify-center h-full">👤</div>
-                )}
+                <div className={`w-full h-full transition-all duration-300 ease-in-out ${triggerAnim ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
+                  {member.image ? (
+                    <img 
+                      key={member.name}
+                      src={member.image} 
+                      alt={member.name} 
+                      className={`w-full h-full object-cover select-none ${member.scale || 'scale-[1.24]'}`}
+                      style={{ objectPosition: member.objectPosition || 'center', imageRendering: '-webkit-optimize-contrast' }}
+                    />
+                  ) : (
+                    <div className="text-gray-300 text-6xl select-none flex items-center justify-center h-full">👤</div>
+                  )}
+                </div>
                 {/* Thick cyan/green border overlay is the sole frame enclosing the photo */}
                 <div className="absolute inset-0 rounded-full border-[10px] md:border-[16px] border-[#01FADA] pointer-events-none z-20" />
               </div>

@@ -18,7 +18,14 @@ DirectoryIndex index.html index.php
   RewriteRule ^ - [L]
 
   # 3. SPA Fallback hacia index.html para React Router
-  RewriteRule ^ index.html [L]
+  RewriteRule ^ index.html [QSA,L]
+</IfModule>
+
+# Cabeceras de seguridad seguras
+<IfModule mod_headers.c>
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+  Header set X-Content-Type-Options "nosniff"
+  Header set X-Frame-Options "SAMEORIGIN"
 </IfModule>
 
 # Compresión GZIP (acelera la carga)
