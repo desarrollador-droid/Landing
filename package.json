@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "qa": "node scripts/qa_audit.js",
+    "build:qa": "vite build && node scripts/qa_audit.js",
     "lint": "eslint .",
     "preview": "vite preview"
   },
