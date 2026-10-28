@@ -164,9 +164,9 @@ const teamMembers = [
   {
     name: "Isabela",
     role: "Practicante en análisis y desarrollo de software",
-    image: "https://res.cloudinary.com/oiaig120/image/upload/b_white,f_auto,q_100/osdiagnostic/staff-isabela.png",
+    image: "https://res.cloudinary.com/oiaig120/image/upload/b_white,c_pad,w_1250,h_1671,f_auto,q_100/osdiagnostic/staff-isabela.png",
     bio: "Apoyando la innovación tecnológica, el desarrollo y la optimización continua de las plataformas digitales del laboratorio.",
-    objectPosition: "center 15%",
+    objectPosition: "center 12%",
     scale: "scale-100"
   }
 ];
