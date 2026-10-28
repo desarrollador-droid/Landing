@@ -15,6 +15,7 @@ export default function Investigacion() {
   });
   
   const autoPlayRef = useRef(null);
+  const talentAutoPlayRef = useRef(null);
   const talentTouchStartX = useRef(null);
   const talentTouchStartY = useRef(null);
 
@@ -74,7 +75,7 @@ export default function Investigacion() {
     stopAutoPlay();
     autoPlayRef.current = setInterval(() => {
       setActiveSlide((prev) => (prev + 1) % heroSlides.length);
-    }, 6000);
+    }, 3800);
   };
 
   const stopAutoPlay = () => {
@@ -223,6 +224,24 @@ export default function Investigacion() {
   ];
 
   const maxTalentIndex = Math.max(0, talentNodes.length - 1);
+
+  const startTalentAutoPlay = () => {
+    stopTalentAutoPlay();
+    talentAutoPlayRef.current = setInterval(() => {
+      setTalentIndex((prev) => (prev < maxTalentIndex ? prev + 1 : 0));
+    }, 3500);
+  };
+
+  const stopTalentAutoPlay = () => {
+    if (talentAutoPlayRef.current) {
+      clearInterval(talentAutoPlayRef.current);
+    }
+  };
+
+  useEffect(() => {
+    startTalentAutoPlay();
+    return () => stopTalentAutoPlay();
+  }, [talentIndex]);
 
   const handlePrevTalent = () => {
     setTalentIndex((prev) => (prev > 0 ? prev - 1 : maxTalentIndex));
@@ -582,7 +601,11 @@ export default function Investigacion() {
         </div>
 
         {/* Carousel Container */}
-        <div className="max-w-7xl mx-auto py-16 sm:py-20 px-4 sm:px-8 relative overflow-hidden">
+        <div 
+          className="max-w-7xl mx-auto py-16 sm:py-20 px-4 sm:px-8 relative overflow-hidden"
+          onMouseEnter={stopTalentAutoPlay}
+          onMouseLeave={startTalentAutoPlay}
+        >
           
           {/* Controls: Left & Right Arrow Buttons */}
           <button

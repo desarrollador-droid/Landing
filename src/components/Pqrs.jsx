@@ -38,7 +38,7 @@ export default function Pqrs() {
 
     setIsSubmitting(true);
     try {
-      const response = await fetch("https://formsubmit.co/ajax/coordinacionadmin@osdiagnostic.com", {
+      const response = await fetch("https://formsubmit.co/ajax/gestionhumana@osdiagnostic.com", {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",

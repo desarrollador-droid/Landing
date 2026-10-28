@@ -131,7 +131,7 @@ export default function Contacto() {
     setIsSubmitting(true);
     
     try {
-      const response = await fetch("https://formsubmit.co/ajax/coordinacioncomercialnal@osdiagnostic.com", {
+      const response = await fetch("https://formsubmit.co/ajax/lideralianzas@osdiagnostic.com", {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
