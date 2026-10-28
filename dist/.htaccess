@@ -2,6 +2,9 @@
 # ON SITE DIAGNOSTIC - CONFIGURACIÓN DE PRODUCCIÓN CPANEL (APACHE)
 # ==============================================================================
 
+# Prioridad absoluta a la SPA de React (index.html) sobre WordPress (index.php)
+DirectoryIndex index.html index.php
+
 # ------------------------------------------------------------------------------
 # 1. SEGURIDAD DEL SERVIDOR Y DIRECTORIOS
 # ------------------------------------------------------------------------------
