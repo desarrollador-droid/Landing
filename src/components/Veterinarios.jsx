@@ -79,7 +79,7 @@ export default function Veterinarios() {
   useEffect(() => {
     const interval = setInterval(() => {
       handleNextSlide();
-    }, 30000);
+    }, 5000);
     return () => clearInterval(interval);
   }, [activeSlide]);
 
@@ -771,14 +771,14 @@ export default function Veterinarios() {
           <div className="banner-shape-right"></div>
           
           <div className="team-banner-grid">
-            {/* Camila Largo */}
+            {/* Valentina Castaño */}
             <div className="doc-col-left">
               <div className="doc-photo-frame">
-                <img src="https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/Laboratorio-Clinico-Veterinario.png" alt="Camila Largo" />
+                <img src="https://res.cloudinary.com/oiaig120/image/upload/v1793205178/osdiagnostic/staff-valentina-castano.png" alt="Valentina Castaño" />
               </div>
               <div className="doc-text-box">
-                <h2>Camila<br/>Largo</h2>
-                <p>MV. Esp. Medicina Interna<br/>en Pequeñas Especies</p>
+                <h2>Valentina<br/>Castaño</h2>
+                <p>Médica Veterinaria</p>
                 <a href="https://wa.link/licxbp" target="_blank" rel="noreferrer" className="doc-btn-action">Agendar asesoría</a>
               </div>
             </div>

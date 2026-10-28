@@ -8,109 +8,119 @@ const teamMembers = [
   {
     name: "Cesar Orlando",
     role: "Director científico",
-    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/staff-cesar-orlando.png",
+    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto:best/osdiagnostic/staff-cesar-orlando.png",
     bio: "Bacteriólogo y Laboratorista Clínico de la Universidad de Antioquia. Magister en Ciencias Básicas Biomédicas con Énfasis en Microbiología y Parasitología de la CCBB-UdeA. Doctor en Biotecnología en Salud de la UFRN, Brasil. Una vida profesional dedicada al diseño, estandarización y validación de pruebas moleculares con fines diagnósticos. A lo largo de los 20 años de experiencia en la vida"
   },
   {
-    name: "Camila Largo",
-    role: "Analista comercial / MV Internista",
-    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/staff-camila.png",
-    bio: "Médico Veterinario con especialización en medicina interna de pequeñas especies. Encargada de brindar soporte de interpretación clínica de resultados qPCR complejos."
+    name: "Valentina Castaño",
+    role: "Médica Veterinaria",
+    image: "https://res.cloudinary.com/oiaig120/image/upload/v1793205178/osdiagnostic/staff-valentina-castano.png",
+    bio: "Médica Veterinaria encargada del acompañamiento y asesoría clínica en diagnóstico molecular y pruebas especializadas.",
+    objectPosition: "center 10%",
+    scale: "scale-100"
   },
   {
     name: "Laura",
     role: "Auxiliar Contable",
-    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/staff-laura.png",
+    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto:best/osdiagnostic/staff-laura.png",
     bio: "Gestión de facturación, cuentas por cobrar y soporte contable para clínicas aliadas de la red de laboratorios."
   },
   {
     name: "Luna",
     role: "Auxiliar de laboratorio",
-    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/staff-luna.png",
+    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto:best/osdiagnostic/staff-luna.png",
     bio: "Bacterióloga"
   },
   {
     name: "Ángela",
     role: "Analista de laboratorio",
-    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/staff-angela.png",
+    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto:best/osdiagnostic/staff-angela.png",
     bio: "Médico veterinario zootecnista con diplomado en bioestadística y epidemiología. Encargada del procesamiento y control analítico de las pruebas de biología molecular."
   },
   {
     name: "Felipe",
     role: "Analista de laboratorio",
-    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/staff-felipe.png",
+    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto:best/osdiagnostic/staff-felipe.png",
     bio: "Biotecnólogo con Diplomado en herramientas moleculares - curso avanzado en biología molecular y cursos avanzados de investigación en biomedicina."
   },
   {
     name: "Maria Elena",
     role: "Analista de laboratorio",
-    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/staff-maria-elena.png",
+    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto:best/osdiagnostic/staff-maria-elena.png",
     bio: "Médico veterinario zootecnista con diplomado en dermatología veterinaria. Estandarización y análisis de perfiles dermatológicos qPCR."
   },
   {
     name: "Anderson",
     role: "Analista de laboratorio",
-    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/staff-anderson.png",
+    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto:best/osdiagnostic/staff-anderson.png",
     bio: "Analista de laboratorio especializado en el control analítico de las muestras remitidas al laboratorio."
   },
   {
     name: "Karen",
     role: "Auxiliar de contabilidad",
-    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/staff-karen.png",
+    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto:best/osdiagnostic/staff-karen.png",
     bio: "Auxiliar de contabilidad encargada del soporte administrativo de la red de laboratorios."
   },
   {
     name: "Juan Esteban",
     role: "Analista de laboratorio",
-    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/staff-juan-esteban.png",
+    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto:best/osdiagnostic/staff-juan-esteban.png",
     bio: "Médico Veterinario. Especialista en la carga técnica, procesamiento de muestras y validación de controles qPCR."
   },
   {
     name: "Farley",
     role: "Analista de laboratorio",
-    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/staff-farley.png",
+    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto:best/osdiagnostic/staff-farley.png",
     bio: "Médico veterinario zootecnista. Encargado de la extracción y preparación de ácidos nucleicos de muestras remitidas a nivel nacional."
   },
   {
     name: "Germán",
     role: "Analista de recolección",
-    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/staff-german.png",
+    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto:best/osdiagnostic/staff-german.png",
     bio: "Técnico en Sistemas. Logística de campo y transporte seguro de muestras biológicas refrigeradas a temperatura controlada."
   },
   {
     name: "María Paula",
-    role: "Practicante de Laboratorio",
-    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/staff-maria-paula.png",
-    bio: "Practicante de Laboratorio brindando soporte técnico en el procesamiento molecular."
+    role: "Analista de laboratorio",
+    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto:best/osdiagnostic/staff-maria-paula.png",
+    bio: "Analista de laboratorio brindando soporte técnico en el procesamiento molecular."
   },
   {
     name: "Eduardo",
     role: "Auxiliar de recolección",
-    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/staff-eduardo.png",
+    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto:best/osdiagnostic/staff-eduardo.png",
     bio: "Auxiliar de recolección encargado de la logística y transporte biológico seguro."
   },
   {
     name: "Andrés",
     role: "Auxiliar de recolección",
-    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/staff-andres.png",
+    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto:best/osdiagnostic/staff-andres.png",
     bio: "Auxiliar de recolección encargado de la ruta logística de campo."
   },
   {
     name: "Estefanía",
     role: "Auxiliar de logística",
-    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/staff-estefania.png",
+    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto:best/osdiagnostic/staff-estefania.png",
     bio: "Auxiliar de logística encargada del transporte y recolección rápida de perfiles de diagnóstico molecular."
   },
   {
     name: "Reiner",
     role: "Analista de recolección",
-    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/staff-reiner.png",
+    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto:best/osdiagnostic/staff-reiner.png",
     bio: "Logística y recolección rápida de perfiles de diagnóstico molecular en clínicas veterinarias aliadas."
+  },
+  {
+    name: "Isabela Cuartas",
+    role: "Practicante de Desarrollo de Software",
+    image: "https://res.cloudinary.com/oiaig120/image/upload/v1793205177/osdiagnostic/staff-isabela-cuartas.png",
+    bio: "Practicante de Desarrollo de Software enfocada en la innovación tecnológica, soporte web y desarrollo de herramientas digitales para el laboratorio.",
+    objectPosition: "center 15%",
+    scale: "scale-100"
   },
   {
     name: "Maria Fernanda Rúa",
     role: "Coordinadora Administrativa y Financiera",
-    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/staff-maria-fernanda.png",
+    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto:best/osdiagnostic/staff-maria-fernanda.png",
     bio: "Administradora de Empresas, dedicada a la gestión administrativa, financiera y de proyectos, optimizando procesos y asegurando el cumplimiento de los objetivos organizacionales.",
     objectPosition: "center 15%",
     scale: "scale-100"
@@ -118,7 +128,7 @@ const teamMembers = [
   {
     name: "Melissa",
     role: "Ingeniera Financiera/Analista de Compras",
-    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/staff-melissa.png",
+    image: "https://res.cloudinary.com/oiaig120/image/upload/v1793205322/osdiagnostic/staff-melissa-hd.png",
     bio: "Gestiona la relación con proveedores, la negociación comercial, el análisis financiero de adquisiciones y el seguimiento de procesos para garantizar eficiencia, calidad y cumplimiento.",
     objectPosition: "center 10%",
     scale: "scale-100"
@@ -126,7 +136,7 @@ const teamMembers = [
   {
     name: "Carlos Mario",
     role: "Auxiliar Administrativo",
-    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/staff-carlos-mario.png",
+    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto:best/osdiagnostic/staff-carlos-mario.png",
     bio: "Experiencia en cartera, enfocado en la gestión de cobros, seguimiento de pagos y atención al cliente.",
     objectPosition: "center 12%",
     scale: "scale-100"
@@ -134,7 +144,7 @@ const teamMembers = [
   {
     name: "Viena Gabriela",
     role: "Gestión Humana",
-    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/staff-viena-gabriela.png",
+    image: "https://res.cloudinary.com/oiaig120/image/upload/v1793205323/osdiagnostic/staff-viena-hd.png",
     bio: "Psicóloga apasionada por el desarrollo del talento humano y convencida de que las personas son el motor que impulsa la transformación de las organizaciones. Su propósito es crear experiencias que inspiren el crecimiento, fortalezcan el liderazgo y promuevan una cultura organizacional donde el bienestar, la innovación y el compromiso impulsen resultados sostenibles.",
     objectPosition: "center 12%",
     scale: "scale-100"
@@ -142,7 +152,7 @@ const teamMembers = [
   {
     name: "Carlos Eduardo",
     role: "Gerente general",
-    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/staff-carlos-eduardo.png",
+    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto:best/osdiagnostic/staff-carlos-eduardo.png",
     bio: "Lidera la dirección estratégica y operativa, coordinando los esfuerzos científicos y administrativos de la organización.",
     objectPosition: "center 10%",
     scale: "scale-100"
@@ -150,7 +160,7 @@ const teamMembers = [
   {
     name: "Valentina",
     role: "Asesora comercial",
-    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/staff-valentina.png",
+    image: "https://res.cloudinary.com/oiaig120/image/upload/v1793205325/osdiagnostic/staff-valentina-asesora-hd.png",
     bio: "Apoya la gestión y asesoría comercial para clínicas veterinarias aliadas, garantizando una atención personalizada y de alta calidad.",
     objectPosition: "center 10%",
     scale: "scale-100"
@@ -172,7 +182,7 @@ export default function Conocenos() {
     stopAutoPlay();
     autoPlayRef.current = setInterval(() => {
       handleNext();
-    }, 6000);
+    }, 3800);
   };
 
   const stopAutoPlay = () => {
@@ -355,7 +365,7 @@ export default function Conocenos() {
                     src={member.image} 
                     alt={member.name} 
                     className={`w-full h-full object-cover select-none ${member.scale || 'scale-[1.24]'}`}
-                    style={{ objectPosition: member.objectPosition || 'center', imageRendering: '-webkit-optimize-contrast' }}
+                    style={{ objectPosition: member.objectPosition || 'center' }}
                   />
                 ) : (
                   <div className="text-gray-300 text-6xl select-none flex items-center justify-center h-full">👤</div>

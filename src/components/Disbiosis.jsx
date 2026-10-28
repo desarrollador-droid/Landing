@@ -656,8 +656,8 @@ export default function Disbiosis() {
                 Ajuste los Niveles de los 9 Grupos Bacterianos
               </h3>
 
-              {/* Species, Age and Code Filters */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pb-4 border-b border-gray-200/60 text-left">
+              {/* Species and Age Filters */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pb-4 border-b border-gray-200/60 text-left">
                 <div className="space-y-2">
                   <label htmlFor="especie-select" className="text-xs font-sans font-bold text-[#6F2BCC]/70 uppercase tracking-wider block">
                     Especie
@@ -686,19 +686,6 @@ export default function Disbiosis() {
                     <option value="adulto" className="bg-white text-gray-800 font-sans font-medium">Adulto</option>
                     <option value="geronte" className="bg-white text-gray-800 font-sans font-medium">Geronte</option>
                   </select>
-                </div>
-                <div className="space-y-2">
-                  <label htmlFor="codigo-input" className="text-xs font-sans font-bold text-[#6F2BCC]/70 uppercase tracking-wider block">
-                    Código de Examen
-                  </label>
-                  <input
-                    id="codigo-input"
-                    type="text"
-                    value={codigo}
-                    onChange={(e) => setCodigo(e.target.value)}
-                    placeholder="Ej. OSD-7842"
-                    className="w-full px-4 py-2.5 bg-white border-2 border-[#6F2BCC] rounded-xl outline-none text-sm text-[#2B017C] font-sans font-bold transition-all focus:border-[#6F2BCC] placeholder:text-[#6F2BCC]/35"
-                  />
                 </div>
               </div>
             </div>

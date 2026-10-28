@@ -329,7 +329,7 @@ export default function Contacto() {
               {/* Direct WhatsApp Channel */}
               <div className="pt-2 font-sans">
                 <a 
-                  href="https://wa.link/3jsx74" 
+                  href="https://wa.me/573005143727" 
                   target="_blank" 
                   rel="noreferrer"
                   className="w-full inline-block bg-[#01FADA] hover:bg-[#6F2BCC] hover:text-white text-[#2B017C] font-bold py-3.5 px-6 rounded-xl text-sm transition-all duration-300 uppercase tracking-wide shadow-sm"
