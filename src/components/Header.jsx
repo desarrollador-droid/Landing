@@ -62,7 +62,7 @@ export default function Header() {
         <Link to="/" className="logo-container flex items-center relative overflow-hidden rounded-xl px-2 py-1">
           <img 
             src="https://res.cloudinary.com/oiaig120/image/upload/osdiagnostic/laboratorio-para-veterinarias.svg" 
-            alt="On Site Diagnostic Logo" 
+            alt="On Site Diagnostic" 
             className="logo-3d h-12 md:h-16 object-contain"
           />
           {/* Light sweep reflection */}

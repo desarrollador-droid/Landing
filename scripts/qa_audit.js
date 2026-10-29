@@ -38,7 +38,12 @@ const criticalDistFiles = [
   'index.html',
   '.htaccess',
   'robots.txt',
-  'sitemap.xml'
+  'sitemap.xml',
+  'favicon.ico',
+  'favicon.svg',
+  'favicon-48x48.png',
+  'apple-touch-icon.png',
+  'site.webmanifest'
 ];
 
 criticalDistFiles.forEach(file => {

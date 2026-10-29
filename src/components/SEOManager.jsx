@@ -19,8 +19,8 @@ const profileTitles = {
 const seoRoutes = {
   // 1. Home / Selección de Perfil
   '/': {
-    title: 'Laboratorio de biología molecular veterinaria en Colombia',
-    description: 'Detección de alta precisión sin falsos negativos. Tenemos un amplio portafolio de qPCR cuantitativa en tiempo real, entrega rápida, qPCR canino, qPCR felino'
+    title: 'On Site Diagnostic | Laboratorio de Biología Molecular Veterinaria',
+    description: 'Detección de alta precisión sin falsos negativos. Portafolio especializado de qPCR cuantitativa en tiempo real, entrega rápida y diagnóstico molecular veterinario en Colombia.'
   },
 
   // 2. Veterinarios
@@ -226,8 +226,8 @@ export default function SEOManager() {
 
     // If user is on /conocenos in owner mode, prioritize the owner metadata
     const applyMetaTags = (title, description) => {
-      const finalTitle = title || 'Laboratorio de biología molecular veterinaria en Colombia';
-      const finalDesc = description || 'Detección de alta precisión sin falsos negativos. Tenemos un amplio portafolio de qPCR cuantitativa en tiempo real, entrega rápida, qPCR canino, qPCR felino';
+      const finalTitle = title || 'On Site Diagnostic | Laboratorio de Biología Molecular Veterinaria';
+      const finalDesc = description || 'Detección de alta precisión sin falsos negativos. Portafolio especializado de qPCR cuantitativa en tiempo real, entrega rápida y diagnóstico molecular veterinario en Colombia.';
 
       // 1. Update <title>
       document.title = finalTitle;

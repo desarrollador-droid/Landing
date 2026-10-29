@@ -40,10 +40,13 @@ export default function LandingPage() {
  
       {/* Main Content Container */}
       <div className="relative z-20 flex flex-col items-center justify-center px-6 text-center w-full">
+        {/* Semantic H1 for SEO & Accessibility */}
+        <h1 className="sr-only">On Site Diagnostic - Laboratorio de Biología Molecular Veterinaria</h1>
+
         {/* Big Central OSD Logo with Entry Animation */}
         <img 
           src="https://res.cloudinary.com/oiaig120/image/upload/osdiagnostic/laboratorio.svg" 
-          alt="On Site Diagnostic Logo" 
+          alt="On Site Diagnostic - Laboratorio de Biología Molecular Veterinaria" 
           className="w-full max-w-[550px] md:max-w-[650px] h-auto mb-10 animate-logo-zoom"
         />
  

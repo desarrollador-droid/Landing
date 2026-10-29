@@ -472,7 +472,7 @@ export default function NoticiaDetalle() {
               <div className="w-32 h-32 rounded-full bg-[#6F2BCC] overflow-hidden flex items-center justify-center mx-auto shadow-sm">
                 <img 
                   src={leftImg} 
-                  alt="On Site Diagnostic Logo" 
+                  alt="On Site Diagnostic" 
                   className="w-full h-full object-contain p-3 rounded-full"
                 />
               </div>

@@ -21,6 +21,11 @@ DirectoryIndex index.html index.php
   RewriteRule ^ index.html [QSA,L]
 </IfModule>
 
+# Tipos MIME para iconos y manifest
+AddType image/x-icon .ico
+AddType image/svg+xml .svg
+AddType application/manifest+json .webmanifest
+
 # Cabeceras de seguridad seguras
 <IfModule mod_headers.c>
   Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
