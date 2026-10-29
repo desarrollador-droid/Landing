@@ -10,6 +10,7 @@
     />
     <meta property="og:title" content="On Site Diagnostic | Laboratorio de Biología Molecular Veterinaria" />
     <meta property="og:description" content="Detección de alta precisión sin falsos negativos. Portafolio especializado de qPCR cuantitativa en tiempo real, entrega rápida y diagnóstico molecular veterinario en Colombia." />
+    <meta property="og:site_name" content="On Site Diagnostic" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://osdiagnostic.com/" />
     <meta property="og:image" content="https://osdiagnostic.com/icon-512.png" />
@@ -30,19 +31,34 @@
     <!-- Iconos de FontAwesome (Local) -->
     <link rel="stylesheet" href="/css/all.min.css">
 
-    <!-- Schema.org Datos Estructurados para Google Search y Logo -->
+    <!-- Schema.org Datos Estructurados para Google Search y Nombre del Sitio -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "MedicalOrganization",
-      "name": "On Site Diagnostic",
-      "alternateName": "OSD",
-      "url": "https://osdiagnostic.com",
-      "logo": "https://osdiagnostic.com/icon-512.png",
-      "description": "Laboratorio de biología molecular veterinaria especializado en qPCR en tiempo real cuantitativo en Colombia.",
-      "telephone": "+57-300-514-3727",
-      "sameAs": [
-        "https://www.instagram.com/onsitediagnostic/"
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://osdiagnostic.com/#website",
+          "url": "https://osdiagnostic.com/",
+          "name": "On Site Diagnostic",
+          "alternateName": ["OSD", "OnSite Diagnostic"],
+          "publisher": {
+            "@id": "https://osdiagnostic.com/#organization"
+          }
+        },
+        {
+          "@type": "MedicalOrganization",
+          "@id": "https://osdiagnostic.com/#organization",
+          "name": "On Site Diagnostic",
+          "alternateName": "OSD",
+          "url": "https://osdiagnostic.com/",
+          "logo": "https://osdiagnostic.com/icon-512.png",
+          "description": "Laboratorio de biología molecular veterinaria especializado en qPCR en tiempo real cuantitativo en Colombia.",
+          "telephone": "+57-300-514-3727",
+          "sameAs": [
+            "https://www.instagram.com/onsitediagnostic/"
+          ]
+        }
       ]
     }
     </script>
