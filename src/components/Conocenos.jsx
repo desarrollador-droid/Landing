@@ -1,29 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-// Exact team roster configured matching the instructions:
-// - Kept: Cesar Orlando, Camila Largo, Laura, Ángela, Felipe, Maria Elena, Juan Esteban, Farley, Germán, Reiner.
-// - Added: Andrés, Estefanía, Luna, Anderson, Karen, María Paula, Eduardo.
-// - Removed: Juan Camilo, Luis, Ena, Mariana, Diego, Cristian, Alida, Miguel, Brayan.
+// Exact team roster: strictly laboratory personnel matching the instructions
 const teamMembers = [
   {
     name: "Cesar Orlando",
     role: "Director científico",
     image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/staff-cesar-orlando.png",
     bio: "Bacteriólogo y Laboratorista Clínico de la Universidad de Antioquia. Magister en Ciencias Básicas Biomédicas con Énfasis en Microbiología y Parasitología de la CCBB-UdeA. Doctor en Biotecnología en Salud de la UFRN, Brasil. Una vida profesional dedicada al diseño, estandarización y validación de pruebas moleculares con fines diagnósticos. A lo largo de los 20 años de experiencia en la vida"
-  },
-  {
-    name: "Valentina",
-    role: "Médica Veterinaria",
-    image: "https://res.cloudinary.com/oiaig120/image/upload/v1793205178/osdiagnostic/staff-valentina-castano.png",
-    bio: "Médica Veterinaria encargada del acompañamiento y asesoría clínica en diagnóstico molecular y pruebas especializadas.",
-    objectPosition: "center 10%",
-    scale: "scale-100"
-  },
-  {
-    name: "Laura",
-    role: "Auxiliar Contable",
-    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/staff-laura.png",
-    bio: "Gestión de facturación, cuentas por cobrar y soporte contable para clínicas aliadas de la red de laboratorios."
   },
   {
     name: "Luna",
@@ -58,12 +41,6 @@ const teamMembers = [
     bio: "Analista de laboratorio especializado en el control analítico de las muestras remitidas al laboratorio."
   },
   {
-    name: "Karen",
-    role: "Auxiliar de contabilidad",
-    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/staff-karen.png",
-    bio: "Auxiliar de contabilidad encargada del soporte administrativo de la red de laboratorios."
-  },
-  {
     name: "Juan Esteban",
     role: "Analista de laboratorio",
     image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_100/osdiagnostic/staff-juan-esteban-new.jpg",
@@ -78,104 +55,10 @@ const teamMembers = [
     bio: "Médico veterinario zootecnista. Encargado de la extracción y preparación de ácidos nucleicos de muestras remitidas a nivel nacional."
   },
   {
-    name: "Germán",
-    role: "Analista de recolección",
-    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/staff-german.png",
-    bio: "Técnico en Sistemas. Logística de campo y transporte seguro de muestras biológicas refrigeradas a temperatura controlada."
-  },
-  {
     name: "María Paula",
     role: "Analista de laboratorio",
     image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/staff-maria-paula.png",
     bio: "Analista de laboratorio brindando soporte técnico en el procesamiento molecular."
-  },
-  {
-    name: "Eduardo",
-    role: "Auxiliar de recolección",
-    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/staff-eduardo.png",
-    bio: "Auxiliar de recolección encargado de la logística y transporte biológico seguro."
-  },
-  {
-    name: "Andrés",
-    role: "Auxiliar de recolección",
-    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/staff-andres.png",
-    bio: "Auxiliar de recolección encargado de la ruta logística de campo."
-  },
-  {
-    name: "Estefanía",
-    role: "Auxiliar de logística",
-    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/staff-estefania.png",
-    bio: "Auxiliar de logística encargada del transporte y recolección rápida de perfiles de diagnóstico molecular."
-  },
-  {
-    name: "Reiner",
-    role: "Analista de recolección",
-    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/staff-reiner.png",
-    bio: "Logística y recolección rápida de perfiles de diagnóstico molecular en clínicas veterinarias aliadas."
-  },
-  {
-    name: "Maria Fernanda",
-    role: "Coordinadora Administrativa y Financiera",
-    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_100/osdiagnostic/staff-maria-fernanda.png",
-    bio: "Administradora de Empresas, dedicada a la gestión administrativa, financiera y de proyectos, optimizando procesos y asegurando el cumplimiento de los objetivos organizacionales.",
-    objectPosition: "center 15%",
-    scale: "scale-100"
-  },
-  {
-    name: "Melissa",
-    role: "Ingeniera Financiera/Analista de Compras",
-    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_100/osdiagnostic/staff-melissa.png",
-    bio: "Gestiona la relación con proveedores, la negociación comercial, el análisis financiero de adquisiciones y el seguimiento de procesos para garantizar eficiencia, calidad y cumplimiento.",
-    objectPosition: "center 10%",
-    scale: "scale-100"
-  },
-  {
-    name: "Carlos Mario",
-    role: "Analista de datos",
-    image: "https://res.cloudinary.com/oiaig120/image/upload/b_white,c_pad,w_1250,h_1672,f_auto,q_100/osdiagnostic/staff-carlos-mario-datos.png",
-    bio: "Analista de datos enfocado en la estructuración, análisis métrico y optimización operativa de los procesos del laboratorio.",
-    objectPosition: "center 12%",
-    scale: "scale-100"
-  },
-  {
-    name: "Viena Gabriela",
-    role: "Gestión Humana",
-    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_100/osdiagnostic/staff-viena-gabriela.png",
-    bio: "Psicóloga apasionada por el desarrollo del talento humano y convencida de que las personas son el motor que impulsa la transformación de las organizaciones. Su propósito es crear experiencias que inspiren el crecimiento, fortalezcan el liderazgo y promuevan una cultura organizacional donde el bienestar, la innovación y el compromiso impulsen resultados sostenibles.",
-    objectPosition: "center 12%",
-    scale: "scale-100"
-  },
-  {
-    name: "Carlos Eduardo",
-    role: "Gerente general",
-    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_100/osdiagnostic/staff-carlos-eduardo.png",
-    bio: "Lidera la dirección estratégica y operativa, coordinando los esfuerzos científicos y administrativos de la organización.",
-    objectPosition: "center 10%",
-    scale: "scale-100"
-  },
-  {
-    name: "Diego",
-    role: "Líder de alianzas",
-    image: "https://res.cloudinary.com/oiaig120/image/upload/b_white,f_auto,q_100/osdiagnostic/staff-diego.png",
-    bio: "Líder de alianzas estratégicas, coordinando relaciones comerciales e institucionales para expandir y fortalecer la red diagnóstica.",
-    objectPosition: "center 15%",
-    scale: "scale-100"
-  },
-  {
-    name: "Valentina",
-    role: "Asesora comercial",
-    image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_100/osdiagnostic/staff-valentina.png",
-    bio: "Apoya la gestión y asesoría comercial para clínicas veterinarias aliadas, garantizando una atención personalizada y de alta calidad.",
-    objectPosition: "center 10%",
-    scale: "scale-100"
-  },
-  {
-    name: "Isabela",
-    role: "Practicante en análisis y desarrollo de software",
-    image: "https://res.cloudinary.com/oiaig120/image/upload/b_white,c_pad,w_1250,h_1671,f_auto,q_100/osdiagnostic/staff-isabela.png",
-    bio: "Apoyando la innovación tecnológica, el desarrollo y la optimización continua de las plataformas digitales del laboratorio.",
-    objectPosition: "center 12%",
-    scale: "scale-100"
   }
 ];
 
@@ -208,17 +91,13 @@ export default function Conocenos() {
     isTransitioningRef.current = true;
     setTriggerAnim(true);
 
-    // Phase 1: Wait for text and photo to smoothly fade out (250ms)
     setTimeout(() => {
-      // Phase 2: Switch data while elements are completely invisible
       setActiveIndex(nextIndex);
-
-      // Phase 3: Give browser a microtask to paint new image, then fade back in
+      setTriggerAnim(false);
       setTimeout(() => {
-        setTriggerAnim(false);
         isTransitioningRef.current = false;
-      }, 50);
-    }, 250);
+      }, 350);
+    }, 180);
   };
 
   const handleNext = () => {
@@ -394,21 +273,30 @@ export default function Conocenos() {
               {/* Concentric Grey backing circle filling the gap completely */}
               <div className="w-[105%] h-[105%] rounded-full bg-[#E5E7EB] absolute z-0" />
 
-              {/* Main Photo Mask with overlaid green/cyan border - scale-124 hides the purple border perfectly, cyan border overlay is the sole border */}
+              {/* Main Photo Mask with overlaid green/cyan border - stacked images eliminate any microsecond desync */}
               <div className="w-full h-full rounded-full bg-white shadow-md overflow-hidden relative z-10">
-                <div className={`w-full h-full transition-all duration-300 ease-in-out ${triggerAnim ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
-                  {member.image ? (
-                    <img 
-                      key={member.name}
-                      src={member.image} 
-                      alt={member.name} 
-                      className={`w-full h-full object-cover select-none ${member.scale || 'scale-[1.24]'}`}
-                      style={{ objectPosition: member.objectPosition || 'center', imageRendering: '-webkit-optimize-contrast' }}
-                    />
-                  ) : (
-                    <div className="text-gray-300 text-6xl select-none flex items-center justify-center h-full">👤</div>
-                  )}
-                </div>
+                {teamMembers.map((m, idx) => (
+                  <div
+                    key={m.name}
+                    className={`absolute inset-0 w-full h-full transition-all duration-500 ease-in-out ${
+                      idx === activeIndex
+                        ? 'opacity-100 scale-100 z-10'
+                        : 'opacity-0 scale-95 z-0 pointer-events-none'
+                    }`}
+                  >
+                    {m.image ? (
+                      <img 
+                        src={m.image} 
+                        alt={m.name} 
+                        className={`w-full h-full object-cover select-none ${m.scale || 'scale-[1.24]'}`}
+                        style={{ objectPosition: m.objectPosition || 'center', imageRendering: '-webkit-optimize-contrast' }}
+                        loading="eager"
+                      />
+                    ) : (
+                      <div className="text-gray-300 text-6xl select-none flex items-center justify-center h-full">👤</div>
+                    )}
+                  </div>
+                ))}
                 {/* Thick cyan/green border overlay is the sole frame enclosing the photo */}
                 <div className="absolute inset-0 rounded-full border-[10px] md:border-[16px] border-[#01FADA] pointer-events-none z-20" />
               </div>

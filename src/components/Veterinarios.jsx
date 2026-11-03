@@ -32,23 +32,42 @@ export default function Veterinarios() {
   const slides = [
     {
       title: "Nunca estás solo.",
-      description: "Acompañamiento experto: Estamos aquí para interpretar y respaldar cada decisión médica junto a ti",
-      bgImage: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/carrusel-slide-3.png"
+      description: "Acompañamiento experto: Estamos aquí para interpretar y respaldar cada decisión médica juntos",
+      bgImage: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/hero-lab-tubes.png"
     },
     {
       title: "Investigación constante. Redefiniendo los límites de la medicina veterinaria.",
       description: "No esperamos el futuro; lo investigamos hoy. A través de proyectos avanzados, transformamos el conocimiento profundo en ayudas diagnósticas",
-      bgImage: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/carrusel-slide-1.png"
-    },
-    {
-      title: "Innovación desde la práctica. Soluciones pensadas para lo que tu paciente requiere",
-      description: "Escuchamos tus desafíos diagnósticos con el fin de desarrollar soluciones para las decisiones clínicas que enfrentas cada día.",
-      bgImage: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/carrusel-slide-2.png"
+      bgImage: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/hero-lab-tubes.png"
     },
     {
       title: "La excelencia científica es nuestro valor fundamental",
       description: "Investigamos, desarrollamos, innovamos y capacitamos para llevar la medicina veterinaria cada vez más lejos.",
-      bgImage: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/carrusel-slide-1.png"
+      bgImage: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/hero-lab-tubes.png"
+    },
+    {
+      title: "Innovación desde la práctica. Soluciones pensadas para lo que tu paciente requiere",
+      description: "Escuchamos tus desafíos diagnósticos con el fin de desarrollar soluciones para las decisiones clínicas que enfrentas cada día.",
+      bgImage: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/hero-lab-tubes.png"
+    }
+  ];
+
+  const challengeCards = [
+    {
+      title: "Asesoría científica para casos complejos",
+      description: "Cuando los casos clínicos complejos presentan hallazgos atípicos o contradictorios que requieren conocimiento científico especializado para orientar las decisiones diagnósticas."
+    },
+    {
+      title: "Perfiles qPCR de amplio espectro",
+      description: "Cuando las pruebas seleccionadas no incluyen algunos de los agentes infecciosos clínicamente más probables, disminuyendo las posibilidades de identificar la causa de la enfermedad"
+    },
+    {
+      title: "Formación en razonamiento clínico basado en evidencia",
+      description: "Cuando la complejidad de los casos clínicos dificulta integrar hallazgos, formular hipótesis y tomar decisiones que reduzcan la incertidumbre diagnóstica."
+    },
+    {
+      title: "Actualización científica continua",
+      description: "Cuando la complejidad de los casos clínicos dificulta integrar hallazgos, formular hipótesis y tomar decisiones que reduzcan la incertidumbre diagnóstica."
     }
   ];
 
@@ -307,10 +326,59 @@ export default function Veterinarios() {
             font-size: 15px;
           }
         }
+        @keyframes dotSlideDesktop {
+          0% {
+            left: 10px;
+          }
+          100% {
+            left: calc(100% - 68px);
+          }
+        }
+        @keyframes dotSlideMobile {
+          0% {
+            left: 6px;
+          }
+          100% {
+            left: calc(100% - 46px);
+          }
+        }
+        @keyframes textRevealLTR {
+          0% {
+            clip-path: inset(0 100% 0 0);
+          }
+          100% {
+            clip-path: inset(0 0% 0 0);
+          }
+        }
+        .capsule-moving-dot {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          border-radius: 9999px;
+          background-color: #DDD0FB;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+          width: 40px;
+          height: 40px;
+          animation: dotSlideMobile 1.25s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+          z-index: 1;
+        }
+        @media (min-width: 768px) {
+          .capsule-moving-dot {
+            width: 58px;
+            height: 58px;
+            animation: dotSlideDesktop 1.25s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+          }
+        }
+        .capsule-text-reveal {
+          clip-path: inset(0 0% 0 0);
+          animation: textRevealLTR 1.25s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+          z-index: 2;
+          position: relative;
+        }
       `}} />
 
       {/* 1. Slider / Hero Banner */}
-      <section className="relative w-full min-h-[440px] md:min-h-[490px] lg:min-h-[520px] flex flex-col justify-end pt-12 md:pt-16 pb-10 sm:pb-14 px-4 sm:px-6 md:px-10 lg:px-14 z-20">
+      <section className="relative w-full min-h-[520px] sm:min-h-[580px] md:min-h-[640px] flex flex-col justify-center items-center pt-14 sm:pt-16 md:pt-20 pb-12 sm:pb-16 px-4 sm:px-6 md:px-10 lg:px-14 z-20 overflow-hidden">
         {/* Background Slides Container with overflow-hidden */}
         <div className="absolute inset-0 overflow-hidden z-0">
           {slides.map((slide, idx) => (
@@ -320,31 +388,47 @@ export default function Veterinarios() {
                 idx === activeSlide ? 'opacity-100' : 'opacity-0 pointer-events-none'
               }`}
             >
-              {/* Background Image: Mantiene su tamaño original (bg-cover) y corrida un poco hacia el centro (center 20%) */}
+              {/* Background Image: Gloved hand in lab holding microcentrifuge tube */}
               <div 
-                className="absolute inset-0 bg-cover transition-all duration-700" 
+                className="absolute inset-0 bg-cover bg-center transition-all duration-700" 
                 style={{ 
                   backgroundImage: `url(${slide.bgImage})`,
-                  backgroundPosition: 'center 20%'
+                  backgroundPosition: 'center 35%'
                 }}
               >
-                {/* Suave degradado lateral para asegurar legibilidad de las letras sobre la foto */}
-                <div className="absolute inset-y-0 left-0 w-3/5 md:w-1/2 bg-gradient-to-r from-white/75 via-white/30 to-transparent pointer-events-none"></div>
+                {/* Clean bright overlay to ensure maximum contrast and legibility */}
+                <div className="absolute inset-0 bg-white/55 backdrop-blur-[0.5px] pointer-events-none"></div>
 
-                {/* Degradado inferior que conecta limpiamente con la sección de abajo */}
-                <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-white via-white/80 to-transparent pointer-events-none"></div>
+                {/* Gentle bottom gradient connecting with the white challenge section */}
+                <div className="absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-white via-white/80 to-transparent pointer-events-none"></div>
               </div>
             </div>
           ))}
         </div>
 
         {/* Foreground Content */}
-        <div className="relative z-10 max-w-[1360px] xl:max-w-[1400px] mx-auto w-full flex flex-col justify-end">
-          {/* Slide Text aligned over the crisp photo */}
-          <div className="mb-2 md:mb-3 max-w-4xl">
+        <div className="relative z-10 max-w-[1240px] mx-auto w-full flex flex-col items-center text-center justify-center">
+          
+          {/* Animated Purple Capsule with Left-to-Right Moving Dot */}
+          <div key={`capsule-${activeSlide}`} className="mb-6 sm:mb-8 md:mb-10">
+            <div className="relative inline-flex items-center justify-center bg-[#6014CA] rounded-full py-3.5 sm:py-4 md:py-5 px-6 sm:px-10 md:px-12 shadow-lg overflow-hidden max-w-[94vw]">
+              {/* Animated revealed text */}
+              <div className="capsule-text-reveal pr-12 sm:pr-16 md:pr-20 text-center">
+                <div className="text-white font-extrabold text-base sm:text-xl md:text-2xl lg:text-[26px] leading-[1.2] tracking-tight text-center">
+                  <div>Tu aliado estratégico en el</div>
+                  <div>proceso diagnóstico</div>
+                </div>
+              </div>
+              {/* Animated Moving Dot */}
+              <div className="capsule-moving-dot"></div>
+            </div>
+          </div>
+
+          {/* Slide Text */}
+          <div className="max-w-4xl mx-auto px-2 mb-6 sm:mb-8 min-h-[140px] sm:min-h-[160px] md:min-h-[180px] flex flex-col items-center justify-center">
             <h1 
               key={`title-${activeSlide}`}
-              className={`text-2xl sm:text-3xl md:text-4xl lg:text-[44px] xl:text-[48px] font-black text-[#2B017C] leading-[1.14] mb-2 md:mb-3 tracking-tight transition-all duration-700 ${
+              className={`text-2xl sm:text-3xl md:text-4xl lg:text-[46px] xl:text-[50px] font-black text-[#240068] leading-[1.18] mb-3 sm:mb-4 tracking-tight transition-all duration-700 ${
                 animateText ? 'translate-y-0 opacity-100' : 'translate-y-3 opacity-0'
               }`}
             >
@@ -352,7 +436,7 @@ export default function Veterinarios() {
             </h1>
             <p 
               key={`desc-${activeSlide}`}
-              className={`text-sm sm:text-base md:text-lg lg:text-[20px] font-bold text-gray-900 leading-snug max-w-3xl transition-all duration-700 delay-100 ${
+              className={`text-sm sm:text-base md:text-lg lg:text-[21px] font-bold text-[#1e1e1e] leading-relaxed max-w-3xl mx-auto transition-all duration-700 delay-100 ${
                 animateText ? 'translate-y-0 opacity-100' : 'translate-y-3 opacity-0'
               }`}
             >
@@ -360,39 +444,95 @@ export default function Veterinarios() {
             </p>
           </div>
 
-          {/* Carousel Controls: Navigation Dots & Arrow */}
-          <div className="flex justify-between items-center mt-4 sm:mt-6 pr-2">
-            {/* Dots Indicator */}
-            <div className="flex items-center space-x-2">
-              {slides.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => {
-                    setAnimateText(false);
-                    setTimeout(() => {
-                      setActiveSlide(idx);
-                      setAnimateText(true);
-                    }, 300);
-                  }}
-                  className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
-                    activeSlide === idx ? 'w-8 bg-[#6F2BCC]' : 'w-2.5 bg-gray-300 hover:bg-gray-400'
-                  }`}
-                  aria-label={`Ir al slide ${idx + 1}`}
-                />
-              ))}
-            </div>
-
-            {/* Next Slide Arrow */}
-            <button
-              onClick={handleNextSlide}
-              className="text-[#6F2BCC] hover:text-[#2B017C] p-1.5 transition-all duration-300 transform hover:translate-x-1.5 focus:outline-none cursor-pointer flex items-center group"
-              aria-label="Siguiente diapositiva"
-            >
-              <svg className="w-8 h-8 md:w-10 md:h-10 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-            </button>
+          {/* Dots Indicator */}
+          <div className="flex items-center justify-center space-x-3 mt-2 sm:mt-4">
+            {slides.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => {
+                  setAnimateText(false);
+                  setTimeout(() => {
+                    setActiveSlide(idx);
+                    setAnimateText(true);
+                  }, 250);
+                }}
+                className={`h-3 rounded-full transition-all duration-300 cursor-pointer ${
+                  activeSlide === idx ? 'w-10 bg-[#6014CA]' : 'w-3 bg-[#D8C7F8] hover:bg-[#A882EB]'
+                }`}
+                aria-label={`Ir al slide ${idx + 1}`}
+              />
+            ))}
           </div>
+
+          {/* Right Slide Arrow (Solid Purple Triangle as in PDF) */}
+          <button
+            onClick={handleNextSlide}
+            className="absolute right-0 sm:right-4 md:right-8 top-1/2 -translate-y-1/2 text-[#240068] hover:text-[#6014CA] p-2 transition-transform hover:scale-110 focus:outline-none cursor-pointer z-20 group"
+            aria-label="Siguiente diapositiva"
+          >
+            <svg className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 fill-current transform transition-transform group-hover:translate-x-1" viewBox="0 0 24 24">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          </button>
+
+          {/* Left Slide Arrow (Subtle matching control) */}
+          <button
+            onClick={handlePrevSlide}
+            className="absolute left-0 sm:left-4 md:left-8 top-1/2 -translate-y-1/2 text-[#240068] hover:text-[#6014CA] p-2 transition-transform hover:scale-110 focus:outline-none cursor-pointer z-20 group opacity-40 hover:opacity-100"
+            aria-label="Diapositiva anterior"
+          >
+            <svg className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 fill-current transform transition-transform group-hover:-translate-x-1" viewBox="0 0 24 24">
+              <path d="M16 19V5l-11 7z" />
+            </svg>
+          </button>
+        </div>
+      </section>
+
+      {/* 2. Desafíos Diagnósticos Section (PDF Pages 5, 6, 7) */}
+      <section className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 bg-white relative z-10 border-b border-gray-100">
+        <div className="max-w-6xl mx-auto text-center">
+          
+          {/* Main Title */}
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[52px] font-black text-[#240068] tracking-tight leading-[1.15] max-w-4xl mx-auto">
+            Estamos contigo en cada desafío diagnóstico.
+          </h2>
+
+          {/* Subtitle / Intro text */}
+          <p className="text-base sm:text-lg md:text-xl lg:text-[22px] text-[#222222] font-normal leading-relaxed max-w-4xl mx-auto mt-5 sm:mt-7">
+            Sabemos que detrás de cada caso clínico hay decisiones importantes. Por eso, más que ofrecerte soluciones diagnósticas, queremos ser ese aliado científico que te escucha, te orienta y respalda tu criterio profesional en cada paso.
+          </p>
+
+          {/* Purple Downward Arrow Indicator */}
+          <div className="flex justify-center mt-8 sm:mt-10 mb-12 sm:mb-16">
+            <svg className="w-8 h-8 sm:w-10 sm:h-10 text-[#240068] fill-current animate-bounce" viewBox="0 0 24 24">
+              <path d="M12 18L4 8h16l-8 10z" />
+            </svg>
+          </div>
+
+          {/* 4 Cards Grid / Stack */}
+          <div className="space-y-6 sm:space-y-8 max-w-5xl mx-auto text-left">
+            {challengeCards.map((card, idx) => (
+              <div 
+                key={idx}
+                className="w-full bg-[#F1F3F7] rounded-[32px] sm:rounded-[44px] md:rounded-full p-2.5 sm:p-3 flex flex-col md:flex-row items-stretch md:items-center shadow-sm hover:shadow-md transition-shadow duration-300"
+              >
+                {/* Left Purple Pill */}
+                <div className="w-full md:w-[42%] lg:w-[40%] bg-[#6014CA] text-white rounded-[26px] sm:rounded-[36px] md:rounded-full py-5 px-6 sm:px-8 md:py-7 flex items-center justify-center text-center shadow-sm flex-shrink-0">
+                  <span className="font-extrabold text-lg sm:text-xl md:text-[22px] leading-snug">
+                    {card.title}
+                  </span>
+                </div>
+
+                {/* Right Description Box */}
+                <div className="w-full md:w-[58%] lg:w-[60%] py-4 px-6 sm:py-5 sm:px-8 md:py-6 md:px-10 flex items-center">
+                  <p className="text-[#1e1e1e] font-normal text-sm sm:text-base md:text-lg lg:text-[19px] leading-relaxed">
+                    {card.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+
         </div>
       </section>
 
