@@ -225,7 +225,7 @@ function InteractiveChallengeCard({ title, description }) {
   const calcProgressFromEvent = (clientX) => {
     if (!trackRef.current) return 0;
     const rect = trackRef.current.getBoundingClientRect();
-    const dotWidth = rect.width < 640 ? 46 : 54;
+    const dotWidth = rect.width < 640 ? 42 : 50;
     const padding = 7;
     const clickX = clientX - rect.left - padding - (dotWidth / 2);
     const maxDist = rect.width - dotWidth - (padding * 2);
@@ -277,52 +277,53 @@ function InteractiveChallengeCard({ title, description }) {
   const hintOpacity = Math.max(0, 1 - progress * 2.6);
 
   return (
-    <div className="w-full bg-[#FAF9FD] sm:bg-white rounded-[28px] sm:rounded-[34px] p-5 sm:p-7 shadow-sm hover:shadow-md transition-all duration-300 border border-purple-100/80 flex flex-col gap-4">
-      {/* Title Pill */}
-      <div className="flex items-center">
-        <span className="inline-flex items-center bg-[#6014CA] text-white font-extrabold text-base sm:text-lg md:text-[19px] py-2.5 px-6 sm:px-7 rounded-full shadow-sm text-left leading-snug">
+    <div className="w-full bg-[#ECEFF2] rounded-[32px] sm:rounded-full p-2 sm:p-2.5 flex flex-col sm:flex-row items-stretch shadow-sm hover:shadow-md transition-shadow duration-300 min-h-[145px] sm:min-h-[160px] md:min-h-[170px]">
+      
+      {/* Left Purple Pill (Exact styling from screenshot media_1793725912444.png) */}
+      <div className="w-full sm:w-[36%] md:w-[35%] lg:w-[34%] bg-[#6014CA] text-white rounded-[26px] sm:rounded-full py-5 px-5 sm:px-6 md:py-6 flex items-center justify-center text-center shadow-sm flex-shrink-0">
+        <span className="font-extrabold text-base sm:text-lg md:text-[19px] lg:text-[20px] leading-snug tracking-tight">
           {title}
         </span>
       </div>
 
-      {/* Wide Interactive Description Capsule Block (Full width, not reduced!) */}
+      {/* Right Description Area (Wider, comfortable, with rolling circle reveal) */}
       <div
         ref={trackRef}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
         onPointerCancel={handlePointerUp}
-        className={`relative w-full min-h-[96px] sm:min-h-[104px] bg-[#F1F3F7] rounded-[24px] sm:rounded-full py-4 px-5 sm:px-7 flex items-center shadow-inner overflow-hidden select-none border-2 transition-all ${
+        className={`w-full sm:w-[64%] md:w-[65%] lg:w-[66%] relative flex items-center py-4 px-4 sm:py-5 sm:px-6 md:px-8 select-none overflow-hidden transition-all ${
           isCompleted 
-            ? 'border-transparent cursor-default' 
+            ? 'cursor-default' 
             : isDragging 
-              ? 'border-[#6014CA]/40 cursor-grabbing shadow-md touch-none' 
-              : 'border-transparent hover:border-purple-300/40 cursor-grab touch-none'
+              ? 'cursor-grabbing touch-none' 
+              : 'cursor-grab touch-none'
         }`}
         title={isCompleted ? "Detalle descubierto" : "Rueda el círculo hacia la derecha para descubrir el texto"}
       >
-        {/* Placeholder hint when not yet revealed */}
+        {/* Placeholder hint before rolling */}
         {!isCompleted && (
           <div 
-            className="absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-200 px-10"
+            className="absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-200 px-6 sm:px-10"
             style={{ opacity: hintOpacity }}
           >
-            <span className="text-purple-900/60 font-bold text-xs sm:text-sm tracking-wide flex items-center gap-2 pl-6">
+            <span className="text-purple-900/60 font-bold text-xs sm:text-sm tracking-wide flex items-center gap-2 pl-6 sm:pl-8">
               <span>Rueda el círculo hacia la derecha</span>
               <span className="text-base animate-pulse">➔</span>
             </span>
           </div>
         )}
 
-        {/* Description text: unmasks dynamically as circle rolls */}
+        {/* Description text: unmasks dynamically as circle rolls from left to right */}
         <div 
-          className="relative z-10 w-full pr-14 sm:pr-16 pl-1 sm:pl-2 text-left pointer-events-none"
+          className="relative z-10 w-full pr-12 sm:pr-14 pl-2 text-left pointer-events-none"
           style={{
             clipPath: isCompleted ? 'none' : `inset(0 ${clipPercent}% 0 0)`,
             WebkitClipPath: isCompleted ? 'none' : `inset(0 ${clipPercent}% 0 0)`
           }}
         >
-          <p className="text-[#1e1e1e] font-normal text-sm sm:text-base leading-relaxed">
+          <p className="text-[#1e1e1e] font-normal text-xs sm:text-sm md:text-[15px] lg:text-[15.5px] leading-relaxed">
             {description}
           </p>
         </div>
@@ -350,6 +351,7 @@ function InteractiveChallengeCard({ title, description }) {
           )}
         </div>
       </div>
+
     </div>
   );
 }
@@ -384,7 +386,7 @@ export default function Veterinarios() {
 
   const challengeCards = [
     {
-      title: "Asesoría científica para casos complejos",
+      title: ". Asesoría científica para casos complejos",
       description: "Cuando los casos clínicos complejos presentan hallazgos atípicos o contradictorios que requieren conocimiento científico especializado para orientar las decisiones diagnósticas."
     },
     {
@@ -771,7 +773,7 @@ export default function Veterinarios() {
 
       {/* 2. Desafíos Diagnósticos Section (PDF Pages 5, 6, 7) */}
       <section className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 bg-white relative z-10 border-b border-gray-100">
-        <div className="max-w-6xl mx-auto text-center">
+        <div className="max-w-[1440px] mx-auto text-center">
           
           {/* Main Title */}
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[52px] font-black text-[#240068] tracking-tight leading-[1.15] max-w-4xl mx-auto">
@@ -790,10 +792,10 @@ export default function Veterinarios() {
             </svg>
           </div>
 
-          {/* 4 Cards in 2 Columns (2 on each side) with Wide Interactive Blocks */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-7 xl:gap-9 max-w-7xl mx-auto text-left">
+          {/* 4 Cards in 2 Columns (2 on each side) matching exact design from screenshot */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 xl:gap-8 max-w-[1440px] mx-auto text-left">
             {/* Columna Izquierda: 2 tarjetas */}
-            <div className="flex flex-col gap-7 xl:gap-9">
+            <div className="flex flex-col gap-6 xl:gap-8">
               <InteractiveChallengeCard 
                 title={challengeCards[0].title} 
                 description={challengeCards[0].description} 
@@ -805,7 +807,7 @@ export default function Veterinarios() {
             </div>
 
             {/* Columna Derecha: 2 tarjetas */}
-            <div className="flex flex-col gap-7 xl:gap-9">
+            <div className="flex flex-col gap-6 xl:gap-8">
               <InteractiveChallengeCard 
                 title={challengeCards[2].title} 
                 description={challengeCards[2].description} 
