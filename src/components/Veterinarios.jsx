@@ -329,7 +329,7 @@ function InteractiveChallengeCard({ title, description }) {
             isCompleted 
               ? 'bg-[#6014CA] text-white shadow-none' 
               : isDragging 
-                ? 'scale-110 bg-[#7A28EE] text-white cursor-grabbing shadow-lg' 
+                ? 'scale-110 bg-[#4A4A4A] text-white cursor-grabbing shadow-lg' 
                 : 'bg-[#6014CA] text-white cursor-grab hover:scale-105'
           } ${progress === 0 && !isCompleted ? 'ring-4 ring-purple-400/30 animate-pulse' : ''}`}
           style={{
@@ -706,7 +706,7 @@ export default function Veterinarios() {
           <div className="max-w-4xl mx-auto px-2 mb-6 sm:mb-8 min-h-[140px] sm:min-h-[160px] md:min-h-[180px] flex flex-col items-center justify-center">
             <h1 
               key={`title-${activeSlide}`}
-              className={`text-2xl sm:text-3xl md:text-4xl lg:text-[46px] xl:text-[50px] font-black text-[#240068] leading-[1.18] mb-3 sm:mb-4 tracking-tight transition-all duration-700 ${
+              className={`text-2xl sm:text-3xl md:text-4xl lg:text-[46px] xl:text-[50px] font-bold text-gray-700 leading-[1.18] mb-3 sm:mb-4 tracking-tight transition-all duration-700 ${
                 animateText ? 'translate-y-0 opacity-100' : 'translate-y-3 opacity-0'
               }`}
             >
