@@ -353,7 +353,6 @@ function InteractiveChallengeCard({ title, description }) {
 
 export default function Veterinarios() {
   const [activeSlide, setActiveSlide] = useState(0);
-  const [animateText, setAnimateText] = useState(true);
   const [carouselIndex, setCarouselIndex] = useState(0);
 
   const slides = [
@@ -424,25 +423,17 @@ export default function Veterinarios() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      handleNextSlide();
-    }, 5000);
+      setActiveSlide((prev) => (prev + 1) % slides.length);
+    }, 5500);
     return () => clearInterval(interval);
-  }, [activeSlide]);
+  }, [slides.length]);
 
   const handleNextSlide = () => {
-    setAnimateText(false);
-    setTimeout(() => {
-      setActiveSlide((prev) => (prev + 1) % slides.length);
-      setAnimateText(true);
-    }, 300);
+    setActiveSlide((prev) => (prev + 1) % slides.length);
   };
 
   const handlePrevSlide = () => {
-    setAnimateText(false);
-    setTimeout(() => {
-      setActiveSlide((prev) => (prev - 1 + slides.length) % slides.length);
-      setAnimateText(true);
-    }, 300);
+    setActiveSlide((prev) => (prev - 1 + slides.length) % slides.length);
   };
 
   useEffect(() => {
@@ -706,17 +697,13 @@ export default function Veterinarios() {
           <div className="max-w-4xl mx-auto px-2 mb-6 sm:mb-8 min-h-[140px] sm:min-h-[160px] md:min-h-[180px] flex flex-col items-center justify-center">
             <h1 
               key={`title-${activeSlide}`}
-              className={`text-2xl sm:text-3xl md:text-4xl lg:text-[46px] xl:text-[50px] font-bold text-gray-700 leading-[1.18] mb-3 sm:mb-4 tracking-tight transition-all duration-700 ${
-                animateText ? 'translate-y-0 opacity-100' : 'translate-y-3 opacity-0'
-              }`}
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-[46px] xl:text-[50px] font-bold text-gray-700 leading-[1.18] mb-3 sm:mb-4 tracking-tight animate-fadeIn"
             >
               {slides[activeSlide].title}
             </h1>
             <p 
               key={`desc-${activeSlide}`}
-              className={`text-sm sm:text-base md:text-lg lg:text-[21px] font-bold text-[#1e1e1e] leading-relaxed max-w-3xl mx-auto transition-all duration-700 delay-100 ${
-                animateText ? 'translate-y-0 opacity-100' : 'translate-y-3 opacity-0'
-              }`}
+              className="text-sm sm:text-base md:text-lg lg:text-[21px] font-bold text-[#1e1e1e] leading-relaxed max-w-3xl mx-auto animate-fadeIn"
             >
               {slides[activeSlide].description}
             </p>
@@ -727,13 +714,8 @@ export default function Veterinarios() {
             {slides.map((_, idx) => (
               <button
                 key={idx}
-                onClick={() => {
-                  setAnimateText(false);
-                  setTimeout(() => {
-                    setActiveSlide(idx);
-                    setAnimateText(true);
-                  }, 250);
-                }}
+                type="button"
+                onClick={() => setActiveSlide(idx)}
                 className={`h-3 rounded-full transition-all duration-300 cursor-pointer ${
                   activeSlide === idx ? 'w-10 bg-[#6014CA]' : 'w-3 bg-[#D8C7F8] hover:bg-[#A882EB]'
                 }`}
@@ -741,29 +723,31 @@ export default function Veterinarios() {
               />
             ))}
           </div>
-
-          {/* Right Slide Arrow (Solid Purple Triangle as in PDF) */}
-          <button
-            onClick={handleNextSlide}
-            className="absolute right-0 sm:right-4 md:right-8 top-1/2 -translate-y-1/2 text-[#240068] hover:text-[#6014CA] p-2 transition-transform hover:scale-110 focus:outline-none cursor-pointer z-20 group"
-            aria-label="Siguiente diapositiva"
-          >
-            <svg className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 fill-current transform transition-transform group-hover:translate-x-1" viewBox="0 0 24 24">
-              <path d="M8 5v14l11-7z" />
-            </svg>
-          </button>
-
-          {/* Left Slide Arrow (Subtle matching control) */}
-          <button
-            onClick={handlePrevSlide}
-            className="absolute left-0 sm:left-4 md:left-8 top-1/2 -translate-y-1/2 text-[#240068] hover:text-[#6014CA] p-2 transition-transform hover:scale-110 focus:outline-none cursor-pointer z-20 group opacity-40 hover:opacity-100"
-            aria-label="Diapositiva anterior"
-          >
-            <svg className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 fill-current transform transition-transform group-hover:-translate-x-1" viewBox="0 0 24 24">
-              <path d="M16 19V5l-11 7z" />
-            </svg>
-          </button>
         </div>
+
+        {/* Left Slide Arrow Button */}
+        <button
+          type="button"
+          onClick={handlePrevSlide}
+          className="absolute left-2 sm:left-4 md:left-6 lg:left-8 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/95 hover:bg-white text-[#6014CA] hover:text-[#240068] shadow-[0_4px_20px_rgba(36,0,104,0.18)] hover:shadow-[0_6px_25px_rgba(36,0,104,0.28)] border border-purple-100 flex items-center justify-center transition-all duration-200 cursor-pointer hover:scale-110 active:scale-95 z-30 group"
+          aria-label="Diapositiva anterior"
+        >
+          <svg className="w-5 h-5 sm:w-6 sm:h-6 fill-current transform transition-transform group-hover:-translate-x-0.5" viewBox="0 0 24 24">
+            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+          </svg>
+        </button>
+
+        {/* Right Slide Arrow Button */}
+        <button
+          type="button"
+          onClick={handleNextSlide}
+          className="absolute right-2 sm:right-4 md:right-6 lg:right-8 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/95 hover:bg-white text-[#6014CA] hover:text-[#240068] shadow-[0_4px_20px_rgba(36,0,104,0.18)] hover:shadow-[0_6px_25px_rgba(36,0,104,0.28)] border border-purple-100 flex items-center justify-center transition-all duration-200 cursor-pointer hover:scale-110 active:scale-95 z-30 group"
+          aria-label="Siguiente diapositiva"
+        >
+          <svg className="w-5 h-5 sm:w-6 sm:h-6 fill-current transform transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24">
+            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
+          </svg>
+        </button>
       </section>
 
       {/* 2. Desafíos Diagnósticos Section (PDF Pages 5, 6, 7) */}
@@ -817,43 +801,6 @@ export default function Veterinarios() {
         </div>
       </section>
 
-      {/* 2. Somos Section */}
-      <section className="py-16 sm:py-20 px-6 bg-white relative z-10">
-        <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-          
-          {/* Left Side: Single Combined Image Asset (Enlarged) */}
-          <div className="relative flex justify-center">
-            <div className="w-full max-w-[360px] md:max-w-[420px] h-auto shadow-md rounded-2xl overflow-hidden">
-              <img 
-                src="https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/somos_combined.png" 
-                alt="Somos Expertos en diagnósticos moleculares" 
-                className="w-full h-auto object-cover"
-              />
-            </div>
-          </div>
-
-          {/* Right Side: Text details */}
-          <div className="space-y-4 text-left">
-            <h2 className="text-4xl md:text-5xl font-extrabold text-osd-dark">Somos</h2>
-            <h3 className="text-lg font-bold text-gray-700">
-              Expertos en diagnósticos moleculares en pequeñas especies:
-            </h3>
-            <p className="text-gray-600 leading-relaxed text-sm md:text-base">
-              Nuestro experimentado equipo científico garantiza precisión y confiabilidad en cada análisis. Contamos con qPCR en tiempo real cuantitativo con sondas de hidrólisis. ¡Confíe en nosotros para resultados fiables y atención de primera categoría!
-            </p>
-            <div className="pt-2">
-              <a 
-                href="https://wa.link/2js1xk" 
-                target="_blank" 
-                rel="noreferrer" 
-                className="inline-block bg-osd-purple hover:bg-osd-dark text-white font-bold py-2.5 px-6 rounded-lg text-sm md:text-base shadow-md transition-all"
-              >
-                Contáctenos
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* 3 & 4. Combined Recolección & Red de Laboratorios */}
       <section className="relative py-10 md:py-12 px-6 text-white bg-cover bg-center overflow-hidden" style={{ backgroundImage: `url('https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/sample-4944424_1280.jpg')` }}>
