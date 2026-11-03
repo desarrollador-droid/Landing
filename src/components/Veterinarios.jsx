@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
 function AnimatedCounter({ target, prefix = "", suffix = "", duration = 2000 }) {
@@ -21,6 +21,187 @@ function AnimatedCounter({ target, prefix = "", suffix = "", duration = 2000 }) 
     <span className="text-3xl md:text-4xl font-black text-osd-purple block mb-1">
       {prefix}{count}{suffix}
     </span>
+  );
+}
+
+function InteractiveCapsule({ activeSlide }) {
+  const [progress, setProgress] = useState(0); // 0 to 1
+  const [isDragging, setIsDragging] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(false);
+  const trackRef = useRef(null);
+  const animFrameRef = useRef(null);
+  const hasInteractedRef = useRef(false);
+  const dragStartPosRef = useRef(0);
+  const wasDraggedRef = useRef(false);
+
+  // Auto-roll after 2.2s on initial mount or when slide changes if visitor hasn't touched it
+  useEffect(() => {
+    if (!hasInteractedRef.current) {
+      setProgress(0);
+      setIsCompleted(false);
+      const timer = setTimeout(() => {
+        if (!hasInteractedRef.current) {
+          animateTo(1, 950);
+        }
+      }, 2200);
+      return () => clearTimeout(timer);
+    }
+  }, [activeSlide]);
+
+  const animateTo = (target, duration = 350) => {
+    if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
+    const start = progress;
+    const startTime = performance.now();
+
+    const step = (now) => {
+      const elapsed = (now - startTime) / duration;
+      if (elapsed < 1) {
+        const ease = 1 - Math.pow(1 - elapsed, 3);
+        const nextVal = start + (target - start) * ease;
+        setProgress(nextVal);
+        animFrameRef.current = requestAnimationFrame(step);
+      } else {
+        setProgress(target);
+        if (target === 1) setIsCompleted(true);
+        if (target === 0) setIsCompleted(false);
+      }
+    };
+    animFrameRef.current = requestAnimationFrame(step);
+  };
+
+  const calcProgressFromEvent = (clientX) => {
+    if (!trackRef.current) return 0;
+    const rect = trackRef.current.getBoundingClientRect();
+    const dotWidth = rect.width < 768 ? 50 : 68;
+    const padding = 8;
+    const clickX = clientX - rect.left - padding - (dotWidth / 2);
+    const maxDist = rect.width - dotWidth - (padding * 2);
+    if (maxDist <= 0) return 0;
+    return Math.max(0, Math.min(1, clickX / maxDist));
+  };
+
+  const handlePointerDown = (e) => {
+    hasInteractedRef.current = true;
+    if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
+    setIsDragging(true);
+    dragStartPosRef.current = e.clientX;
+    wasDraggedRef.current = false;
+    if (e.target && e.target.setPointerCapture) {
+      try { e.target.setPointerCapture(e.pointerId); } catch (err) {}
+    }
+    const p = calcProgressFromEvent(e.clientX);
+    setProgress(p);
+  };
+
+  const handlePointerMove = (e) => {
+    if (!isDragging) return;
+    if (Math.abs(e.clientX - dragStartPosRef.current) > 5) {
+      wasDraggedRef.current = true;
+    }
+    const p = calcProgressFromEvent(e.clientX);
+    setProgress(p);
+  };
+
+  const handlePointerUp = (e) => {
+    if (!isDragging) return;
+    setIsDragging(false);
+    if (e.target && e.target.releasePointerCapture) {
+      try { e.target.releasePointerCapture(e.pointerId); } catch (err) {}
+    }
+    // Snap to 100% if dragged past 35%, otherwise snap back to 0%
+    if (progress > 0.35) {
+      animateTo(1, 320);
+    } else {
+      animateTo(0, 260);
+    }
+    setTimeout(() => {
+      wasDraggedRef.current = false;
+    }, 80);
+  };
+
+  const handleTrackClick = () => {
+    if (wasDraggedRef.current) return;
+    hasInteractedRef.current = true;
+    if (isCompleted || progress >= 0.8) {
+      animateTo(0, 320);
+    } else {
+      animateTo(1, 420);
+    }
+  };
+
+  const clipPercent = Math.max(0, Math.min(100, (1 - progress) * 100));
+  const hintOpacity = Math.max(0, 1 - progress * 2.8);
+
+  return (
+    <div className="relative inline-flex flex-col items-center select-none">
+      {/* Outer interactive capsule */}
+      <div
+        ref={trackRef}
+        onClick={handleTrackClick}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        onPointerCancel={handlePointerUp}
+        className={`relative inline-flex items-center justify-center bg-[#6014CA] rounded-full py-4 sm:py-5 px-6 sm:px-10 md:px-12 shadow-xl overflow-hidden cursor-pointer touch-none transition-shadow border-2 ${
+          isDragging ? 'shadow-2xl border-[#A882EB]' : 'border-transparent hover:border-[#8640E6]/50'
+        }`}
+        style={{
+          width: '580px',
+          maxWidth: '92vw',
+          minHeight: '82px',
+        }}
+        title={isCompleted ? "Haz clic para volver a deslizar" : "Desliza el círculo para descubrir el mensaje"}
+      >
+        {/* Placeholder Hint when hidden */}
+        <div 
+          className="absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-200 px-8"
+          style={{ opacity: hintOpacity }}
+        >
+          <span className="text-purple-200/90 font-bold text-xs sm:text-sm md:text-base tracking-wide flex items-center gap-2 pl-6 sm:pl-8">
+            <span>Desliza el círculo hacia la derecha</span>
+            <span className="text-lg animate-pulse">➔</span>
+          </span>
+        </div>
+
+        {/* Revealed text: hidden initially, unmasks as the circle rolls across */}
+        <div 
+          className="relative z-10 pr-14 sm:pr-20 md:pr-24 text-center pointer-events-none transition-all"
+          style={{
+            clipPath: `inset(0 ${clipPercent}% 0 0)`,
+            WebkitClipPath: `inset(0 ${clipPercent}% 0 0)`
+          }}
+        >
+          <div className="text-white font-extrabold text-base sm:text-xl md:text-2xl lg:text-[25px] leading-[1.2] tracking-tight text-center">
+            <div>Tu aliado estratégico en el</div>
+            <div>proceso diagnóstico</div>
+          </div>
+        </div>
+
+        {/* Draggable Circle / Rolling Dot */}
+        <div
+          className={`absolute top-1/2 -translate-y-1/2 rounded-full bg-[#DDD0FB] shadow-md flex items-center justify-center z-20 transition-transform ${
+            isDragging ? 'scale-110 cursor-grabbing bg-[#EDE4FF]' : 'cursor-grab hover:scale-105'
+          } ${progress === 0 ? 'ring-4 ring-purple-300/50 animate-pulse' : ''}`}
+          style={{
+            width: 'var(--capsule-dot-size, 50px)',
+            height: 'var(--capsule-dot-size, 50px)',
+            left: `calc(8px + ${progress} * (100% - 16px - var(--capsule-dot-size, 50px)))`,
+            transition: isDragging ? 'none' : 'left 0.12s linear, transform 0.15s ease-out'
+          }}
+        >
+          {progress >= 0.9 ? (
+            <span className="text-[#6014CA] font-black text-sm sm:text-base">✔</span>
+          ) : (
+            <span className="text-[#6014CA] font-black text-xs sm:text-sm">➔</span>
+          )}
+        </div>
+      </div>
+
+      {/* Subtle interaction cue below the capsule */}
+      <span className="text-[11px] sm:text-xs text-purple-900/70 font-semibold mt-2 tracking-wide flex items-center gap-1.5">
+        <span>{isCompleted ? "✨ Mensaje descubierto (toca para repetir)" : "👆 Desliza o toca para interactuar"}</span>
+      </span>
+    </div>
   );
 }
 
@@ -326,54 +507,13 @@ export default function Veterinarios() {
             font-size: 15px;
           }
         }
-        @keyframes dotSlideDesktop {
-          0% {
-            left: 10px;
-          }
-          100% {
-            left: calc(100% - 68px);
-          }
-        }
-        @keyframes dotSlideMobile {
-          0% {
-            left: 6px;
-          }
-          100% {
-            left: calc(100% - 46px);
-          }
-        }
-        @keyframes textRevealLTR {
-          0% {
-            clip-path: inset(0 100% 0 0);
-          }
-          100% {
-            clip-path: inset(0 0% 0 0);
-          }
-        }
-        .capsule-moving-dot {
-          position: absolute;
-          top: 50%;
-          transform: translateY(-50%);
-          border-radius: 9999px;
-          background-color: #DDD0FB;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-          width: 40px;
-          height: 40px;
-          animation: dotSlideMobile 1.25s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-          z-index: 1;
+        :root {
+          --capsule-dot-size: 50px;
         }
         @media (min-width: 768px) {
-          .capsule-moving-dot {
-            width: 58px;
-            height: 58px;
-            animation: dotSlideDesktop 1.25s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+          :root {
+            --capsule-dot-size: 68px;
           }
-        }
-        .capsule-text-reveal {
-          clip-path: inset(0 0% 0 0);
-          animation: textRevealLTR 1.25s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-          z-index: 2;
-          position: relative;
         }
       `}} />
 
@@ -409,19 +549,9 @@ export default function Veterinarios() {
         {/* Foreground Content */}
         <div className="relative z-10 max-w-[1240px] mx-auto w-full flex flex-col items-center text-center justify-center">
           
-          {/* Animated Purple Capsule with Left-to-Right Moving Dot */}
+          {/* Interactive Purple Capsule with Draggable / Rolling Reveal Dot */}
           <div key={`capsule-${activeSlide}`} className="mb-6 sm:mb-8 md:mb-10">
-            <div className="relative inline-flex items-center justify-center bg-[#6014CA] rounded-full py-3.5 sm:py-4 md:py-5 px-6 sm:px-10 md:px-12 shadow-lg overflow-hidden max-w-[94vw]">
-              {/* Animated revealed text */}
-              <div className="capsule-text-reveal pr-12 sm:pr-16 md:pr-20 text-center">
-                <div className="text-white font-extrabold text-base sm:text-xl md:text-2xl lg:text-[26px] leading-[1.2] tracking-tight text-center">
-                  <div>Tu aliado estratégico en el</div>
-                  <div>proceso diagnóstico</div>
-                </div>
-              </div>
-              {/* Animated Moving Dot */}
-              <div className="capsule-moving-dot"></div>
-            </div>
+            <InteractiveCapsule activeSlide={activeSlide} />
           </div>
 
           {/* Slide Text */}
@@ -509,28 +639,55 @@ export default function Veterinarios() {
             </svg>
           </div>
 
-          {/* 4 Cards Grid / Stack */}
-          <div className="space-y-6 sm:space-y-8 max-w-5xl mx-auto text-left">
-            {challengeCards.map((card, idx) => (
-              <div 
-                key={idx}
-                className="w-full bg-[#F1F3F7] rounded-[32px] sm:rounded-[44px] md:rounded-full p-2.5 sm:p-3 flex flex-col md:flex-row items-stretch md:items-center shadow-sm hover:shadow-md transition-shadow duration-300"
-              >
-                {/* Left Purple Pill */}
-                <div className="w-full md:w-[42%] lg:w-[40%] bg-[#6014CA] text-white rounded-[26px] sm:rounded-[36px] md:rounded-full py-5 px-6 sm:px-8 md:py-7 flex items-center justify-center text-center shadow-sm flex-shrink-0">
-                  <span className="font-extrabold text-lg sm:text-xl md:text-[22px] leading-snug">
-                    {card.title}
-                  </span>
-                </div>
+          {/* 4 Cards in 2 Columns (2 on each side) */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 xl:gap-8 max-w-7xl mx-auto text-left">
+            {/* Columna Izquierda: 2 tarjetas */}
+            <div className="flex flex-col gap-6 xl:gap-8">
+              {[challengeCards[0], challengeCards[1]].map((card, idx) => (
+                <div 
+                  key={idx}
+                  className="w-full flex-1 bg-[#F1F3F7] rounded-[28px] xl:rounded-full p-2 sm:p-2.5 flex flex-col sm:flex-row items-stretch shadow-sm hover:shadow-md transition-shadow duration-300"
+                >
+                  {/* Left Purple Pill */}
+                  <div className="w-full sm:w-[45%] xl:w-[44%] bg-[#6014CA] text-white rounded-[22px] xl:rounded-full py-4 px-4 sm:py-5 sm:px-5 flex items-center justify-center text-center shadow-sm flex-shrink-0">
+                    <span className="font-extrabold text-sm sm:text-base xl:text-[16px] leading-snug">
+                      {card.title}
+                    </span>
+                  </div>
 
-                {/* Right Description Box */}
-                <div className="w-full md:w-[58%] lg:w-[60%] py-4 px-6 sm:py-5 sm:px-8 md:py-6 md:px-10 flex items-center">
-                  <p className="text-[#1e1e1e] font-normal text-sm sm:text-base md:text-lg lg:text-[19px] leading-relaxed">
-                    {card.description}
-                  </p>
+                  {/* Right Description Box */}
+                  <div className="flex-1 py-3 px-4 sm:py-4 sm:px-5 xl:py-4 xl:px-6 flex items-center">
+                    <p className="text-[#1e1e1e] font-normal text-xs sm:text-sm xl:text-[14px] leading-relaxed">
+                      {card.description}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+
+            {/* Columna Derecha: 2 tarjetas */}
+            <div className="flex flex-col gap-6 xl:gap-8">
+              {[challengeCards[2], challengeCards[3]].map((card, idx) => (
+                <div 
+                  key={idx}
+                  className="w-full flex-1 bg-[#F1F3F7] rounded-[28px] xl:rounded-full p-2 sm:p-2.5 flex flex-col sm:flex-row items-stretch shadow-sm hover:shadow-md transition-shadow duration-300"
+                >
+                  {/* Left Purple Pill */}
+                  <div className="w-full sm:w-[45%] xl:w-[44%] bg-[#6014CA] text-white rounded-[22px] xl:rounded-full py-4 px-4 sm:py-5 sm:px-5 flex items-center justify-center text-center shadow-sm flex-shrink-0">
+                    <span className="font-extrabold text-sm sm:text-base xl:text-[16px] leading-snug">
+                      {card.title}
+                    </span>
+                  </div>
+
+                  {/* Right Description Box */}
+                  <div className="flex-1 py-3 px-4 sm:py-4 sm:px-5 xl:py-4 xl:px-6 flex items-center">
+                    <p className="text-[#1e1e1e] font-normal text-xs sm:text-sm xl:text-[14px] leading-relaxed">
+                      {card.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
 
         </div>
