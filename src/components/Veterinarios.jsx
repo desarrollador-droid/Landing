@@ -24,31 +24,18 @@ function AnimatedCounter({ target, prefix = "", suffix = "", duration = 2000 }) 
   );
 }
 
-function InteractiveCapsule({ activeSlide }) {
+function InteractiveCapsule() {
   const [progress, setProgress] = useState(0); // 0 to 1
   const [isDragging, setIsDragging] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
   const trackRef = useRef(null);
   const animFrameRef = useRef(null);
-  const hasInteractedRef = useRef(false);
   const dragStartPosRef = useRef(0);
   const wasDraggedRef = useRef(false);
 
-  // Auto-roll after 2.2s on initial mount or when slide changes if visitor hasn't touched it
-  useEffect(() => {
-    if (!hasInteractedRef.current) {
-      setProgress(0);
-      setIsCompleted(false);
-      const timer = setTimeout(() => {
-        if (!hasInteractedRef.current) {
-          animateTo(1, 950);
-        }
-      }, 2200);
-      return () => clearTimeout(timer);
-    }
-  }, [activeSlide]);
+  // STRICT REQUIREMENT: No auto-roll. Only reveals if user physically rolls the circle!
 
-  const animateTo = (target, duration = 350) => {
+  const animateTo = (target, duration = 320) => {
     if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
     const start = progress;
     const startTime = performance.now();
@@ -63,7 +50,6 @@ function InteractiveCapsule({ activeSlide }) {
       } else {
         setProgress(target);
         if (target === 1) setIsCompleted(true);
-        if (target === 0) setIsCompleted(false);
       }
     };
     animFrameRef.current = requestAnimationFrame(step);
@@ -81,7 +67,7 @@ function InteractiveCapsule({ activeSlide }) {
   };
 
   const handlePointerDown = (e) => {
-    hasInteractedRef.current = true;
+    if (isCompleted) return; // Stays permanently revealed once rolled!
     if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
     setIsDragging(true);
     dragStartPosRef.current = e.clientX;
@@ -94,8 +80,8 @@ function InteractiveCapsule({ activeSlide }) {
   };
 
   const handlePointerMove = (e) => {
-    if (!isDragging) return;
-    if (Math.abs(e.clientX - dragStartPosRef.current) > 5) {
+    if (!isDragging || isCompleted) return;
+    if (Math.abs(e.clientX - dragStartPosRef.current) > 6) {
       wasDraggedRef.current = true;
     }
     const p = calcProgressFromEvent(e.clientX);
@@ -103,30 +89,21 @@ function InteractiveCapsule({ activeSlide }) {
   };
 
   const handlePointerUp = (e) => {
-    if (!isDragging) return;
+    if (!isDragging || isCompleted) return;
     setIsDragging(false);
     if (e.target && e.target.releasePointerCapture) {
       try { e.target.releasePointerCapture(e.pointerId); } catch (err) {}
     }
-    // Snap to 100% if dragged past 35%, otherwise snap back to 0%
-    if (progress > 0.35) {
-      animateTo(1, 320);
+    // Snap to 100% ONLY if dragged past 40% and actually rolled
+    if (progress > 0.40 && wasDraggedRef.current) {
+      animateTo(1, 280);
+      setIsCompleted(true);
     } else {
-      animateTo(0, 260);
+      animateTo(0, 240);
     }
     setTimeout(() => {
       wasDraggedRef.current = false;
     }, 80);
-  };
-
-  const handleTrackClick = () => {
-    if (wasDraggedRef.current) return;
-    hasInteractedRef.current = true;
-    if (isCompleted || progress >= 0.8) {
-      animateTo(0, 320);
-    } else {
-      animateTo(1, 420);
-    }
   };
 
   const clipPercent = Math.max(0, Math.min(100, (1 - progress) * 100));
@@ -137,38 +114,43 @@ function InteractiveCapsule({ activeSlide }) {
       {/* Outer interactive capsule */}
       <div
         ref={trackRef}
-        onClick={handleTrackClick}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
         onPointerCancel={handlePointerUp}
-        className={`relative inline-flex items-center justify-center bg-[#6014CA] rounded-full py-4 sm:py-5 px-6 sm:px-10 md:px-12 shadow-xl overflow-hidden cursor-pointer touch-none transition-shadow border-2 ${
-          isDragging ? 'shadow-2xl border-[#A882EB]' : 'border-transparent hover:border-[#8640E6]/50'
+        className={`relative inline-flex items-center justify-center bg-[#6014CA] rounded-full py-4 sm:py-5 px-6 sm:px-10 md:px-12 shadow-xl overflow-hidden transition-all border-2 select-none ${
+          isCompleted
+            ? 'border-transparent cursor-default'
+            : isDragging 
+              ? 'shadow-2xl border-[#A882EB] cursor-grabbing touch-none' 
+              : 'border-transparent hover:border-[#8640E6]/50 cursor-grab touch-none'
         }`}
         style={{
           width: '580px',
           maxWidth: '92vw',
           minHeight: '82px',
         }}
-        title={isCompleted ? "Haz clic para volver a deslizar" : "Desliza el círculo para descubrir el mensaje"}
+        title={isCompleted ? "Mensaje descubierto" : "Rueda el círculo hacia la derecha para descubrir el mensaje"}
       >
         {/* Placeholder Hint when hidden */}
-        <div 
-          className="absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-200 px-8"
-          style={{ opacity: hintOpacity }}
-        >
-          <span className="text-purple-200/90 font-bold text-xs sm:text-sm md:text-base tracking-wide flex items-center gap-2 pl-6 sm:pl-8">
-            <span>Desliza el círculo hacia la derecha</span>
-            <span className="text-lg animate-pulse">➔</span>
-          </span>
-        </div>
+        {!isCompleted && (
+          <div 
+            className="absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-200 px-8"
+            style={{ opacity: hintOpacity }}
+          >
+            <span className="text-purple-200/90 font-bold text-xs sm:text-sm md:text-base tracking-wide flex items-center gap-2 pl-6 sm:pl-8">
+              <span>Rueda el círculo hacia la derecha</span>
+              <span className="text-lg animate-pulse">➔</span>
+            </span>
+          </div>
+        )}
 
         {/* Revealed text: hidden initially, unmasks as the circle rolls across */}
         <div 
           className="relative z-10 pr-14 sm:pr-20 md:pr-24 text-center pointer-events-none transition-all"
           style={{
-            clipPath: `inset(0 ${clipPercent}% 0 0)`,
-            WebkitClipPath: `inset(0 ${clipPercent}% 0 0)`
+            clipPath: isCompleted ? 'none' : `inset(0 ${clipPercent}% 0 0)`,
+            WebkitClipPath: isCompleted ? 'none' : `inset(0 ${clipPercent}% 0 0)`
           }}
         >
           <div className="text-white font-extrabold text-base sm:text-xl md:text-2xl lg:text-[25px] leading-[1.2] tracking-tight text-center">
@@ -180,8 +162,12 @@ function InteractiveCapsule({ activeSlide }) {
         {/* Draggable Circle / Rolling Dot */}
         <div
           className={`absolute top-1/2 -translate-y-1/2 rounded-full bg-[#DDD0FB] shadow-md flex items-center justify-center z-20 transition-transform ${
-            isDragging ? 'scale-110 cursor-grabbing bg-[#EDE4FF]' : 'cursor-grab hover:scale-105'
-          } ${progress === 0 ? 'ring-4 ring-purple-300/50 animate-pulse' : ''}`}
+            isCompleted
+              ? 'bg-[#DDD0FB] shadow-none'
+              : isDragging 
+                ? 'scale-110 cursor-grabbing bg-[#EDE4FF]' 
+                : 'cursor-grab hover:scale-105'
+          } ${progress === 0 && !isCompleted ? 'ring-4 ring-purple-300/50 animate-pulse' : ''}`}
           style={{
             width: 'var(--capsule-dot-size, 50px)',
             height: 'var(--capsule-dot-size, 50px)',
@@ -189,7 +175,7 @@ function InteractiveCapsule({ activeSlide }) {
             transition: isDragging ? 'none' : 'left 0.12s linear, transform 0.15s ease-out'
           }}
         >
-          {progress >= 0.9 ? (
+          {isCompleted || progress >= 0.9 ? (
             <span className="text-[#6014CA] font-black text-sm sm:text-base">✔</span>
           ) : (
             <span className="text-[#6014CA] font-black text-xs sm:text-sm">➔</span>
@@ -199,8 +185,171 @@ function InteractiveCapsule({ activeSlide }) {
 
       {/* Subtle interaction cue below the capsule */}
       <span className="text-[11px] sm:text-xs text-purple-900/70 font-semibold mt-2 tracking-wide flex items-center gap-1.5">
-        <span>{isCompleted ? "✨ Mensaje descubierto (toca para repetir)" : "👆 Desliza o toca para interactuar"}</span>
+        <span>{isCompleted ? "✨ Mensaje descubierto" : "👆 Rueda el círculo para descubrir"}</span>
       </span>
+    </div>
+  );
+}
+
+function InteractiveChallengeCard({ title, description }) {
+  const [progress, setProgress] = useState(0); // 0 to 1
+  const [isDragging, setIsDragging] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(false);
+  const trackRef = useRef(null);
+  const animFrameRef = useRef(null);
+  const dragStartPosRef = useRef(0);
+  const wasDraggedRef = useRef(false);
+
+  // STRICT REQUIREMENT: No auto-roll. Only reveals if user physically rolls the circle!
+
+  const animateTo = (target, duration = 300) => {
+    if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
+    const start = progress;
+    const startTime = performance.now();
+
+    const step = (now) => {
+      const elapsed = (now - startTime) / duration;
+      if (elapsed < 1) {
+        const ease = 1 - Math.pow(1 - elapsed, 3);
+        const nextVal = start + (target - start) * ease;
+        setProgress(nextVal);
+        animFrameRef.current = requestAnimationFrame(step);
+      } else {
+        setProgress(target);
+        if (target === 1) setIsCompleted(true);
+      }
+    };
+    animFrameRef.current = requestAnimationFrame(step);
+  };
+
+  const calcProgressFromEvent = (clientX) => {
+    if (!trackRef.current) return 0;
+    const rect = trackRef.current.getBoundingClientRect();
+    const dotWidth = rect.width < 640 ? 46 : 54;
+    const padding = 7;
+    const clickX = clientX - rect.left - padding - (dotWidth / 2);
+    const maxDist = rect.width - dotWidth - (padding * 2);
+    if (maxDist <= 0) return 0;
+    return Math.max(0, Math.min(1, clickX / maxDist));
+  };
+
+  const handlePointerDown = (e) => {
+    if (isCompleted) return; // Stays permanently revealed once rolled!
+    if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
+    setIsDragging(true);
+    dragStartPosRef.current = e.clientX;
+    wasDraggedRef.current = false;
+    if (e.target && e.target.setPointerCapture) {
+      try { e.target.setPointerCapture(e.pointerId); } catch (err) {}
+    }
+    const p = calcProgressFromEvent(e.clientX);
+    setProgress(p);
+  };
+
+  const handlePointerMove = (e) => {
+    if (!isDragging || isCompleted) return;
+    if (Math.abs(e.clientX - dragStartPosRef.current) > 6) {
+      wasDraggedRef.current = true;
+    }
+    const p = calcProgressFromEvent(e.clientX);
+    setProgress(p);
+  };
+
+  const handlePointerUp = (e) => {
+    if (!isDragging || isCompleted) return;
+    setIsDragging(false);
+    if (e.target && e.target.releasePointerCapture) {
+      try { e.target.releasePointerCapture(e.pointerId); } catch (err) {}
+    }
+    // Snap to 100% ONLY if dragged past 40% and actually rolled
+    if (progress > 0.40 && wasDraggedRef.current) {
+      animateTo(1, 280);
+      setIsCompleted(true);
+    } else {
+      animateTo(0, 240);
+    }
+    setTimeout(() => {
+      wasDraggedRef.current = false;
+    }, 80);
+  };
+
+  const clipPercent = Math.max(0, Math.min(100, (1 - progress) * 100));
+  const hintOpacity = Math.max(0, 1 - progress * 2.6);
+
+  return (
+    <div className="w-full bg-[#FAF9FD] sm:bg-white rounded-[28px] sm:rounded-[34px] p-5 sm:p-7 shadow-sm hover:shadow-md transition-all duration-300 border border-purple-100/80 flex flex-col gap-4">
+      {/* Title Pill */}
+      <div className="flex items-center">
+        <span className="inline-flex items-center bg-[#6014CA] text-white font-extrabold text-base sm:text-lg md:text-[19px] py-2.5 px-6 sm:px-7 rounded-full shadow-sm text-left leading-snug">
+          {title}
+        </span>
+      </div>
+
+      {/* Wide Interactive Description Capsule Block (Full width, not reduced!) */}
+      <div
+        ref={trackRef}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        onPointerCancel={handlePointerUp}
+        className={`relative w-full min-h-[96px] sm:min-h-[104px] bg-[#F1F3F7] rounded-[24px] sm:rounded-full py-4 px-5 sm:px-7 flex items-center shadow-inner overflow-hidden select-none border-2 transition-all ${
+          isCompleted 
+            ? 'border-transparent cursor-default' 
+            : isDragging 
+              ? 'border-[#6014CA]/40 cursor-grabbing shadow-md touch-none' 
+              : 'border-transparent hover:border-purple-300/40 cursor-grab touch-none'
+        }`}
+        title={isCompleted ? "Detalle descubierto" : "Rueda el círculo hacia la derecha para descubrir el texto"}
+      >
+        {/* Placeholder hint when not yet revealed */}
+        {!isCompleted && (
+          <div 
+            className="absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-200 px-10"
+            style={{ opacity: hintOpacity }}
+          >
+            <span className="text-purple-900/60 font-bold text-xs sm:text-sm tracking-wide flex items-center gap-2 pl-6">
+              <span>Rueda el círculo hacia la derecha</span>
+              <span className="text-base animate-pulse">➔</span>
+            </span>
+          </div>
+        )}
+
+        {/* Description text: unmasks dynamically as circle rolls */}
+        <div 
+          className="relative z-10 w-full pr-14 sm:pr-16 pl-1 sm:pl-2 text-left pointer-events-none"
+          style={{
+            clipPath: isCompleted ? 'none' : `inset(0 ${clipPercent}% 0 0)`,
+            WebkitClipPath: isCompleted ? 'none' : `inset(0 ${clipPercent}% 0 0)`
+          }}
+        >
+          <p className="text-[#1e1e1e] font-normal text-sm sm:text-base leading-relaxed">
+            {description}
+          </p>
+        </div>
+
+        {/* Rolling Circle Dot */}
+        <div
+          className={`absolute top-1/2 -translate-y-1/2 rounded-full shadow-md flex items-center justify-center z-20 transition-transform ${
+            isCompleted 
+              ? 'bg-[#6014CA] text-white shadow-none' 
+              : isDragging 
+                ? 'scale-110 bg-[#7A28EE] text-white cursor-grabbing shadow-lg' 
+                : 'bg-[#6014CA] text-white cursor-grab hover:scale-105'
+          } ${progress === 0 && !isCompleted ? 'ring-4 ring-purple-400/30 animate-pulse' : ''}`}
+          style={{
+            width: 'var(--challenge-dot-size, 46px)',
+            height: 'var(--challenge-dot-size, 46px)',
+            left: `calc(7px + ${progress} * (100% - 14px - var(--challenge-dot-size, 46px)))`,
+            transition: isDragging ? 'none' : 'left 0.12s linear, transform 0.15s ease-out'
+          }}
+        >
+          {isCompleted || progress >= 0.9 ? (
+            <span className="font-black text-sm sm:text-base">✔</span>
+          ) : (
+            <span className="font-black text-xs sm:text-sm">➔</span>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
@@ -509,10 +658,12 @@ export default function Veterinarios() {
         }
         :root {
           --capsule-dot-size: 50px;
+          --challenge-dot-size: 46px;
         }
         @media (min-width: 768px) {
           :root {
             --capsule-dot-size: 68px;
+            --challenge-dot-size: 54px;
           }
         }
       `}} />
@@ -550,8 +701,8 @@ export default function Veterinarios() {
         <div className="relative z-10 max-w-[1240px] mx-auto w-full flex flex-col items-center text-center justify-center">
           
           {/* Interactive Purple Capsule with Draggable / Rolling Reveal Dot */}
-          <div key={`capsule-${activeSlide}`} className="mb-6 sm:mb-8 md:mb-10">
-            <InteractiveCapsule activeSlide={activeSlide} />
+          <div className="mb-6 sm:mb-8 md:mb-10">
+            <InteractiveCapsule />
           </div>
 
           {/* Slide Text */}
@@ -639,54 +790,30 @@ export default function Veterinarios() {
             </svg>
           </div>
 
-          {/* 4 Cards in 2 Columns (2 on each side) */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 xl:gap-8 max-w-7xl mx-auto text-left">
+          {/* 4 Cards in 2 Columns (2 on each side) with Wide Interactive Blocks */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-7 xl:gap-9 max-w-7xl mx-auto text-left">
             {/* Columna Izquierda: 2 tarjetas */}
-            <div className="flex flex-col gap-6 xl:gap-8">
-              {[challengeCards[0], challengeCards[1]].map((card, idx) => (
-                <div 
-                  key={idx}
-                  className="w-full flex-1 bg-[#F1F3F7] rounded-[28px] xl:rounded-full p-2 sm:p-2.5 flex flex-col sm:flex-row items-stretch shadow-sm hover:shadow-md transition-shadow duration-300"
-                >
-                  {/* Left Purple Pill */}
-                  <div className="w-full sm:w-[45%] xl:w-[44%] bg-[#6014CA] text-white rounded-[22px] xl:rounded-full py-4 px-4 sm:py-5 sm:px-5 flex items-center justify-center text-center shadow-sm flex-shrink-0">
-                    <span className="font-extrabold text-sm sm:text-base xl:text-[16px] leading-snug">
-                      {card.title}
-                    </span>
-                  </div>
-
-                  {/* Right Description Box */}
-                  <div className="flex-1 py-3 px-4 sm:py-4 sm:px-5 xl:py-4 xl:px-6 flex items-center">
-                    <p className="text-[#1e1e1e] font-normal text-xs sm:text-sm xl:text-[14px] leading-relaxed">
-                      {card.description}
-                    </p>
-                  </div>
-                </div>
-              ))}
+            <div className="flex flex-col gap-7 xl:gap-9">
+              <InteractiveChallengeCard 
+                title={challengeCards[0].title} 
+                description={challengeCards[0].description} 
+              />
+              <InteractiveChallengeCard 
+                title={challengeCards[1].title} 
+                description={challengeCards[1].description} 
+              />
             </div>
 
             {/* Columna Derecha: 2 tarjetas */}
-            <div className="flex flex-col gap-6 xl:gap-8">
-              {[challengeCards[2], challengeCards[3]].map((card, idx) => (
-                <div 
-                  key={idx}
-                  className="w-full flex-1 bg-[#F1F3F7] rounded-[28px] xl:rounded-full p-2 sm:p-2.5 flex flex-col sm:flex-row items-stretch shadow-sm hover:shadow-md transition-shadow duration-300"
-                >
-                  {/* Left Purple Pill */}
-                  <div className="w-full sm:w-[45%] xl:w-[44%] bg-[#6014CA] text-white rounded-[22px] xl:rounded-full py-4 px-4 sm:py-5 sm:px-5 flex items-center justify-center text-center shadow-sm flex-shrink-0">
-                    <span className="font-extrabold text-sm sm:text-base xl:text-[16px] leading-snug">
-                      {card.title}
-                    </span>
-                  </div>
-
-                  {/* Right Description Box */}
-                  <div className="flex-1 py-3 px-4 sm:py-4 sm:px-5 xl:py-4 xl:px-6 flex items-center">
-                    <p className="text-[#1e1e1e] font-normal text-xs sm:text-sm xl:text-[14px] leading-relaxed">
-                      {card.description}
-                    </p>
-                  </div>
-                </div>
-              ))}
+            <div className="flex flex-col gap-7 xl:gap-9">
+              <InteractiveChallengeCard 
+                title={challengeCards[2].title} 
+                description={challengeCards[2].description} 
+              />
+              <InteractiveChallengeCard 
+                title={challengeCards[3].title} 
+                description={challengeCards[3].description} 
+              />
             </div>
           </div>
 
