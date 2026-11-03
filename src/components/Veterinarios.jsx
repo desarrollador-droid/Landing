@@ -69,16 +69,16 @@ function InteractiveCapsule() {
 
   return (
     <div className="relative inline-flex flex-col items-center select-none">
-      {/* Outer capsule: now #4A4A4A */}
+      {/* Outer capsule: Vibrant Royal Brand Purple with luminous glow */}
       <div
-        className="relative inline-flex items-center justify-center bg-[#4A4A4A] rounded-full py-4 sm:py-5 px-6 sm:px-10 md:px-12 shadow-xl overflow-hidden border border-gray-600/50 select-none transition-all"
+        className="relative inline-flex items-center justify-center bg-gradient-to-r from-[#6014CA] via-[#6717D6] to-[#721FE0] rounded-full py-4 sm:py-5 px-6 sm:px-10 md:px-12 shadow-[0_12px_35px_rgba(96,20,202,0.32)] overflow-hidden border border-purple-300/30 select-none transition-all"
         style={{
           width: '580px',
           maxWidth: '92vw',
           minHeight: '82px',
         }}
       >
-        {/* Revealed text: letters are PURPLE (#DDD0FB / lavender purple) */}
+        {/* Revealed text: pure crisp white */}
         <div 
           className="relative z-10 pr-14 sm:pr-20 md:pr-24 text-center pointer-events-none transition-all"
           style={{
@@ -86,15 +86,15 @@ function InteractiveCapsule() {
             WebkitClipPath: isCompleted ? 'none' : `inset(0 ${clipPercent}% 0 0)`
           }}
         >
-          <div className="text-[#DDD0FB] font-extrabold text-base sm:text-xl md:text-2xl lg:text-[25px] leading-[1.2] tracking-tight text-center">
+          <div className="text-white font-extrabold text-base sm:text-xl md:text-2xl lg:text-[25px] leading-[1.2] tracking-tight text-center drop-shadow-sm">
             <div>Tu aliado estratégico en el</div>
             <div>proceso diagnóstico</div>
           </div>
         </div>
 
-        {/* Rolling Circle Dot: PURPLE (#6014CA) */}
+        {/* Rolling Circle Dot: Crisp White Circle with purple icon */}
         <div
-          className="absolute top-1/2 -translate-y-1/2 rounded-full bg-[#6014CA] text-white shadow-[0_4px_14px_rgba(96,20,202,0.45)] flex items-center justify-center z-20 pointer-events-none transition-all"
+          className="absolute top-1/2 -translate-y-1/2 rounded-full bg-white text-[#6014CA] shadow-[0_4px_14px_rgba(0,0,0,0.22)] flex items-center justify-center z-20 pointer-events-none transition-all"
           style={{
             width: 'var(--capsule-dot-size, 50px)',
             height: 'var(--capsule-dot-size, 50px)',
@@ -103,9 +103,9 @@ function InteractiveCapsule() {
           }}
         >
           {isCompleted ? (
-            <span className="text-white font-black text-sm sm:text-base">✔</span>
+            <span className="text-[#6014CA] font-black text-sm sm:text-base">✔</span>
           ) : (
-            <span className="text-white font-black text-xs sm:text-sm">➔</span>
+            <span className="text-[#6014CA] font-black text-xs sm:text-sm">➔</span>
           )}
         </div>
       </div>
@@ -157,9 +157,9 @@ function InteractiveChallengeCard({ title, description }) {
       ref={cardRef}
       className="w-full bg-[#ECEFF2] rounded-[32px] sm:rounded-full p-2 sm:p-2.5 flex flex-col sm:flex-row items-stretch shadow-sm hover:shadow-md transition-shadow duration-300 min-h-[145px] sm:min-h-[160px] md:min-h-[170px]"
     >
-      {/* Left Pill: was purple, now #4A4A4A with purple letters */}
-      <div className="w-full sm:w-[36%] md:w-[35%] lg:w-[34%] bg-[#4A4A4A] text-[#DDD0FB] rounded-[26px] sm:rounded-full py-5 px-5 sm:px-6 md:py-6 flex items-center justify-center text-center shadow-sm flex-shrink-0">
-        <span className="font-extrabold text-base sm:text-lg md:text-[19px] lg:text-[20px] leading-snug tracking-tight text-[#DDD0FB]">
+      {/* Left Pill: Rich Purple with crisp white typography */}
+      <div className="w-full sm:w-[36%] md:w-[35%] lg:w-[34%] bg-gradient-to-r from-[#6014CA] to-[#6E1FD8] text-white rounded-[26px] sm:rounded-full py-5 px-5 sm:px-6 md:py-6 flex items-center justify-center text-center shadow-md flex-shrink-0">
+        <span className="font-extrabold text-base sm:text-lg md:text-[19px] lg:text-[20px] leading-snug tracking-tight text-white drop-shadow-sm">
           {title}
         </span>
       </div>
@@ -181,7 +181,7 @@ function InteractiveChallengeCard({ title, description }) {
           </p>
         </div>
 
-        {/* Rolling Circle Dot: PURPLE (#6014CA) */}
+        {/* Rolling Circle Dot: Royal Purple (#6014CA) */}
         <div
           className="absolute top-1/2 -translate-y-1/2 rounded-full bg-[#6014CA] text-white shadow-[0_4px_12px_rgba(96,20,202,0.4)] flex items-center justify-center z-20 pointer-events-none transition-all"
           style={{
