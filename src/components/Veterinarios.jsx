@@ -182,11 +182,6 @@ function InteractiveCapsule() {
           )}
         </div>
       </div>
-
-      {/* Subtle interaction cue below the capsule */}
-      <span className="text-[11px] sm:text-xs text-purple-900/70 font-semibold mt-2 tracking-wide flex items-center gap-1.5">
-        <span>{isCompleted ? "✨ Mensaje descubierto" : "👆 Rueda el círculo para descubrir"}</span>
-      </span>
     </div>
   );
 }
@@ -364,29 +359,29 @@ export default function Veterinarios() {
   const slides = [
     {
       title: "Nunca estás solo.",
-      description: "Acompañamiento experto: Estamos aquí para interpretar y respaldar cada decisión médica juntos",
-      bgImage: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/hero-lab-tubes.png"
+      description: "Acompañamiento experto: Estamos aquí para interpretar y respaldar cada decisión médica junto a ti",
+      bgImage: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/carrusel-slide-3.png"
     },
     {
       title: "Investigación constante. Redefiniendo los límites de la medicina veterinaria.",
       description: "No esperamos el futuro; lo investigamos hoy. A través de proyectos avanzados, transformamos el conocimiento profundo en ayudas diagnósticas",
-      bgImage: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/hero-lab-tubes.png"
-    },
-    {
-      title: "La excelencia científica es nuestro valor fundamental",
-      description: "Investigamos, desarrollamos, innovamos y capacitamos para llevar la medicina veterinaria cada vez más lejos.",
-      bgImage: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/hero-lab-tubes.png"
+      bgImage: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/carrusel-slide-1.png"
     },
     {
       title: "Innovación desde la práctica. Soluciones pensadas para lo que tu paciente requiere",
       description: "Escuchamos tus desafíos diagnósticos con el fin de desarrollar soluciones para las decisiones clínicas que enfrentas cada día.",
-      bgImage: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/hero-lab-tubes.png"
+      bgImage: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/carrusel-slide-2.png"
+    },
+    {
+      title: "La excelencia científica es nuestro valor fundamental",
+      description: "Investigamos, desarrollamos, innovamos y capacitamos para llevar la medicina veterinaria cada vez más lejos.",
+      bgImage: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/carrusel-slide-1.png"
     }
   ];
 
   const challengeCards = [
     {
-      title: ". Asesoría científica para casos complejos",
+      title: "Asesoría científica para casos complejos",
       description: "Cuando los casos clínicos complejos presentan hallazgos atípicos o contradictorios que requieren conocimiento científico especializado para orientar las decisiones diagnósticas."
     },
     {
@@ -681,18 +676,18 @@ export default function Veterinarios() {
                 idx === activeSlide ? 'opacity-100' : 'opacity-0 pointer-events-none'
               }`}
             >
-              {/* Background Image: Gloved hand in lab holding microcentrifuge tube */}
+              {/* Background Image: Mantiene su tamaño original (bg-cover) y posición (center 20%) */}
               <div 
-                className="absolute inset-0 bg-cover bg-center transition-all duration-700" 
+                className="absolute inset-0 bg-cover transition-all duration-700" 
                 style={{ 
                   backgroundImage: `url(${slide.bgImage})`,
-                  backgroundPosition: 'center 35%'
+                  backgroundPosition: 'center 20%'
                 }}
               >
-                {/* Clean bright overlay to ensure maximum contrast and legibility */}
-                <div className="absolute inset-0 bg-white/55 backdrop-blur-[0.5px] pointer-events-none"></div>
+                {/* Suave degradado lateral para asegurar legibilidad sobre la foto */}
+                <div className="absolute inset-y-0 left-0 w-3/5 md:w-1/2 bg-gradient-to-r from-white/75 via-white/30 to-transparent pointer-events-none"></div>
 
-                {/* Gentle bottom gradient connecting with the white challenge section */}
+                {/* Degradado inferior que conecta limpiamente con la sección de abajo */}
                 <div className="absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-white via-white/80 to-transparent pointer-events-none"></div>
               </div>
             </div>
