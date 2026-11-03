@@ -427,7 +427,7 @@ export default function Clinica() {
               
               <div className="pt-2 sm:pt-3">
                 <a
-                  href="https://wa.link/osqeux"
+                  href="https://wa.link/licxbp"
                   target="_blank"
                   rel="noreferrer"
                   className="w-full sm:w-auto inline-flex items-center justify-center bg-white hover:bg-gray-100 text-black font-black py-3.5 sm:py-4 px-6 sm:px-10 rounded-full text-xs sm:text-sm uppercase tracking-wider shadow-lg transition-all transform hover:scale-105 cursor-pointer"

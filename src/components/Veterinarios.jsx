@@ -40,7 +40,7 @@ function InteractiveCapsule() {
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
 
-    // Also smoothly self-rolls after 650ms if user remains idle at top of page
+    // Smoothly self-rolls after 1.2s if user remains idle at top of page
     const timer = setTimeout(() => {
       let start = null;
       const step = (now) => {
@@ -55,7 +55,7 @@ function InteractiveCapsule() {
         }
       };
       animId = requestAnimationFrame(step);
-    }, 650);
+    }, 1200);
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
@@ -64,27 +64,34 @@ function InteractiveCapsule() {
     };
   }, []);
 
-  const isCompleted = progress >= 0.98;
-  const clipPercent = Math.max(0, Math.min(100, (1 - progress) * 100));
+  const isCompleted = progress >= 0.95;
 
   return (
     <div className="relative inline-flex flex-col items-center select-none">
-      {/* Outer capsule: Vibrant Royal Brand Purple with luminous glow */}
+      {/* Outer capsule:
+          - Initial state (while rolling): soft light grayish-white (#ECEFF2) with subtle clean border
+          - Completed state (circle reached end): turns rich royal purple (#6014CA to #721FE0)
+      */}
       <div
-        className="relative inline-flex items-center justify-center bg-gradient-to-r from-[#6014CA] via-[#6717D6] to-[#721FE0] rounded-full py-4 sm:py-5 px-6 sm:px-10 md:px-12 shadow-[0_12px_35px_rgba(96,20,202,0.32)] overflow-hidden border border-purple-300/30 select-none transition-all"
+        className={`relative inline-flex items-center justify-center rounded-full py-4 sm:py-5 px-6 sm:px-10 md:px-12 overflow-hidden select-none transition-all duration-500 ease-out ${
+          isCompleted
+            ? 'bg-gradient-to-r from-[#6014CA] via-[#6717D6] to-[#721FE0] shadow-[0_12px_35px_rgba(96,20,202,0.35)] border border-purple-300/40'
+            : 'bg-[#ECEFF2] shadow-[0_6px_20px_rgba(0,0,0,0.06)] border border-gray-300/80'
+        }`}
         style={{
           width: '580px',
           maxWidth: '92vw',
           minHeight: '82px',
         }}
       >
-        {/* Revealed text: pure crisp white */}
+        {/* Revealed text:
+            - Fully hidden until the circle finishes rolling (isCompleted === true)
+            - Revealed in crisp white once completed and capsule turns purple
+        */}
         <div 
-          className="relative z-10 pr-14 sm:pr-20 md:pr-24 text-center pointer-events-none transition-all"
-          style={{
-            clipPath: isCompleted ? 'none' : `inset(0 ${clipPercent}% 0 0)`,
-            WebkitClipPath: isCompleted ? 'none' : `inset(0 ${clipPercent}% 0 0)`
-          }}
+          className={`relative z-10 pr-14 sm:pr-20 md:pr-24 text-center pointer-events-none transition-opacity duration-400 ease-in ${
+            isCompleted ? 'opacity-100' : 'opacity-0'
+          }`}
         >
           <div className="text-white font-extrabold text-base sm:text-xl md:text-2xl lg:text-[25px] leading-[1.2] tracking-tight text-center drop-shadow-sm">
             <div>Tu aliado estratégico en el</div>
@@ -92,20 +99,27 @@ function InteractiveCapsule() {
           </div>
         </div>
 
-        {/* Rolling Circle Dot: Crisp White Circle with purple icon */}
+        {/* Rolling Circle Dot:
+            - While rolling: purple (#6014CA) circle with white arrow ➔
+            - When finished: turns white with purple checkmark ✔ against the purple capsule
+        */}
         <div
-          className="absolute top-1/2 -translate-y-1/2 rounded-full bg-white text-[#6014CA] shadow-[0_4px_14px_rgba(0,0,0,0.22)] flex items-center justify-center z-20 pointer-events-none transition-all"
+          className={`absolute top-1/2 -translate-y-1/2 rounded-full flex items-center justify-center z-20 pointer-events-none transition-all duration-300 ${
+            isCompleted
+              ? 'bg-white text-[#6014CA] shadow-[0_4px_14px_rgba(0,0,0,0.22)]'
+              : 'bg-[#6014CA] text-white shadow-[0_4px_14px_rgba(96,20,202,0.4)]'
+          }`}
           style={{
             width: 'var(--capsule-dot-size, 50px)',
             height: 'var(--capsule-dot-size, 50px)',
             left: `calc(8px + ${progress} * (100% - 16px - var(--capsule-dot-size, 50px)))`,
-            transition: 'left 0.15s ease-out, transform 0.2s ease-out'
+            transition: 'left 0.15s ease-out, background-color 0.3s ease-out, color 0.3s ease-out'
           }}
         >
           {isCompleted ? (
-            <span className="text-[#6014CA] font-black text-sm sm:text-base">✔</span>
+            <span className="font-black text-sm sm:text-base">✔</span>
           ) : (
-            <span className="text-[#6014CA] font-black text-xs sm:text-sm">➔</span>
+            <span className="font-black text-xs sm:text-sm">➔</span>
           )}
         </div>
       </div>
@@ -115,7 +129,48 @@ function InteractiveCapsule() {
 
 function InteractiveChallengeCard({ title, description }) {
   const [progress, setProgress] = useState(0); // 0 to 1
+  const [shifts, setShifts] = useState({ titleX: 0, descX: 0, titleY: 0, descY: 0, isMobile: false });
   const cardRef = useRef(null);
+  const titleRef = useRef(null);
+  const descRef = useRef(null);
+
+  useEffect(() => {
+    const measure = () => {
+      if (!cardRef.current || !titleRef.current || !descRef.current) return;
+      const isMobile = window.innerWidth < 640;
+      const titleRect = titleRef.current.getBoundingClientRect();
+      const descRect = descRef.current.getBoundingClientRect();
+
+      if (isMobile) {
+        const gap = 10;
+        setShifts({
+          titleX: 0,
+          descX: 0,
+          titleY: descRect.height + gap,
+          descY: titleRect.height + gap,
+          isMobile: true
+        });
+      } else {
+        const gap = 12;
+        setShifts({
+          titleX: descRect.width + gap,
+          descX: titleRect.width + gap,
+          titleY: 0,
+          descY: 0,
+          isMobile: false
+        });
+      }
+    };
+
+    measure();
+    const observer = new ResizeObserver(measure);
+    if (cardRef.current) observer.observe(cardRef.current);
+    window.addEventListener('resize', measure);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', measure);
+    };
+  }, []);
 
   useEffect(() => {
     let ticking = false;
@@ -127,9 +182,9 @@ function InteractiveChallengeCard({ title, description }) {
           const rect = cardRef.current.getBoundingClientRect();
           const windowHeight = window.innerHeight || document.documentElement.clientHeight;
           
-          // Triggers as card enters and moves up the viewport
+          // Triggers as card enters and moves through viewport
           const start = windowHeight * 0.90;
-          const end = windowHeight * 0.40;
+          const end = windowHeight * 0.45;
           
           if (rect.top <= end) {
             setProgress(1);
@@ -149,54 +204,45 @@ function InteractiveChallengeCard({ title, description }) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const isCompleted = progress >= 0.98;
-  const clipPercent = Math.max(0, Math.min(100, (1 - progress) * 100));
+  const titleTransform = shifts.isMobile
+    ? `translateY(${progress * shifts.titleY}px)`
+    : `translateX(${progress * shifts.titleX}px)`;
+
+  const descTransform = shifts.isMobile
+    ? `translateY(-${progress * shifts.descY}px)`
+    : `translateX(-${progress * shifts.descX}px)`;
 
   return (
     <div 
       ref={cardRef}
-      className="w-full bg-[#ECEFF2] rounded-[32px] sm:rounded-full p-2 sm:p-2.5 flex flex-col sm:flex-row items-stretch shadow-sm hover:shadow-md transition-shadow duration-300 min-h-[145px] sm:min-h-[160px] md:min-h-[170px]"
+      className="w-full bg-[#ECEFF2] rounded-[32px] sm:rounded-full p-2.5 sm:p-3 relative overflow-hidden flex flex-col sm:flex-row items-stretch shadow-sm hover:shadow-md transition-shadow duration-300 min-h-[145px] sm:min-h-[160px] md:min-h-[170px] border border-gray-200/80"
     >
-      {/* Left Pill: Rich Purple with crisp white typography */}
-      <div className="w-full sm:w-[36%] md:w-[35%] lg:w-[34%] bg-gradient-to-r from-[#6014CA] to-[#6E1FD8] text-white rounded-[26px] sm:rounded-full py-5 px-5 sm:px-6 md:py-6 flex items-center justify-center text-center shadow-md flex-shrink-0">
+      {/* Purple Rolling Title Badge: "el circulo morado con texto" */}
+      <div 
+        ref={titleRef}
+        className="w-full sm:w-[36%] md:w-[35%] lg:w-[34%] bg-gradient-to-r from-[#6014CA] to-[#6E1FD8] text-white rounded-[26px] sm:rounded-full py-5 px-5 sm:px-6 md:py-6 flex items-center justify-center text-center shadow-md flex-shrink-0 z-20 select-none will-change-transform"
+        style={{
+          transform: titleTransform,
+          transition: 'transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1)'
+        }}
+      >
         <span className="font-extrabold text-base sm:text-lg md:text-[19px] lg:text-[20px] leading-snug tracking-tight text-white drop-shadow-sm">
           {title}
         </span>
       </div>
 
-      {/* Right Description Area (Wider, comfortable, with rolling circle reveal on scroll) */}
+      {/* Description Area: smoothly swaps position with purple title badge upon scrolling */}
       <div
-        className="w-full sm:w-[64%] md:w-[65%] lg:w-[66%] relative flex items-center py-4 px-4 sm:py-5 sm:px-6 md:px-8 select-none overflow-hidden"
+        ref={descRef}
+        className="w-full sm:w-[64%] md:w-[65%] lg:w-[66%] relative flex items-center py-4 px-4 sm:py-5 sm:px-6 md:px-8 select-none z-10 will-change-transform"
+        style={{
+          transform: descTransform,
+          transition: 'transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1)'
+        }}
       >
-        {/* Description text: unmasks dynamically as circle rolls on scroll */}
-        <div 
-          className="relative z-10 w-full pr-12 sm:pr-14 pl-2 text-left pointer-events-none"
-          style={{
-            clipPath: isCompleted ? 'none' : `inset(0 ${clipPercent}% 0 0)`,
-            WebkitClipPath: isCompleted ? 'none' : `inset(0 ${clipPercent}% 0 0)`
-          }}
-        >
-          <p className="text-[#1e1e1e] font-normal text-xs sm:text-sm md:text-[15px] lg:text-[15.5px] leading-relaxed">
-            {description}
-          </p>
-        </div>
-
-        {/* Rolling Circle Dot: Royal Purple (#6014CA) */}
-        <div
-          className="absolute top-1/2 -translate-y-1/2 rounded-full bg-[#6014CA] text-white shadow-[0_4px_12px_rgba(96,20,202,0.4)] flex items-center justify-center z-20 pointer-events-none transition-all"
-          style={{
-            width: 'var(--challenge-dot-size, 46px)',
-            height: 'var(--challenge-dot-size, 46px)',
-            left: `calc(7px + ${progress} * (100% - 14px - var(--challenge-dot-size, 46px)))`,
-            transition: 'left 0.15s ease-out, transform 0.2s ease-out'
-          }}
-        >
-          {isCompleted ? (
-            <span className="font-black text-sm sm:text-base">✔</span>
-          ) : (
-            <span className="font-black text-xs sm:text-sm">➔</span>
-          )}
-        </div>
+        <p className="text-[#1e1e1e] font-normal text-xs sm:text-sm md:text-[15px] lg:text-[15.5px] leading-relaxed">
+          {description}
+        </p>
       </div>
 
     </div>

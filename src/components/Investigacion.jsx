@@ -119,7 +119,7 @@ export default function Investigacion() {
     },
     {
       initials: 'MPU',
-      tag: 'INVESTIGADORA',
+      tag: 'ANALISTA DE LABORATORIO',
       name: 'Maria Paula Urián',
       role: 'Oncología & Ensayos Clínicos',
       bgClass: 'bg-[#6F2BCC]',
@@ -127,7 +127,7 @@ export default function Investigacion() {
     },
     {
       initials: 'LAM',
-      tag: 'INVESTIGADORA',
+      tag: 'ANALISTA DE LABORATORIO',
       name: 'Laura Alexandra Moreno',
       role: 'Bioestadística & Epidemiología',
       bgClass: 'bg-[#2B017C]',
@@ -135,7 +135,7 @@ export default function Investigacion() {
     },
     {
       initials: 'VZ',
-      tag: 'INVESTIGADORA',
+      tag: 'ANALISTA DE LABORATORIO',
       name: 'Valentina Zapata',
       role: 'Microbiología & Control Analítico',
       bgClass: 'bg-[#4B109E]',
@@ -143,7 +143,7 @@ export default function Investigacion() {
     },
     {
       initials: 'FGJ',
-      tag: 'ANALISTA MOLECULAR',
+      tag: 'ANALISTA DE LABORATORIO',
       name: 'Farley Garavito Jaimes',
       role: 'Extracción & Ácidos Nucleicos',
       bgClass: 'bg-[#1A004C]',
@@ -159,7 +159,7 @@ export default function Investigacion() {
     },
     {
       initials: 'FA',
-      tag: 'BIOTECNOLOGÍA',
+      tag: 'ANALISTA DE LABORATORIO',
       name: 'Felipe Amador',
       role: 'Validación de Ensayos dPCR/qPCR',
       bgClass: 'bg-[#6F2BCC]',
@@ -167,7 +167,7 @@ export default function Investigacion() {
     },
     {
       initials: 'LVV',
-      tag: 'BACTERIOLOGÍA',
+      tag: 'ANALISTA DE LABORATORIO',
       name: 'Luna Valentina Viillarraga',
       role: 'Diagnóstico Microbiológico',
       bgClass: 'bg-[#4B109E]',
@@ -175,7 +175,7 @@ export default function Investigacion() {
     },
     {
       initials: 'VC',
-      tag: 'INVESTIGADORA',
+      tag: 'ANALISTA DE LABORATORIO',
       name: 'Valentina Castaño',
       role: 'Bioensayos & Casos Clínicos',
       bgClass: 'bg-[#1A004C]',
@@ -183,7 +183,7 @@ export default function Investigacion() {
     },
     {
       initials: 'VG',
-      tag: 'INVESTIGADORA',
+      tag: 'ANALISTA DE LABORATORIO',
       name: 'Valentina Gutierrez',
       role: 'Validación de Datos Clínicos',
       bgClass: 'bg-[#2B017C]',
@@ -191,7 +191,7 @@ export default function Investigacion() {
     },
     {
       initials: 'MHB',
-      tag: 'INVESTIGADORA',
+      tag: 'ANALISTA DE LABORATORIO',
       name: 'María Helena Bonilla',
       role: 'Dermatología & Perfiles Moleculares',
       bgClass: 'bg-[#6F2BCC]',
@@ -199,7 +199,7 @@ export default function Investigacion() {
     },
     {
       initials: 'JEL',
-      tag: 'MÉDICO VETERINARIO',
+      tag: 'ANALISTA DE LABORATORIO',
       name: 'Juan Esteban Lamprea',
       role: 'Validación de Controles qPCR',
       bgClass: 'bg-[#1A004C]',
@@ -215,7 +215,7 @@ export default function Investigacion() {
     },
     {
       initials: 'DSA',
-      tag: 'INVESTIGADOR',
+      tag: 'LÍDER DE ALIANZAS',
       name: 'Diego Sanchez Àvila',
       role: 'Patología & Asesoría Clínica',
       bgClass: 'bg-[#2B017C]',
@@ -660,9 +660,6 @@ export default function Investigacion() {
                     <h3 className="font-bold text-[#374151] text-sm sm:text-base leading-snug">
                       {node.name}
                     </h3>
-                    <p className="text-gray-500 text-xs sm:text-[13px] leading-tight">
-                      {node.role}
-                    </p>
                   </div>
                 </div>
               ))}
