@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import FloatingRecoleccionButton from './FloatingRecoleccionButton';
 
 function AnimatedCounter({ target, prefix = "", suffix = "", duration = 2000 }) {
   const [count, setCount] = useState(0);
@@ -352,15 +353,8 @@ export default function Veterinarios() {
   return (
     <div className="w-full bg-white font-sans text-gray-800">
       
-      {/* Floating Side Tab */}
-      <a 
-        href="https://docs.google.com/forms/d/e/1FAIpQLSeDPoSkLRQm7UiFy2f_U_2f8YE4bU85Ap5QixzMqUvQc-A4pA/viewform" 
-        target="_blank" 
-        rel="noreferrer" 
-        className="fixed left-0 top-1/2 -translate-y-1/2 bg-osd-cyan text-osd-dark font-bold text-xs uppercase tracking-wider py-3 px-5 rounded-r-lg z-50 shadow-lg hover:bg-white transition-all duration-300"
-      >
-        Formulario de recolección
-      </a>
+      {/* Floating Sample Collection CTA (Sleek Bottom-Center Pill Dock) */}
+      <FloatingRecoleccionButton />
 
       {/* Styles for Team Banner */}
       <style dangerouslySetInnerHTML={{__html: `

@@ -8,10 +8,30 @@ export default function Header() {
 
   useEffect(() => {
     // Detect user role state based on the current URL pathname
-    if (location.pathname === '/prueba-fecal-para-mascotas' || location.pathname === '/prueba-fecal-para-mascotas/') {
+    if (
+      location.pathname === '/prueba-fecal-para-mascotas' || 
+      location.pathname === '/prueba-fecal-para-mascotas/' ||
+      location.pathname === '/conocenos-propietarios' || 
+      location.pathname === '/conocenos-propietarios/' ||
+      location.pathname === '/test-disbiosis-mascotas' || 
+      location.pathname === '/test-disbiosis-mascotas/' ||
+      location.pathname === '/prueba-microbiota-una-solucion-en-la-salud-animal' ||
+      location.pathname === '/prueba-microbiota-una-solucion-en-la-salud-animal/'
+    ) {
       localStorage.setItem('userRole', 'owner');
       setUserRole('owner');
-    } else if (location.pathname === '/veterinarios' || location.pathname === '/veterinarios/') {
+    } else if (
+      location.pathname === '/' ||
+      location.pathname === '/veterinarios' || 
+      location.pathname === '/veterinarios/' ||
+      location.pathname.startsWith('/clinica') ||
+      location.pathname.startsWith('/biologia-molecular') ||
+      location.pathname.startsWith('/servicios') ||
+      location.pathname.startsWith('/investigacion') ||
+      location.pathname.startsWith('/noticias') ||
+      location.pathname.startsWith('/preguntas-frecuentes') ||
+      location.pathname.startsWith('/contacto')
+    ) {
       localStorage.setItem('userRole', 'vet');
       setUserRole('vet');
     } else {
@@ -92,7 +112,7 @@ export default function Header() {
             </>
           ) : (
             <>
-              <Link to="/veterinarios" className="relative py-1.5 group hover:text-osd-purple transition-colors">
+              <Link to="/" className="relative py-1.5 group hover:text-osd-purple transition-colors">
                 Inicio
                 <span className="absolute bottom-0 left-0 w-full h-[2px] bg-osd-purple transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
               </Link>
@@ -199,7 +219,7 @@ export default function Header() {
           ) : (
             <>
               <Link 
-                to="/veterinarios" 
+                to="/" 
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="py-2 hover:text-osd-purple transition-colors"
               >

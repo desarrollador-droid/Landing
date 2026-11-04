@@ -66,8 +66,8 @@ function App() {
       <SEOManager />
       <Suspense fallback={<PageLoader />}>
         <Routes>
-          {/* 1. INICIO / HOME */}
-          <Route path="/" element={<LandingPage />} />
+          {/* 1. INICIO / HOME DIRECTO */}
+          <Route path="/" element={<PageWrapper><Veterinarios /></PageWrapper>} />
 
         {/* 2. SERVICIOS / BIOLOGÍA MOLECULAR / qPCR (Rutas actuales e históricas de Google) */}
         <Route path="/biologia-molecular" element={<PageWrapper><BiologiaMolecular /></PageWrapper>} />
@@ -183,8 +183,12 @@ function App() {
         <Route path="/medicina-veterinaria-biorreguladora" element={<Navigate to="/noticias-veterinarias/osd-llevo-el-conocimiento-veterinario-colombiano-a-un-escenario-internacional" replace />} />
         <Route path="/medicina-veterinaria-biorreguladora/" element={<Navigate to="/noticias-veterinarias/osd-llevo-el-conocimiento-veterinario-colombiano-a-un-escenario-internacional" replace />} />
 
-        {/* 13. WILDCARD FALLBACK */}
-        <Route path="*" element={<LandingPage />} />
+        {/* 13. ACCESO SECUNDARIO A PÁGINA DE SELECCIÓN HISTÓRICA */}
+        <Route path="/bienvenida" element={<LandingPage />} />
+        <Route path="/bienvenida/" element={<LandingPage />} />
+
+        {/* 14. WILDCARD FALLBACK */}
+        <Route path="*" element={<PageWrapper><Veterinarios /></PageWrapper>} />
       </Routes>
       </Suspense>
     </Router>

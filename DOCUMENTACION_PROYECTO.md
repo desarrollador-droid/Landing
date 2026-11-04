@@ -157,19 +157,41 @@ Para garantizar la escalabilidad, mantenibilidad y evolución continua de la pla
 
 ---
 
+## 5. FASE V: TRANSICIÓN A ENTRADA DIRECTA (HOME) Y REDISEÑO DE RECOLECCIÓN
+
+Atendiendo las directrices de optimización de flujo y estética visual:
+1. **Acceso Inmediato al Home (`/`)**:
+   - Se removió la pantalla previa de selección de rol con video de fondo y dos botones centrales como entrada principal.
+   - La raíz (`/`) y rutas generales cargan de inmediato la vista principal (`Veterinarios`) con su `PageWrapper` (Header y Footer completos).
+   - Se preservó íntegramente la vista y enrutamiento de Propietarios en el código fuente (`PruebaFecal.jsx`, `/prueba-fecal-para-mascotas`, `/conocenos-propietarios`, `/test-disbiosis-mascotas`), manteniendo su selector de rol contextual y añadiendo enlace en el pie de página.
+   - El componente de bienvenida histórica (`LandingPage.jsx`) se mantiene preservado en código y accesible en `/bienvenida`.
+2. **Rediseño del Botón de Solicitud de Recolección (`FloatingRecoleccionButton.jsx`)**:
+   - **Problema previo**: Pestaña fija en el lateral izquierdo a mitad de pantalla (`fixed left-0 top-1/2`) que cubría contenido clínico y bloqueaba la lectura en móviles y pantallas medianas.
+   - **Solución implementada**:
+     - Posicionamiento inferior centrado en modo dock flotante (`fixed bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-40`).
+     - Morfología de cápsula moderna con gradiente de marca (`#2B017C` / `#1E0054`), borde sutil y efecto glassmorphism (`backdrop-blur-md`).
+     - Iconografía inequívoca: Contenedor circular cian `#01FADA` con vector de vehículo de logística y transporte de muestras + anillo de pulso suave.
+     - Tipografía y claridad diagnóstica: Etiqueta micro `"RECOLECCIÓN GRATUITA · BOGOTÁ"` y título principal `"Solicitud de Recolección de Muestras"`.
+     - Flecha interactiva de apertura y micro-botón discreto para minimizar a un botón flotante circular (FAB) en la esquina inferior si el usuario requiere lectura inmersiva.
+
+---
+
 ## 6. REGISTRO DE ARCHIVOS CLAVE DEL PROYECTO
 
 - **Configuración y Enrutamiento**:
-  - [`src/App.jsx`](file:///C:/Users/PC/LocalWeb/src/App.jsx) - Rutas, redirecciones y scroll manager.
-  - [`src/index.css`](file:///C:/Users/PC/LocalWeb/src/index.css) - Reglas globales, directivas de Tailwind y fuentes corporativas.
+  - [`src/App.jsx`](file:///C:/Users/isis4/.gemini/antigravity/scratch/Landing/src/App.jsx) - Rutas canónicas, Home directo y redirecciones.
+  - [`src/index.css`](file:///C:/Users/isis4/.gemini/antigravity/scratch/Landing/src/index.css) - Reglas globales y Tailwind.
 - **Componentes Principales**:
-  - [`src/components/Header.jsx`](file:///C:/Users/PC/LocalWeb/src/components/Header.jsx) - Navegación global, selector de rol y barra superior contextual.
-  - [`src/components/Clinica.jsx`](file:///C:/Users/PC/LocalWeb/src/components/Clinica.jsx) - Landing page clínica, scrollytelling de 3 slides y categorías de análisis.
-  - [`src/components/Disbiosis.jsx`](file:///C:/Users/PC/LocalWeb/src/components/Disbiosis.jsx) - Calculadora matemática del índice de disbiosis.
-  - [`src/components/ComoLeerResultados.jsx`](file:///C:/Users/PC/LocalWeb/src/components/ComoLeerResultados.jsx) - Visor interactivo de reportes con hotspots.
-  - [`src/components/BiologiaMolecular.jsx`](file:///C:/Users/PC/LocalWeb/src/components/BiologiaMolecular.jsx) - Catálogo técnico y filtros de exámenes moleculares.
-  - [`src/components/SEOManager.jsx`](file:///C:/Users/PC/LocalWeb/src/components/SEOManager.jsx) - Gestión dinámica de metadatos y Schema JSON-LD.
-  - [`src/components/Footer.jsx`](file:///C:/Users/PC/LocalWeb/src/components/Footer.jsx) - Pie de página institucional, redes y enlaces legales.
+  - [`src/components/FloatingRecoleccionButton.jsx`](file:///C:/Users/isis4/.gemini/antigravity/scratch/Landing/src/components/FloatingRecoleccionButton.jsx) - Dock flotante inferior estético para solicitud de recolección de muestras.
+  - [`src/components/Header.jsx`](file:///C:/Users/isis4/.gemini/antigravity/scratch/Landing/src/components/Header.jsx) - Navegación global, selector dinámico de rol y enlaces actualizados al Home.
+  - [`src/components/Veterinarios.jsx`](file:///C:/Users/isis4/.gemini/antigravity/scratch/Landing/src/components/Veterinarios.jsx) - Vista principal / Home con integración de recolección.
+  - [`src/components/PruebaFecal.jsx`](file:///C:/Users/isis4/.gemini/antigravity/scratch/Landing/src/components/PruebaFecal.jsx) - Vista de propietarios preservada intacta.
+  - [`src/components/Clinica.jsx`](file:///C:/Users/isis4/.gemini/antigravity/scratch/Landing/src/components/Clinica.jsx) - Landing page clínica y scrollytelling.
+  - [`src/components/Disbiosis.jsx`](file:///C:/Users/isis4/.gemini/antigravity/scratch/Landing/src/components/Disbiosis.jsx) - Calculadora matemática del índice de disbiosis.
+  - [`src/components/ComoLeerResultados.jsx`](file:///C:/Users/isis4/.gemini/antigravity/scratch/Landing/src/components/ComoLeerResultados.jsx) - Visor interactivo de reportes con hotspots.
+  - [`src/components/BiologiaMolecular.jsx`](file:///C:/Users/isis4/.gemini/antigravity/scratch/Landing/src/components/BiologiaMolecular.jsx) - Catálogo técnico y filtros qPCR.
+  - [`src/components/SEOManager.jsx`](file:///C:/Users/isis4/.gemini/antigravity/scratch/Landing/src/components/SEOManager.jsx) - Gestión dinámica de metadatos.
+  - [`src/components/Footer.jsx`](file:///C:/Users/isis4/.gemini/antigravity/scratch/Landing/src/components/Footer.jsx) - Pie de página institucional y enlaces de navegación rápida.
 - **Datos y Activos**:
   - `public/images/bacterias-clinica-purple.png` - Vector en alta definición de microorganismos morados.
   - `public/images/bacterias-clinica-cyan.png` - Vector en alta definición de microorganismos cian.
