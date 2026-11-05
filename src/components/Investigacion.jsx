@@ -5,6 +5,7 @@ export default function Investigacion() {
   const [talentIndex, setTalentIndex] = useState(0);
   const [activeFilter, setActiveFilter] = useState('Póster');
   const [selectedItem, setSelectedItem] = useState(null);
+  const [lightboxImage, setLightboxImage] = useState(null);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [honeypot, setHoneypot] = useState('');
@@ -280,60 +281,66 @@ export default function Investigacion() {
       category: 'Póster',
       title: 'Desarrollo de un índice de disbiosis estratificado por edad en caninos.',
       description: 'Investigación que establece umbrales específicos de salud intestinal para cachorros, adultos y gerontes. Este estudio demuestra que los puntos de corte para identificar la disbiosis asociada a enteropatías crónicas varían según la etapa de vida del paciente, ofreciendo una herramienta cuantitativa de alta precisión para el diagnóstico clínico veterinario.',
-      actionLabel: 'DESCARGAR PDF',
+      actionLabel: 'VER PÓSTER',
       authors: 'Leidy Alejandra Giraldo, Cesar Muñoz, OSD Diagnostic',
       year: '2026',
-      downloadUrl: 'https://osdiagnostic.com/wp-content/uploads/2026/05/Desarrollo-de-un-indice-de-disbiosis-estratificado-por-edad-en-caninos.pdf'
+      posterImage: '/posters/disbiosis-caninos.png',
+      downloadUrl: '/posters/disbiosis-caninos.png'
     },
     {
       id: 'disbiosis-felinos',
       category: 'Póster',
       title: 'Análisis comparativo de la microbiota intestinal en gatos sanos y con enteropatías.',
       description: 'Investigación que logra discriminar con precisión entre estados normobióticos y disbióticos, demostrando que los umbrales de salud intestinal deben ajustarse según la etapa de vida del gato (cachorro, adulto o geronte) para garantizar un diagnóstico clínico certero en pacientes con enteropatías crónicas.',
-      actionLabel: 'DESCARGAR PDF',
+      actionLabel: 'VER PÓSTER',
       authors: 'Equipo Científico OSD Research & CVDC',
       year: '2026',
-      downloadUrl: 'https://osdiagnostic.com/wp-content/uploads/2026/05/Poster-CVDC-Analisis-comparativo-de-la-microbiota-intestinal-en-gatos-sanos-y-con-enteropatias-mediante-un-indice-de-disbiosis-estratificado-por-edad-1.pdf'
+      posterImage: '/posters/disbiosis-felinos.png',
+      downloadUrl: '/posters/disbiosis-felinos.png'
     },
     {
       id: 'mdr1',
       category: 'Póster',
       title: 'Caracterización de la frecuencia de la mutación nt230[del4] del gen MDR1 en razas caninas.',
       description: 'Estudio epidemiológico mediante qPCR que identifica la carencia de la proteína P-Gp en caninos. Proporciona un marco de referencia en farmacogenética para evitar toxicidades graves por fármacos comunes. Es una herramienta esencial para personalizar la terapia farmacológica y garantizar la integridad del paciente en el contexto nacional.',
-      actionLabel: 'DESCARGAR PDF',
+      actionLabel: 'VER PÓSTER',
       authors: 'Cesar Muñoz, Maria Paula Urián, Grupo OSD Research',
       year: '2026',
-      downloadUrl: 'https://osdiagnostic.com/wp-content/uploads/2026/05/Primera-caracterizacion-de-la-frecuencia-de-la-mutacion-nt230del4-del-gen-MDR1-en-razas-caninas.pdf'
+      posterImage: '/posters/mdr1.png',
+      downloadUrl: '/posters/mdr1.png'
     },
     {
       id: 'felv-coinfeccion',
       category: 'Póster',
       title: 'Evaluación de coinfección en felinos domésticos positivos a FeLV.',
       description: 'Análisis por RT-qPCR que identifica la frecuencia de patógenos oportunistas (Anaplasma, Bartonella, Mycoplasma) en pacientes con Leucemia Felina. El estudio resalta la vulnerabilidad en cachorros y la urgencia de diagnósticos integrales para tratar infecciones secundarias en pacientes inmunosuprimidos.',
-      actionLabel: 'DESCARGAR PDF',
+      actionLabel: 'VER PÓSTER',
       authors: 'Ángela Sánchez, Cesar Muñoz, OSD Lab',
       year: '2026',
-      downloadUrl: 'https://osdiagnostic.com/wp-content/uploads/2026/05/Evaluacion-de-coinfeccion-en-felinos-domesticos-positivos-a-FeLV.pdf'
+      posterImage: '/posters/felv-coinfeccion.png',
+      downloadUrl: '/posters/felv-coinfeccion.png'
     },
     {
       id: 'brucella-lcr',
       category: 'Póster',
       title: 'Detección de Brucella spp., Haemophilus spp. y Pseudomonas spp. en líquido cefalorraquídeo',
       description: 'Mediante qPCR, se detectó una coinfección atípica de Brucella spp., Haemophilus spp. y Pseudomonas spp. en líquido cefalorraquídeo, permitiendo un tratamiento dirigido que salvó la vida del paciente y evitó fallos diagnósticos comunes en enfermedades zoonóticas de difícil aislamiento.',
-      actionLabel: 'DESCARGAR PDF',
+      actionLabel: 'VER PÓSTER',
       authors: 'Grupo Clínico y Molecular OSD Research',
       year: '2026',
-      downloadUrl: 'https://osdiagnostic.com/wp-content/uploads/2026/05/Deteccion-de-Brucella-spp.-Haemophilus-spp.-y-Pseudomonas-spp.-en-liquido-cefalorraquideo-de-un-canino.pdf'
+      posterImage: '/posters/brucella-lcr.png',
+      downloadUrl: '/posters/brucella-lcr.png'
     },
     {
       id: 'leishmania-caninos',
       category: 'Póster',
       title: 'Detección molecular de Leishmania infantum en caninos de zonas no endémicas de Colombia.',
       description: 'Investigación documenta la presencia de L. infantum en regiones sin transmisión activa, validando la qPCR como eje para el diagnóstico temprano y seguimiento de carga parasitaria en diversos nichos biológicos. Los hallazgos consolidan un marco de referencia para la vigilancia molecular y el monitoreo terapéutico.',
-      actionLabel: 'DESCARGAR PDF',
+      actionLabel: 'VER PÓSTER',
       authors: 'Cesar Muñoz, Laura Alexandra Moreno, OSD Team',
       year: '2026',
-      downloadUrl: 'https://osdiagnostic.com/wp-content/uploads/2026/05/Deteccion-molecular-de-Leishmania-infantum-en-caninos-de-zonas-no-endemicas-de-Colombia.pdf'
+      posterImage: '/posters/leishmania-caninos.png',
+      downloadUrl: '/posters/leishmania-caninos.png'
     },
     {
       id: 'adn-osd',
@@ -842,15 +849,27 @@ export default function Investigacion() {
             {filteredItems.map((item) => (
               <div
                 key={item.id}
-                className="bg-white rounded-2xl border border-gray-200/80 p-6 sm:p-7 flex flex-col justify-between shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 text-left min-h-[280px]"
+                onClick={() => {
+                  if (item.category === 'Póster') handleOpenItem(item);
+                }}
+                className={`bg-white rounded-2xl border border-gray-200/80 p-6 sm:p-7 flex flex-col justify-between shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 text-left min-h-[280px] ${
+                  item.category === 'Póster' ? 'cursor-pointer hover:border-[#6F2BCC]/50 group/card' : ''
+                }`}
               >
                 {/* Top Badge & Content */}
                 <div className="space-y-3">
-                  <span className="inline-block px-3 py-1 rounded-full text-xs font-bold text-[#6F2BCC] bg-[#F3E8FF]">
-                    {item.category}
-                  </span>
+                  <div className="flex items-center justify-between">
+                    <span className="inline-block px-3 py-1 rounded-full text-xs font-bold text-[#6F2BCC] bg-[#F3E8FF]">
+                      {item.category}
+                    </span>
+                    {item.category === 'Póster' && (
+                      <span className="text-[11px] font-semibold text-purple-700/70 bg-purple-50 px-2 py-0.5 rounded-md">
+                        Imagen directa
+                      </span>
+                    )}
+                  </div>
                   
-                  <h3 className="text-base sm:text-lg font-bold text-[#374151] leading-snug tracking-tight font-sans">
+                  <h3 className="text-base sm:text-lg font-bold text-[#374151] leading-snug tracking-tight font-sans group-hover/card:text-[#2B017C] transition-colors">
                     {item.title}
                   </h3>
                   
@@ -859,9 +878,21 @@ export default function Investigacion() {
                   </p>
                 </div>
 
-                {/* Bottom Action Footer with direct PDF link */}
+                {/* Bottom Action Footer with direct image view for posters */}
                 <div className="pt-6 border-t border-gray-100 mt-4 flex items-center justify-between">
-                  {item.downloadUrl && item.downloadUrl !== '#' ? (
+                  {item.category === 'Póster' ? (
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleOpenItem(item);
+                      }}
+                      className="text-xs sm:text-sm font-bold text-[#6F2BCC] hover:text-[#2B017C] uppercase tracking-wider inline-flex items-center space-x-1.5 transition-colors cursor-pointer group"
+                    >
+                      <span className="group-hover:underline">VER PÓSTER</span>
+                      <span className="transform group-hover:translate-x-1 transition-transform">→</span>
+                    </button>
+                  ) : item.downloadUrl && item.downloadUrl !== '#' ? (
                     <a
                       href={item.downloadUrl}
                       target="_blank"
@@ -873,6 +904,7 @@ export default function Investigacion() {
                     </a>
                   ) : (
                     <button
+                      type="button"
                       onClick={() => handleOpenItem(item)}
                       className="text-xs sm:text-sm font-bold text-[#6F2BCC] hover:text-[#2B017C] uppercase tracking-wider inline-flex items-center space-x-1.5 transition-colors cursor-pointer"
                     >
@@ -890,15 +922,17 @@ export default function Investigacion() {
       </section>
 
       {/* --------------------------------------------------------------------- */}
-      {/* 6. MODAL DETALLE / DESCARGA DE INVESTIGACIÓN                          */}
+      {/* 6. MODAL DETALLE / VISOR DIRECTO DE PÓSTER E INVESTIGACIÓN            */}
       {/* --------------------------------------------------------------------- */}
       {selectedItem && (
         <div 
-          className="fixed inset-0 z-50 bg-[#1E0054]/60 backdrop-blur-sm flex items-center justify-center p-4 animate-fadeIn"
+          className="fixed inset-0 z-50 bg-[#1E0054]/70 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 animate-fadeIn overflow-y-auto"
           onClick={() => setSelectedItem(null)}
         >
           <div 
-            className="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative text-left space-y-4"
+            className={`bg-white rounded-3xl w-full p-5 sm:p-8 shadow-2xl relative text-left space-y-4 my-auto transition-all ${
+              selectedItem.category === 'Póster' ? 'max-w-2xl sm:max-w-3xl' : 'max-w-lg'
+            }`}
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-start justify-between">
@@ -908,43 +942,147 @@ export default function Investigacion() {
               <button
                 onClick={() => setSelectedItem(null)}
                 className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 flex items-center justify-center font-bold text-sm cursor-pointer transition-colors"
+                title="Cerrar ventana"
               >
                 ✕
               </button>
             </div>
 
-            <h3 className="text-xl sm:text-2xl font-bold text-[#374151] leading-snug">
+            <h3 className="text-lg sm:text-2xl font-bold text-[#374151] leading-snug">
               {selectedItem.title}
             </h3>
+
+            {/* Poster Image Preview: directly displayed without going to Drive */}
+            {selectedItem.category === 'Póster' && (
+              <div className="w-full bg-gradient-to-b from-gray-50 to-gray-100 rounded-2xl border border-gray-200 p-2 sm:p-4 text-center overflow-hidden">
+                {selectedItem.posterImage && (
+                  <div 
+                    className="relative group cursor-zoom-in inline-block max-w-full"
+                    onClick={() => setLightboxImage({ url: selectedItem.posterImage, title: selectedItem.title })}
+                    title="Clic para ampliar póster en pantalla completa"
+                  >
+                    <img 
+                      src={selectedItem.posterImage} 
+                      alt={selectedItem.title}
+                      className="max-h-[48vh] w-auto mx-auto object-contain rounded-xl shadow-md transition-transform duration-300 group-hover:scale-[1.01]"
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                        const fb = document.getElementById(`poster-placeholder-${selectedItem.id}`);
+                        if (fb) fb.style.display = 'flex';
+                      }}
+                    />
+                    <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl flex items-center justify-center text-white font-bold text-xs sm:text-sm gap-2 pointer-events-none">
+                      <span className="bg-black/60 px-3 py-1.5 rounded-full">🔍 Clic para ampliar en pantalla completa</span>
+                    </div>
+                  </div>
+                )}
+                
+                {/* Visual placeholder while image is ready */}
+                <div 
+                  id={`poster-placeholder-${selectedItem.id}`}
+                  style={{ display: selectedItem.posterImage ? 'none' : 'flex' }}
+                  className="flex-col items-center justify-center py-8 px-4 text-center space-y-2 bg-purple-50/70 rounded-xl border border-purple-100"
+                >
+                  <div className="w-12 h-12 rounded-full bg-[#6F2BCC]/10 text-[#6F2BCC] flex items-center justify-center text-2xl font-bold">
+                    🔬
+                  </div>
+                  <p className="font-bold text-[#2B017C] text-sm sm:text-base">Póster Científico OSD Research</p>
+                  <p className="text-xs text-gray-500 max-w-md">Visualización directa del estudio científico de biología molecular.</p>
+                </div>
+              </div>
+            )}
 
             <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
               {selectedItem.description}
             </p>
 
-            <div className="bg-gray-50 rounded-xl p-4 text-xs space-y-1 border border-gray-100">
+            <div className="bg-gray-50 rounded-xl p-3 sm:p-4 text-xs space-y-1 border border-gray-100">
               <p><span className="font-bold text-gray-700">Autores:</span> {selectedItem.authors}</p>
               <p><span className="font-bold text-gray-700">Año / Estado:</span> {selectedItem.year}</p>
             </div>
 
             <div className="pt-2 flex flex-col sm:flex-row gap-2.5">
-              <a
-                href={selectedItem.downloadUrl !== '#' ? selectedItem.downloadUrl : 'https://wa.me/573005143727?text=Hola%20OSD,%20deseo%20solicitar%20el%20documento%20de%20investigacion:%20' + encodeURIComponent(selectedItem.title)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex-1 bg-[#6F2BCC] hover:bg-[#2B017C] text-white font-extrabold text-xs sm:text-sm py-3 px-6 rounded-xl text-center uppercase tracking-wider shadow-md transition-all cursor-pointer"
-              >
-                {selectedItem.category === 'Póster' 
-                  ? 'Abrir / Descargar PDF Oficial' 
-                  : selectedItem.category === 'Proyectos' 
+              {selectedItem.category === 'Póster' ? (
+                <>
+                  <button
+                    type="button"
+                    onClick={() => setLightboxImage({ url: selectedItem.posterImage, title: selectedItem.title })}
+                    className="flex-1 bg-[#6F2BCC] hover:bg-[#2B017C] text-white font-extrabold text-xs sm:text-sm py-3 px-6 rounded-xl text-center uppercase tracking-wider shadow-md transition-all cursor-pointer flex items-center justify-center gap-2"
+                  >
+                    <span>🔍</span>
+                    <span>Ver Pantalla Completa</span>
+                  </button>
+                  <a
+                    href={selectedItem.posterImage}
+                    download
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 border-2 border-[#6F2BCC] text-[#6F2BCC] hover:bg-[#6F2BCC] hover:text-white font-extrabold text-xs sm:text-sm py-3 px-6 rounded-xl text-center uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center gap-2"
+                  >
+                    <span>⬇</span>
+                    <span>Descargar Imagen</span>
+                  </a>
+                </>
+              ) : (
+                <a
+                  href={selectedItem.downloadUrl !== '#' ? selectedItem.downloadUrl : 'https://wa.me/573005143727?text=Hola%20OSD,%20deseo%20solicitar%20el%20documento%20de%20investigacion:%20' + encodeURIComponent(selectedItem.title)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 bg-[#6F2BCC] hover:bg-[#2B017C] text-white font-extrabold text-xs sm:text-sm py-3 px-6 rounded-xl text-center uppercase tracking-wider shadow-md transition-all cursor-pointer"
+                >
+                  {selectedItem.category === 'Proyectos' 
                     ? 'Ver Proyecto Oficial' 
                     : 'Leer Artículo Completo'}
-              </a>
+                </a>
+              )}
               <button
+                type="button"
                 onClick={() => setSelectedItem(null)}
                 className="border border-gray-300 hover:bg-gray-100 text-gray-700 font-bold text-xs sm:text-sm py-3 px-6 rounded-xl cursor-pointer transition-colors"
               >
                 Cerrar
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* --------------------------------------------------------------------- */}
+      {/* 7. FULLSCREEN LIGHTBOX PARA VISUALIZACIÓN DIRECTA DE PÓSTERS          */}
+      {/* --------------------------------------------------------------------- */}
+      {lightboxImage && (
+        <div 
+          className="fixed inset-0 z-[70] bg-black/95 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 animate-fadeIn"
+          onClick={() => setLightboxImage(null)}
+        >
+          <div 
+            className="relative max-w-6xl max-h-[96vh] flex flex-col items-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setLightboxImage(null)}
+              className="absolute -top-12 right-0 sm:-right-8 w-10 h-10 rounded-full bg-white/20 hover:bg-white text-white hover:text-black flex items-center justify-center font-bold text-xl cursor-pointer transition-all shadow-lg"
+              title="Cerrar visor"
+            >
+              ✕
+            </button>
+            <img
+              src={lightboxImage.url}
+              alt={lightboxImage.title}
+              className="max-h-[84vh] max-w-full w-auto object-contain rounded-lg shadow-2xl"
+            />
+            <div className="mt-3 flex flex-col sm:flex-row items-center justify-between w-full px-2 gap-2 text-white">
+              <span className="text-xs sm:text-sm font-semibold truncate max-w-xl">{lightboxImage.title}</span>
+              <a
+                href={lightboxImage.url}
+                download
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-[#6F2BCC] hover:bg-[#8640E6] text-white text-xs font-bold py-2.5 px-5 rounded-lg uppercase tracking-wider flex items-center gap-2 transition-colors shadow"
+              >
+                <span>Descargar Imagen</span>
+                <span>↓</span>
+              </a>
             </div>
           </div>
         </div>

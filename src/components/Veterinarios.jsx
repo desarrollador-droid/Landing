@@ -80,16 +80,16 @@ function InteractiveCapsule() {
       >
         {/* Revealed text:
             - Fully hidden while circle is rolling to guarantee NO text overlap
-            - Generous horizontal padding (px-14 to px-24) ensures it never touches the parked circle
+            - Right padding leaves space for parked circle, left padding keeps text centered and prevents 3-line wrap
         */}
         <div 
-          className={`relative z-10 px-14 sm:px-20 md:px-24 text-center pointer-events-none transition-opacity duration-400 ease-in ${
+          className={`relative z-10 pr-14 sm:pr-20 md:pr-24 pl-6 sm:pl-8 text-center pointer-events-none transition-opacity duration-400 ease-in ${
             isCompleted ? 'opacity-100' : 'opacity-0'
           }`}
         >
           <div className="text-white font-extrabold text-base sm:text-xl md:text-2xl lg:text-[25px] leading-[1.2] tracking-tight text-center drop-shadow-sm">
-            <div>Tu aliado estratégico en el</div>
-            <div>proceso diagnóstico</div>
+            <div className="whitespace-nowrap">Tu aliado estratégico en el</div>
+            <div className="whitespace-nowrap">proceso diagnóstico</div>
           </div>
         </div>
 
