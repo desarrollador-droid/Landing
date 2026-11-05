@@ -6,6 +6,7 @@ export default function Investigacion() {
   const [activeFilter, setActiveFilter] = useState('Póster');
   const [selectedItem, setSelectedItem] = useState(null);
   const [lightboxImage, setLightboxImage] = useState(null);
+  const [isPosterZoomed, setIsPosterZoomed] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [honeypot, setHoneypot] = useState('');
@@ -14,6 +15,27 @@ export default function Investigacion() {
     correo: '',
     resumen: ''
   });
+
+  // Lock body scroll and handle ESC key when poster viewer is open
+  useEffect(() => {
+    if (lightboxImage) {
+      document.body.style.overflow = 'hidden';
+      const handleKeyDown = (e) => {
+        if (e.key === 'Escape') {
+          setLightboxImage(null);
+          setIsPosterZoomed(false);
+        }
+      };
+      window.addEventListener('keydown', handleKeyDown);
+      return () => {
+        document.body.style.overflow = '';
+        window.removeEventListener('keydown', handleKeyDown);
+      };
+    } else {
+      document.body.style.overflow = '';
+      setIsPosterZoomed(false);
+    }
+  }, [lightboxImage]);
   
   const autoPlayRef = useRef(null);
   const talentAutoPlayRef = useRef(null);
@@ -559,7 +581,7 @@ export default function Investigacion() {
                   setLightboxImage({
                     url: found.posterImage,
                     title: found.title,
-                    downloadUrl: found.posterImage,
+                    downloadUrl: found.downloadUrl || found.posterImage,
                     authors: found.authors,
                     year: found.year
                   });
@@ -875,7 +897,7 @@ export default function Investigacion() {
                     setLightboxImage({
                       url: item.posterImage,
                       title: item.title,
-                      downloadUrl: item.posterImage,
+                      downloadUrl: item.downloadUrl || item.posterImage,
                       id: item.id
                     });
                   } else {
@@ -918,7 +940,7 @@ export default function Investigacion() {
                         setLightboxImage({
                           url: item.posterImage,
                           title: item.title,
-                          downloadUrl: item.posterImage,
+                          downloadUrl: item.downloadUrl || item.posterImage,
                           id: item.id
                         });
                       }}
@@ -1022,41 +1044,64 @@ export default function Investigacion() {
       {/* --------------------------------------------------------------------- */}
       {lightboxImage && (
         <div 
-          className="fixed inset-0 z-[100] bg-black/92 backdrop-blur-md flex flex-col items-center justify-between p-3 sm:p-5 animate-fadeIn"
-          onClick={() => setLightboxImage(null)}
+          className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-md flex flex-col justify-between p-2 sm:p-4 animate-fadeIn select-none overflow-hidden"
+          onClick={() => {
+            setLightboxImage(null);
+            setIsPosterZoomed(false);
+          }}
         >
           {/* Top Floating Control Bar */}
           <div 
-            className="w-full max-w-6xl flex items-center justify-between gap-3 py-2.5 px-4 sm:px-6 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 text-white z-20 shadow-2xl flex-shrink-0"
+            className="w-full max-w-6xl mx-auto flex items-center justify-between gap-1.5 sm:gap-3 py-2 px-2.5 sm:py-2.5 sm:px-6 bg-gray-900/95 backdrop-blur-md rounded-xl sm:rounded-2xl border border-white/20 text-white z-20 shadow-2xl flex-shrink-0"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center gap-3 min-w-0 pr-2">
-              <span className="bg-[#6F2BCC] text-white text-[10px] sm:text-xs font-black uppercase px-2.5 py-1 rounded-lg tracking-wider flex-shrink-0">
-                Póster OSD
+            <div className="flex items-center gap-2 min-w-0 flex-1 pr-1">
+              <span className="hidden xs:inline-block bg-[#6F2BCC] text-white text-[10px] sm:text-xs font-black uppercase px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md sm:rounded-lg tracking-wider flex-shrink-0 shadow-sm">
+                Póster
               </span>
-              <h4 className="text-xs sm:text-sm md:text-base font-bold truncate text-gray-100">
+              <h4 className="text-xs sm:text-sm md:text-base font-bold truncate text-gray-100" title={lightboxImage.title}>
                 {lightboxImage.title}
               </h4>
             </div>
 
-            <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+            <div className="flex items-center gap-1.5 sm:gap-2.5 flex-shrink-0">
+              {/* Zoom Toggle Button */}
+              <button
+                type="button"
+                onClick={() => setIsPosterZoomed(!isPosterZoomed)}
+                className={`py-1.5 px-2.5 sm:py-2 sm:px-3.5 rounded-lg sm:rounded-xl text-xs sm:text-sm font-bold flex items-center gap-1 transition-all border cursor-pointer select-none ${
+                  isPosterZoomed
+                    ? 'bg-[#6F2BCC] text-white border-purple-400 shadow-md ring-2 ring-purple-400/30'
+                    : 'bg-white/15 hover:bg-white/25 text-white border-white/20'
+                }`}
+                title={isPosterZoomed ? 'Ajustar a pantalla' : 'Ampliar para leer texto'}
+              >
+                <span>🔍</span>
+                <span>{isPosterZoomed ? 'Ajustar' : 'Ampliar'}</span>
+              </button>
+
               {/* Direct Download Button */}
               <a
                 href={lightboxImage.downloadUrl || lightboxImage.url}
                 download
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-[#6F2BCC] hover:bg-[#8640E6] text-white text-xs sm:text-sm font-extrabold py-2 px-3.5 sm:px-5 rounded-xl uppercase tracking-wider flex items-center gap-2 transition-all shadow-lg hover:shadow-purple-500/30 cursor-pointer"
+                className="bg-[#6F2BCC] hover:bg-[#8640E6] text-white text-xs sm:text-sm font-extrabold py-1.5 px-2.5 sm:py-2 sm:px-4 rounded-lg sm:rounded-xl uppercase tracking-wider flex items-center gap-1 sm:gap-1.5 transition-all shadow-md hover:shadow-purple-500/40 cursor-pointer flex-shrink-0 select-none"
+                title="Descargar póster oficial"
               >
-                <span>Descargar Póster {lightboxImage.downloadUrl && lightboxImage.downloadUrl.endsWith('.pdf') ? '(PDF Oficial)' : '(Imagen)'}</span>
-                <span className="text-sm font-bold">⬇</span>
+                <span className="hidden sm:inline">Descargar </span>
+                <span>{lightboxImage.downloadUrl && lightboxImage.downloadUrl.endsWith('.pdf') ? 'PDF' : 'JPG'}</span>
+                <span className="font-bold text-xs sm:text-sm">⬇</span>
               </a>
 
               {/* Close Button */}
               <button
                 type="button"
-                onClick={() => setLightboxImage(null)}
-                className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white/15 hover:bg-white text-white hover:text-gray-900 flex items-center justify-center font-black text-lg transition-all cursor-pointer border border-white/20"
+                onClick={() => {
+                  setLightboxImage(null);
+                  setIsPosterZoomed(false);
+                }}
+                className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-white/20 hover:bg-white text-white hover:text-gray-900 flex items-center justify-center font-black text-base sm:text-lg transition-all cursor-pointer border border-white/25 flex-shrink-0 select-none"
                 title="Cerrar visor"
               >
                 ✕
@@ -1064,24 +1109,53 @@ export default function Investigacion() {
             </div>
           </div>
 
-          {/* Central Image: crisp, large, centered */}
+          {/* Central Image: responsive scrollable container */}
           <div 
-            className="relative flex-1 w-full max-w-6xl flex items-center justify-center my-2 sm:my-3 overflow-hidden"
-            onClick={(e) => e.stopPropagation()}
+            className="relative flex-1 w-full max-w-6xl mx-auto my-1.5 sm:my-3 overflow-auto touch-pan-x touch-pan-y overscroll-contain rounded-xl"
+            style={{ WebkitOverflowScrolling: 'touch' }}
+            onClick={(e) => {
+              if (e.target === e.currentTarget) {
+                setLightboxImage(null);
+                setIsPosterZoomed(false);
+              }
+            }}
           >
-            <img
-              src={lightboxImage.url}
-              alt={lightboxImage.title}
-              className="max-h-[82vh] w-auto max-w-full object-contain rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.6)] border border-white/15 bg-white transition-transform duration-200"
-            />
+            <div 
+              className={`min-h-full flex ${
+                isPosterZoomed 
+                  ? 'w-max min-w-full items-start justify-start p-2 sm:p-4' 
+                  : 'w-full min-w-full items-center justify-center p-1 sm:p-2'
+              }`}
+              onClick={(e) => {
+                if (e.target === e.currentTarget) {
+                  setLightboxImage(null);
+                  setIsPosterZoomed(false);
+                }
+              }}
+            >
+              <img
+                src={lightboxImage.url}
+                alt={lightboxImage.title}
+                onClick={() => setIsPosterZoomed(!isPosterZoomed)}
+                className={`transition-all duration-300 rounded-lg sm:rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.6)] border border-white/15 bg-white select-none ${
+                  isPosterZoomed
+                    ? 'w-[180%] xs:w-[150%] sm:w-[125%] md:w-[105%] min-w-[580px] sm:min-w-[850px] max-w-none h-auto cursor-zoom-out'
+                    : 'max-h-[72vh] sm:max-h-[80vh] w-auto max-w-full object-contain cursor-zoom-in'
+                }`}
+              />
+            </div>
           </div>
 
           {/* Bottom Bar: Instructions */}
           <div 
-            className="text-center text-xs text-white/70 tracking-wide font-medium z-10 py-1"
+            className="text-center text-[10px] sm:text-xs text-white/70 tracking-wide font-medium z-10 py-1 flex items-center justify-center gap-2 flex-shrink-0 select-none"
             onClick={(e) => e.stopPropagation()}
           >
-            <span>Haz clic fuera de la imagen o en la ✕ para cerrar • On Site Diagnostic Research</span>
+            <span>
+              {isPosterZoomed 
+                ? '🔍 Modo lectura: Desliza para explorar todos los detalles • Toca la imagen o "Ajustar" para volver' 
+                : '💡 Toca la imagen o "Ampliar" para leer texto • Toca fuera o ✕ para cerrar'}
+            </span>
           </div>
         </div>
       )}
