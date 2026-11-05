@@ -284,8 +284,8 @@ export default function Investigacion() {
       actionLabel: 'VER PÓSTER',
       authors: 'Leidy Alejandra Giraldo, Cesar Muñoz, OSD Diagnostic',
       year: '2026',
-      posterImage: '/posters/disbiosis-caninos.png',
-      downloadUrl: '/posters/disbiosis-caninos.png'
+      posterImage: '/posters/disbiosis-caninos.jpg',
+      downloadUrl: '/posters/disbiosis-caninos.pdf'
     },
     {
       id: 'disbiosis-felinos',
@@ -295,8 +295,8 @@ export default function Investigacion() {
       actionLabel: 'VER PÓSTER',
       authors: 'Equipo Científico OSD Research & CVDC',
       year: '2026',
-      posterImage: '/posters/disbiosis-felinos.png',
-      downloadUrl: '/posters/disbiosis-felinos.png'
+      posterImage: '/posters/disbiosis-felinos.jpg',
+      downloadUrl: '/posters/disbiosis-felinos.pdf'
     },
     {
       id: 'mdr1',
@@ -306,8 +306,8 @@ export default function Investigacion() {
       actionLabel: 'VER PÓSTER',
       authors: 'Cesar Muñoz, Maria Paula Urián, Grupo OSD Research',
       year: '2026',
-      posterImage: '/posters/mdr1.png',
-      downloadUrl: '/posters/mdr1.png'
+      posterImage: '/posters/mdr1.jpg',
+      downloadUrl: '/posters/mdr1.pdf'
     },
     {
       id: 'felv-coinfeccion',
@@ -317,8 +317,8 @@ export default function Investigacion() {
       actionLabel: 'VER PÓSTER',
       authors: 'Ángela Sánchez, Cesar Muñoz, OSD Lab',
       year: '2026',
-      posterImage: '/posters/felv-coinfeccion.png',
-      downloadUrl: '/posters/felv-coinfeccion.png'
+      posterImage: '/posters/felv-coinfeccion.jpg',
+      downloadUrl: '/posters/felv-coinfeccion.pdf'
     },
     {
       id: 'brucella-lcr',
@@ -328,8 +328,8 @@ export default function Investigacion() {
       actionLabel: 'VER PÓSTER',
       authors: 'Grupo Clínico y Molecular OSD Research',
       year: '2026',
-      posterImage: '/posters/brucella-lcr.png',
-      downloadUrl: '/posters/brucella-lcr.png'
+      posterImage: '/posters/brucella-lcr.jpg',
+      downloadUrl: '/posters/brucella-lcr.pdf'
     },
     {
       id: 'leishmania-caninos',
@@ -339,8 +339,19 @@ export default function Investigacion() {
       actionLabel: 'VER PÓSTER',
       authors: 'Cesar Muñoz, Laura Alexandra Moreno, OSD Team',
       year: '2026',
-      posterImage: '/posters/leishmania-caninos.png',
+      posterImage: '/posters/leishmania-caninos.jpg',
       downloadUrl: '/posters/leishmania-caninos.png'
+    },
+    {
+      id: 'anaplasma-dirofilaria',
+      category: 'Póster',
+      title: 'Coinfección por Anaplasma spp., Dirofilaria repens y Dirofilaria immitis en un perro: Reporte de caso.',
+      description: 'Reporte clínico y molecular de coinfección múltiple en canino por patógenos transmitidos por vectores, abordado con diagnóstico qPCR de alta sensibilidad en sangre total.',
+      actionLabel: 'VER PÓSTER',
+      authors: 'Ángela M. Sánchez Pamplona, Felipe Amador Luján, Leidy A. Giraldo Martínez, Cesar O. Muñoz Cadavid',
+      year: '2026',
+      posterImage: '/posters/anaplasma-dirofilaria.jpg',
+      downloadUrl: '/posters/anaplasma-dirofilaria.pdf'
     },
     {
       id: 'adn-osd',
@@ -1031,13 +1042,13 @@ export default function Investigacion() {
             <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
               {/* Direct Download Button */}
               <a
-                href={lightboxImage.url}
-                download={`${lightboxImage.title.slice(0, 50)}.png`}
+                href={lightboxImage.downloadUrl || lightboxImage.url}
+                download
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-[#6F2BCC] hover:bg-[#8640E6] text-white text-xs sm:text-sm font-extrabold py-2 px-3.5 sm:px-5 rounded-xl uppercase tracking-wider flex items-center gap-2 transition-all shadow-lg hover:shadow-purple-500/30 cursor-pointer"
               >
-                <span>Descargar Imagen / PDF</span>
+                <span>Descargar Póster {lightboxImage.downloadUrl && lightboxImage.downloadUrl.endsWith('.pdf') ? '(PDF Oficial)' : '(Imagen)'}</span>
                 <span className="text-sm font-bold">⬇</span>
               </a>
 
