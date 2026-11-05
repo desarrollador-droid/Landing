@@ -26,46 +26,39 @@ function AnimatedCounter({ target, prefix = "", suffix = "", duration = 2000 }) 
 }
 
 function InteractiveCapsule() {
-  const [progress, setProgress] = useState(0); // 0 to 1
+  const [isTriggered, setIsTriggered] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(false);
 
   useEffect(() => {
-    let animId = null;
+    // 1. Auto-trigger after 450ms on load so the user sees the smooth fluid roll
+    const timer = setTimeout(() => {
+      setIsTriggered(true);
+    }, 450);
 
+    // 2. Also trigger immediately on any initial scroll if user scrolls before 450ms
     const handleScroll = () => {
       const scrollY = window.scrollY || document.documentElement.scrollTop;
-      // Rolls smoothly as the user initiates scroll from top (0 to 80px)
-      const p = Math.min(1, Math.max(0, scrollY / 75));
-      setProgress((prev) => Math.max(prev, p));
+      if (scrollY > 5) {
+        setIsTriggered(true);
+      }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-
-    // Smoothly self-rolls after 1.2s if user remains idle at top of page
-    const timer = setTimeout(() => {
-      let start = null;
-      const step = (now) => {
-        if (!start) start = now;
-        const elapsed = (now - start) / 750;
-        if (elapsed < 1) {
-          const ease = 1 - Math.pow(1 - elapsed, 3);
-          setProgress((prev) => Math.max(prev, ease));
-          animId = requestAnimationFrame(step);
-        } else {
-          setProgress(1);
-        }
-      };
-      animId = requestAnimationFrame(step);
-    }, 1200);
-
     return () => {
-      window.removeEventListener('scroll', handleScroll);
       clearTimeout(timer);
-      if (animId) cancelAnimationFrame(animId);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
-  const isCompleted = progress >= 0.95;
+  // When triggered, roll the circle smoothly all the way across and complete without stopping halfway
+  useEffect(() => {
+    if (isTriggered) {
+      const finishTimer = setTimeout(() => {
+        setIsCompleted(true);
+      }, 750);
+      return () => clearTimeout(finishTimer);
+    }
+  }, [isTriggered]);
 
   return (
     <div className="relative inline-flex flex-col items-center select-none">
@@ -86,11 +79,11 @@ function InteractiveCapsule() {
         }}
       >
         {/* Revealed text:
-            - Fully hidden until the circle finishes rolling (isCompleted === true)
-            - Revealed in crisp white once completed and capsule turns purple
+            - Fully hidden while circle is rolling to guarantee NO text overlap
+            - Generous horizontal padding (px-14 to px-24) ensures it never touches the parked circle
         */}
         <div 
-          className={`relative z-10 pr-14 sm:pr-20 md:pr-24 text-center pointer-events-none transition-opacity duration-400 ease-in ${
+          className={`relative z-10 px-14 sm:px-20 md:px-24 text-center pointer-events-none transition-opacity duration-400 ease-in ${
             isCompleted ? 'opacity-100' : 'opacity-0'
           }`}
         >
@@ -101,8 +94,7 @@ function InteractiveCapsule() {
         </div>
 
         {/* Rolling Circle Dot:
-            - While rolling: purple (#6014CA) circle with white arrow ➔
-            - When finished: turns white with purple checkmark ✔ against the purple capsule
+            - Glides across from left to right all the way to 100% without stopping halfway
         */}
         <div
           className={`absolute top-1/2 -translate-y-1/2 rounded-full flex items-center justify-center z-20 pointer-events-none transition-all duration-300 ${
@@ -113,8 +105,10 @@ function InteractiveCapsule() {
           style={{
             width: 'var(--capsule-dot-size, 50px)',
             height: 'var(--capsule-dot-size, 50px)',
-            left: `calc(8px + ${progress} * (100% - 16px - var(--capsule-dot-size, 50px)))`,
-            transition: 'left 0.15s ease-out, background-color 0.3s ease-out, color 0.3s ease-out'
+            left: isTriggered
+              ? 'calc(100% - 8px - var(--capsule-dot-size, 50px))'
+              : '8px',
+            transition: 'left 0.75s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.3s ease-out, color 0.3s ease-out'
           }}
         >
           {isCompleted ? (
@@ -128,8 +122,10 @@ function InteractiveCapsule() {
   );
 }
 
-function InteractiveChallengeCard({ title, description }) {
-  const [progress, setProgress] = useState(0); // 0 to 1
+function InteractiveChallengeCard({ title, description, index = 0 }) {
+  const [isTriggered, setIsTriggered] = useState(false);
+  const [isSwapped, setIsSwapped] = useState(false);
+  const [showDesc, setShowDesc] = useState(true);
   const [shifts, setShifts] = useState({ titleX: 0, descX: 0, titleY: 0, descY: 0, isMobile: false });
   const cardRef = useRef(null);
   const titleRef = useRef(null);
@@ -143,7 +139,7 @@ function InteractiveChallengeCard({ title, description }) {
       const descRect = descRef.current.getBoundingClientRect();
 
       if (isMobile) {
-        const gap = 10;
+        const gap = 12;
         setShifts({
           titleX: 0,
           descX: 0,
@@ -152,10 +148,9 @@ function InteractiveChallengeCard({ title, description }) {
           isMobile: true
         });
       } else {
-        const gap = 12;
         setShifts({
-          titleX: descRect.width + gap,
-          descX: titleRect.width + gap,
+          titleX: descRect.width,
+          descX: titleRect.width,
           titleY: 0,
           descY: 0,
           isMobile: false
@@ -174,44 +169,52 @@ function InteractiveChallengeCard({ title, description }) {
   }, []);
 
   useEffect(() => {
-    let ticking = false;
+    if (!cardRef.current) return;
 
-    const handleScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          if (!cardRef.current) return;
-          const rect = cardRef.current.getBoundingClientRect();
-          const windowHeight = window.innerHeight || document.documentElement.clientHeight;
-          
-          // Triggers as card enters and moves through viewport
-          const start = windowHeight * 0.90;
-          const end = windowHeight * 0.45;
-          
-          if (rect.top <= end) {
-            setProgress(1);
-          } else if (rect.top < start) {
-            const rawProgress = (start - rect.top) / (start - end);
-            const p = Math.max(0, Math.min(1, rawProgress));
-            setProgress((prev) => Math.max(prev, p));
+    if (typeof IntersectionObserver === 'undefined') {
+      setIsTriggered(true);
+      setIsSwapped(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !isTriggered) {
+            setIsTriggered(true);
+            const staggerDelay = (index % 2) * 120;
+
+            setTimeout(() => {
+              // 1. Fade out description text first so the moving title badge NEVER overlaps it
+              setShowDesc(false);
+
+              // 2. Once description is faded out, smoothly glide the purple title badge across
+              setTimeout(() => {
+                setIsSwapped(true);
+
+                // 3. Once title badge arrives in place, smoothly fade in description on the left
+                setTimeout(() => {
+                  setShowDesc(true);
+                }, 600);
+              }, 180);
+            }, staggerDelay);
           }
-          ticking = false;
         });
-        ticking = true;
-      }
-    };
+      },
+      { threshold: 0.2, rootMargin: '0px 0px -40px 0px' }
+    );
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    observer.observe(cardRef.current);
+    return () => observer.disconnect();
+  }, [isTriggered, index]);
 
   const titleTransform = shifts.isMobile
-    ? `translateY(${progress * shifts.titleY}px)`
-    : `translateX(${progress * shifts.titleX}px)`;
+    ? isSwapped ? `translateY(${shifts.titleY}px)` : 'translateY(0)'
+    : isSwapped ? `translateX(${shifts.titleX}px)` : 'translateX(0)';
 
   const descTransform = shifts.isMobile
-    ? `translateY(-${progress * shifts.descY}px)`
-    : `translateX(-${progress * shifts.descX}px)`;
+    ? isSwapped ? `translateY(-${shifts.descY}px)` : 'translateY(0)'
+    : isSwapped ? `translateX(-${shifts.descX}px)` : 'translateX(0)';
 
   return (
     <div 
@@ -224,7 +227,7 @@ function InteractiveChallengeCard({ title, description }) {
         className="w-full sm:w-[36%] md:w-[35%] lg:w-[34%] bg-gradient-to-r from-[#6014CA] to-[#6E1FD8] text-white rounded-[26px] sm:rounded-full py-5 px-5 sm:px-6 md:py-6 flex items-center justify-center text-center shadow-md flex-shrink-0 z-20 select-none will-change-transform"
         style={{
           transform: titleTransform,
-          transition: 'transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1)'
+          transition: 'transform 0.6s cubic-bezier(0.22, 1, 0.36, 1)'
         }}
       >
         <span className="font-extrabold text-base sm:text-lg md:text-[19px] lg:text-[20px] leading-snug tracking-tight text-white drop-shadow-sm">
@@ -232,16 +235,20 @@ function InteractiveChallengeCard({ title, description }) {
         </span>
       </div>
 
-      {/* Description Area: smoothly swaps position with purple title badge upon scrolling */}
+      {/* Description Area: smoothly swaps position with purple title badge upon scrolling into view */}
       <div
         ref={descRef}
         className="w-full sm:w-[64%] md:w-[65%] lg:w-[66%] relative flex items-center py-4 px-4 sm:py-5 sm:px-6 md:px-8 select-none z-10 will-change-transform"
         style={{
           transform: descTransform,
-          transition: 'transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1)'
+          transition: 'transform 0.6s cubic-bezier(0.22, 1, 0.36, 1)'
         }}
       >
-        <p className="text-[#1e1e1e] font-normal text-xs sm:text-sm md:text-[15px] lg:text-[15.5px] leading-relaxed">
+        <p 
+          className={`text-[#1e1e1e] font-normal text-xs sm:text-sm md:text-[15px] lg:text-[15.5px] leading-relaxed transition-opacity duration-200 ${
+            showDesc ? 'opacity-100' : 'opacity-0'
+          }`}
+        >
           {description}
         </p>
       </div>
@@ -670,10 +677,12 @@ export default function Veterinarios() {
               <InteractiveChallengeCard 
                 title={challengeCards[0].title} 
                 description={challengeCards[0].description} 
+                index={0}
               />
               <InteractiveChallengeCard 
                 title={challengeCards[1].title} 
                 description={challengeCards[1].description} 
+                index={1}
               />
             </div>
 
@@ -682,10 +691,12 @@ export default function Veterinarios() {
               <InteractiveChallengeCard 
                 title={challengeCards[2].title} 
                 description={challengeCards[2].description} 
+                index={2}
               />
               <InteractiveChallengeCard 
                 title={challengeCards[3].title} 
                 description={challengeCards[3].description} 
+                index={3}
               />
             </div>
           </div>
