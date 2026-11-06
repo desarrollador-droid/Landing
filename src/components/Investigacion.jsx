@@ -1,5 +1,171 @@
 import React, { useState, useEffect, useRef } from 'react';
 
+// Repositorio Oficial OSD: Proyectos, Artículos y Pósters
+const repositoryItems = [
+  // 1. Proyectos de investigación
+  {
+    id: 'coronavirus-felino',
+    category: 'Proyectos',
+    title: 'Identificación de mutaciones específicas y caracterización del perfil de mutaciones asociadas con Peritonitis Infecciosa Felina (PIF)',
+    description: 'El Coronavirus felino (FCoV) posee una alta capacidad de mutación, generando cuadros leves hasta desencadenar PIF tras un cambio de tropismo hacia monocitos y macrófagos. Este proyecto caracteriza el conjunto de mutaciones genéticas asociadas al cambio de patogenicidad y tropismo viral para permitir un diagnóstico precoz certero.',
+    actionLabel: 'CONOCER PROYECTO',
+    authors: 'Cesar Muñoz, Ángela Sánchez, Maria Paula Urián',
+    year: 'En desarrollo (Fase II)',
+    downloadUrl: 'https://osdiagnostic.com/proyectos-investigacion-laboratorio-biologia-molecular/'
+  },
+  {
+    id: 'qpcr-dpcr',
+    category: 'Proyectos',
+    title: 'Comparación de la sensibilidad analítica de qPCR vs dPCR para la detección de agentes hemotrópicos en caninos y felinos',
+    description: 'Iniciativa en colaboración con ANNAR Health Technologies e instituciones académicas para evaluar el desempeño analítico de la PCR digital (dPCR) frente a qPCR en muestras de sangre, permitiendo cuantificación absoluta de cargas bajas sin curvas estándar.',
+    actionLabel: 'CONOCER PROYECTO',
+    authors: 'Felipe Amador, Cesar Muñoz, OSD Lab',
+    year: 'En desarrollo (Fase I)',
+    downloadUrl: 'https://osdiagnostic.com/proyectos-investigacion-laboratorio-biologia-molecular/'
+  },
+  {
+    id: 'mir-126-perros',
+    category: 'Proyectos',
+    title: 'Evaluación de miR-126 como biomarcador para la glomerulonefritis inmunomediada en perros',
+    description: 'La glomerulonefritis inmunomediada es una patología renal de difícil diagnóstico temprano. Este proyecto evalúa la expresión del microARN miR-126 en muestras urinarias caninas con el fin de determinar su viabilidad como biomarcador no invasivo para el diagnóstico y monitoreo temprano antes de la falla renal crónica.',
+    actionLabel: 'CONOCER PROYECTO',
+    authors: 'Laura Alexandra Moreno, Cesar Muñoz, Valentina Zapata',
+    year: 'En desarrollo (Fase I)',
+    downloadUrl: 'https://osdiagnostic.com/proyectos-investigacion-laboratorio-biologia-molecular/'
+  },
+  {
+    id: 'felv-subtipo-oncogenico',
+    category: 'Proyectos',
+    title: 'Diferenciación del subtipo oncogénico del virus de la leucemia felina (FeLV-B) mediante diagnóstico molecular',
+    description: 'El subtipo FeLV-B se encuentra asociado a una mayor oncogenicidad y progresión a linfoma. Debido a que las pruebas diagnósticas convencionales no diferencian subtipos virales, este proyecto desarrolla y valida una estrategia de diagnóstico molecular para estratificar casos y permitir medidas terapéuticas de alta precisión.',
+    actionLabel: 'CONOCER PROYECTO',
+    authors: 'Maria Paula Urián, Farley Garavito Jaimes, Cesar Muñoz',
+    year: 'En desarrollo (Fase II)',
+    downloadUrl: 'https://osdiagnostic.com/proyectos-investigacion-laboratorio-biologia-molecular/'
+  },
+
+  // 2. Artículos Científicos
+  {
+    id: 'adn-osd',
+    category: 'Artículos',
+    title: 'El ADN de OSD: investigación en busca de transformar la medicina veterinaria.',
+    description: 'Publicación técnica sobre el impacto de la biología molecular en el pronóstico y tratamiento clínico temprano en Latinoamérica.',
+    actionLabel: 'LEER ARTÍCULO',
+    authors: 'OSD Research Communications',
+    year: '2025',
+    downloadUrl: 'https://osdiagnostic.com/noticias-veterinarias/investigacion-veterinaria/'
+  },
+  {
+    id: 'dpcr-veterinaria',
+    category: 'Artículos',
+    title: 'dPCR en Medicina Veterinaria: Proyecto pionero de OSD y ANNAR Technologies',
+    description: 'Publicación sobre la implementación de la PCR digital en Colombia, incrementando la sensibilidad analítica y evitando falsos negativos en bajas cargas genómicas.',
+    actionLabel: 'LEER ARTÍCULO',
+    authors: 'Equipo Científico OSD & ANNAR',
+    year: '2025',
+    downloadUrl: 'https://osdiagnostic.com/noticias-veterinarias/pcr-digital/'
+  },
+  {
+    id: 'microbiota-edad',
+    category: 'Artículos',
+    title: 'Microbiota intestinal en perros y gatos según su edad: Evidencia clínica',
+    description: 'Análisis detallado de cómo los patrones microbianos intestinales varían en cachorros, adultos y gerontes para fundamentar terapias digestivas personalizadas.',
+    actionLabel: 'LEER ARTÍCULO',
+    authors: 'Leidy Alejandra Giraldo, Equipo OSD Research',
+    year: '2025',
+    downloadUrl: 'https://osdiagnostic.com/noticias-veterinarias/microbiota-intestinal-en-perros-y-gatos-segun-su-edad/'
+  },
+  {
+    id: 'mdr1-reconocimiento',
+    category: 'Artículos',
+    title: 'OSD llevó el conocimiento veterinario colombiano a un escenario internacional',
+    description: 'Reconocimiento internacional a la investigación farmacogenética sobre la mutación del gen MDR1 en razas caninas colombianas.',
+    actionLabel: 'LEER ARTÍCULO',
+    authors: 'Cesar Muñoz, Dirección Científica OSD',
+    year: '2025',
+    downloadUrl: 'https://osdiagnostic.com/noticias-veterinarias/osd-llevo-el-conocimiento-veterinario-colombiano-a-un-escenario-internacional/'
+  },
+
+  // 3. Pósters Científicos Oficiales OSD
+  {
+    id: 'disbiosis-caninos',
+    category: 'Póster',
+    title: 'Desarrollo de un índice de disbiosis estratificado por edad en caninos.',
+    description: 'Investigación que establece umbrales específicos de salud intestinal para cachorros, adultos y gerontes. Este estudio demuestra que los puntos de corte para identificar la disbiosis asociada a enteropatías crónicas varían según la etapa de vida del paciente, ofreciendo una herramienta cuantitativa de alta precisión para el diagnóstico clínico veterinario.',
+    actionLabel: 'VER PÓSTER',
+    authors: 'Leidy Alejandra Giraldo, Cesar Muñoz, OSD Diagnostic',
+    year: '2026',
+    posterImage: '/posters/disbiosis-caninos.jpg',
+    downloadUrl: '/posters/disbiosis-caninos.pdf'
+  },
+  {
+    id: 'disbiosis-felinos',
+    category: 'Póster',
+    title: 'Análisis comparativo de la microbiota intestinal en gatos sanos y con enteropatías.',
+    description: 'Investigación que logra discriminar con precisión entre estados normobióticos y disbióticos, demostrando que los umbrales de salud intestinal deben ajustarse según la etapa de vida del gato (cachorro, adulto o geronte) para garantizar un diagnóstico clínico certero en pacientes con enteropatías crónicas.',
+    actionLabel: 'VER PÓSTER',
+    authors: 'Equipo Científico OSD Research & CVDC',
+    year: '2026',
+    posterImage: '/posters/disbiosis-felinos.jpg',
+    downloadUrl: '/posters/disbiosis-felinos.pdf'
+  },
+  {
+    id: 'mdr1',
+    category: 'Póster',
+    title: 'Caracterización de la frecuencia de la mutación nt230[del4] del gen MDR1 en razas caninas.',
+    description: 'Estudio epidemiológico mediante qPCR que identifica la carencia de la proteína P-Gp en caninos. Proporciona un marco de referencia en farmacogenética para evitar toxicidades graves por fármacos comunes. Es una herramienta esencial para personalizar la terapia farmacológica y garantizar la integridad del paciente en el contexto nacional.',
+    actionLabel: 'VER PÓSTER',
+    authors: 'Cesar Muñoz, Maria Paula Urián, Grupo OSD Research',
+    year: '2026',
+    posterImage: '/posters/mdr1.jpg',
+    downloadUrl: '/posters/mdr1.pdf'
+  },
+  {
+    id: 'felv-coinfeccion',
+    category: 'Póster',
+    title: 'Evaluación de coinfección en felinos domésticos positivos a FeLV.',
+    description: 'Análisis por RT-qPCR que identifica la frecuencia de patógenos oportunistas (Anaplasma, Bartonella, Mycoplasma) en pacientes con Leucemia Felina. El estudio resalta la vulnerabilidad en cachorros y la urgencia de diagnósticos integrales para tratar infecciones secundarias en pacientes inmunosuprimidos.',
+    actionLabel: 'VER PÓSTER',
+    authors: 'Ángela Sánchez, Cesar Muñoz, OSD Lab',
+    year: '2026',
+    posterImage: '/posters/felv-coinfeccion.jpg',
+    downloadUrl: '/posters/felv-coinfeccion.pdf'
+  },
+  {
+    id: 'brucella-lcr',
+    category: 'Póster',
+    title: 'Detección de Brucella spp., Haemophilus spp. y Pseudomonas spp. en líquido cefalorraquídeo',
+    description: 'Mediante qPCR, se detectó una coinfección atípica de Brucella spp., Haemophilus spp. y Pseudomonas spp. en líquido cefalorraquídeo, permitiendo un tratamiento dirigido que salvó la vida del paciente y evitó fallos diagnósticos comunes en enfermedades zoonóticas de difícil aislamiento.',
+    actionLabel: 'VER PÓSTER',
+    authors: 'Grupo Clínico y Molecular OSD Research',
+    year: '2026',
+    posterImage: '/posters/brucella-lcr.jpg',
+    downloadUrl: '/posters/brucella-lcr.pdf'
+  },
+  {
+    id: 'leishmania-caninos',
+    category: 'Póster',
+    title: 'Detección molecular de Leishmania infantum en caninos de zonas no endémicas de Colombia.',
+    description: 'Investigación documenta la presencia de L. infantum en regiones sin transmisión activa, validando la qPCR como eje para el diagnóstico temprano y seguimiento de carga parasitaria en diversos nichos biológicos. Los hallazgos consolidan un marco de referencia para la vigilancia molecular y el monitoreo terapéutico.',
+    actionLabel: 'VER PÓSTER',
+    authors: 'Cesar Muñoz, Laura Alexandra Moreno, OSD Team',
+    year: '2026',
+    posterImage: '/posters/leishmania-caninos.jpg',
+    downloadUrl: '/posters/leishmania-caninos.png'
+  },
+  {
+    id: 'anaplasma-dirofilaria',
+    category: 'Póster',
+    title: 'Coinfección por Anaplasma spp., Dirofilaria repens y Dirofilaria immitis en un perro: Reporte de caso.',
+    description: 'Reporte clínico y molecular de coinfección múltiple en canino por patógenos transmitidos por vectores, abordado con diagnóstico qPCR de alta sensibilidad en sangre total.',
+    actionLabel: 'VER PÓSTER',
+    authors: 'Ángela M. Sánchez Pamplona, Felipe Amador Luján, Leidy A. Giraldo Martínez, Cesar O. Muñoz Cadavid',
+    year: '2026',
+    posterImage: '/posters/anaplasma-dirofilaria.jpg',
+    downloadUrl: '/posters/anaplasma-dirofilaria.pdf'
+  }
+];
+
 export default function Investigacion() {
   const [activeSlide, setActiveSlide] = useState(0);
   const [talentIndex, setTalentIndex] = useState(0);
@@ -42,51 +208,14 @@ export default function Investigacion() {
   const talentTouchStartX = useRef(null);
   const talentTouchStartY = useRef(null);
 
-  // 1. Hero Carousel Slides (Video Background Carousel - Page 1)
-  const heroSlides = [
-    {
-      id: 0,
-      badge: 'Póster',
-      title: 'Desarrollo de un índice de disbiosis estratificado por edad en caninos.',
-      repoId: 'disbiosis-caninos',
-      description: 'Investigación que establece umbrales específicos de salud intestinal para cachorros, adultos y gerontes.'
-    },
-    {
-      id: 1,
-      badge: 'Póster',
-      title: 'Análisis comparativo de la microbiota intestinal en gatos sanos y con enteropatías.',
-      repoId: 'disbiosis-felinos',
-      description: 'Discriminación precisa entre estados normobióticos y disbióticos ajustados a la etapa de vida felina.'
-    },
-    {
-      id: 2,
-      badge: 'Póster',
-      title: 'Caracterización de la frecuencia de la mutación nt230[del4] del gen MDR1 en razas caninas.',
-      repoId: 'mdr1',
-      description: 'Estudio farmacogenético mediante qPCR que identifica la carencia de la proteína P-Gp en caninos.'
-    },
-    {
-      id: 3,
-      badge: 'Póster',
-      title: 'Evaluación de coinfección en felinos domésticos positivos a FeLV.',
-      repoId: 'felv-coinfeccion',
-      description: 'Frecuencia de patógenos oportunistas en pacientes inmunosuprimidos con Leucemia Felina.'
-    },
-    {
-      id: 4,
-      badge: 'Póster',
-      title: 'Detección de Brucella spp., Haemophilus spp. y Pseudomonas spp. en líquido cefalorraquídeo',
-      repoId: 'brucella-lcr',
-      description: 'Coinfección atípica en LCR detectada por qPCR permitiendo tratamiento dirigido de alta precisión.'
-    },
-    {
-      id: 5,
-      badge: 'Póster',
-      title: 'Detección molecular de Leishmania infantum en caninos de zonas no endémicas de Colombia.',
-      repoId: 'leishmania-caninos',
-      description: 'Vigilancia molecular y monitoreo terapéutico de carga parasitaria en áreas sin transmisión activa.'
-    }
-  ];
+  // 1. Hero Carousel Slides (Video Background Carousel - Page 1) - Todos los Proyectos, Artículos y Pósters
+  const heroSlides = repositoryItems.map((item, idx) => ({
+    id: idx,
+    badge: item.category === 'Artículos' ? 'Artículo' : item.category === 'Proyectos' ? 'Proyecto' : 'Póster',
+    title: item.title,
+    repoId: item.id,
+    description: item.description
+  }));
 
   // Carousel autoplay
   useEffect(() => {
@@ -296,166 +425,7 @@ export default function Investigacion() {
     talentTouchStartY.current = null;
   };
 
-  // 5. Repositorio Oficial extraído de osdiagnostic.com/posters-de-investigacion-medicina-veterinaria
-  const repositoryItems = [
-    {
-      id: 'disbiosis-caninos',
-      category: 'Póster',
-      title: 'Desarrollo de un índice de disbiosis estratificado por edad en caninos.',
-      description: 'Investigación que establece umbrales específicos de salud intestinal para cachorros, adultos y gerontes. Este estudio demuestra que los puntos de corte para identificar la disbiosis asociada a enteropatías crónicas varían según la etapa de vida del paciente, ofreciendo una herramienta cuantitativa de alta precisión para el diagnóstico clínico veterinario.',
-      actionLabel: 'VER PÓSTER',
-      authors: 'Leidy Alejandra Giraldo, Cesar Muñoz, OSD Diagnostic',
-      year: '2026',
-      posterImage: '/posters/disbiosis-caninos.jpg',
-      downloadUrl: '/posters/disbiosis-caninos.pdf'
-    },
-    {
-      id: 'disbiosis-felinos',
-      category: 'Póster',
-      title: 'Análisis comparativo de la microbiota intestinal en gatos sanos y con enteropatías.',
-      description: 'Investigación que logra discriminar con precisión entre estados normobióticos y disbióticos, demostrando que los umbrales de salud intestinal deben ajustarse según la etapa de vida del gato (cachorro, adulto o geronte) para garantizar un diagnóstico clínico certero en pacientes con enteropatías crónicas.',
-      actionLabel: 'VER PÓSTER',
-      authors: 'Equipo Científico OSD Research & CVDC',
-      year: '2026',
-      posterImage: '/posters/disbiosis-felinos.jpg',
-      downloadUrl: '/posters/disbiosis-felinos.pdf'
-    },
-    {
-      id: 'mdr1',
-      category: 'Póster',
-      title: 'Caracterización de la frecuencia de la mutación nt230[del4] del gen MDR1 en razas caninas.',
-      description: 'Estudio epidemiológico mediante qPCR que identifica la carencia de la proteína P-Gp en caninos. Proporciona un marco de referencia en farmacogenética para evitar toxicidades graves por fármacos comunes. Es una herramienta esencial para personalizar la terapia farmacológica y garantizar la integridad del paciente en el contexto nacional.',
-      actionLabel: 'VER PÓSTER',
-      authors: 'Cesar Muñoz, Maria Paula Urián, Grupo OSD Research',
-      year: '2026',
-      posterImage: '/posters/mdr1.jpg',
-      downloadUrl: '/posters/mdr1.pdf'
-    },
-    {
-      id: 'felv-coinfeccion',
-      category: 'Póster',
-      title: 'Evaluación de coinfección en felinos domésticos positivos a FeLV.',
-      description: 'Análisis por RT-qPCR que identifica la frecuencia de patógenos oportunistas (Anaplasma, Bartonella, Mycoplasma) en pacientes con Leucemia Felina. El estudio resalta la vulnerabilidad en cachorros y la urgencia de diagnósticos integrales para tratar infecciones secundarias en pacientes inmunosuprimidos.',
-      actionLabel: 'VER PÓSTER',
-      authors: 'Ángela Sánchez, Cesar Muñoz, OSD Lab',
-      year: '2026',
-      posterImage: '/posters/felv-coinfeccion.jpg',
-      downloadUrl: '/posters/felv-coinfeccion.pdf'
-    },
-    {
-      id: 'brucella-lcr',
-      category: 'Póster',
-      title: 'Detección de Brucella spp., Haemophilus spp. y Pseudomonas spp. en líquido cefalorraquídeo',
-      description: 'Mediante qPCR, se detectó una coinfección atípica de Brucella spp., Haemophilus spp. y Pseudomonas spp. en líquido cefalorraquídeo, permitiendo un tratamiento dirigido que salvó la vida del paciente y evitó fallos diagnósticos comunes en enfermedades zoonóticas de difícil aislamiento.',
-      actionLabel: 'VER PÓSTER',
-      authors: 'Grupo Clínico y Molecular OSD Research',
-      year: '2026',
-      posterImage: '/posters/brucella-lcr.jpg',
-      downloadUrl: '/posters/brucella-lcr.pdf'
-    },
-    {
-      id: 'leishmania-caninos',
-      category: 'Póster',
-      title: 'Detección molecular de Leishmania infantum en caninos de zonas no endémicas de Colombia.',
-      description: 'Investigación documenta la presencia de L. infantum en regiones sin transmisión activa, validando la qPCR como eje para el diagnóstico temprano y seguimiento de carga parasitaria en diversos nichos biológicos. Los hallazgos consolidan un marco de referencia para la vigilancia molecular y el monitoreo terapéutico.',
-      actionLabel: 'VER PÓSTER',
-      authors: 'Cesar Muñoz, Laura Alexandra Moreno, OSD Team',
-      year: '2026',
-      posterImage: '/posters/leishmania-caninos.jpg',
-      downloadUrl: '/posters/leishmania-caninos.png'
-    },
-    {
-      id: 'anaplasma-dirofilaria',
-      category: 'Póster',
-      title: 'Coinfección por Anaplasma spp., Dirofilaria repens y Dirofilaria immitis en un perro: Reporte de caso.',
-      description: 'Reporte clínico y molecular de coinfección múltiple en canino por patógenos transmitidos por vectores, abordado con diagnóstico qPCR de alta sensibilidad en sangre total.',
-      actionLabel: 'VER PÓSTER',
-      authors: 'Ángela M. Sánchez Pamplona, Felipe Amador Luján, Leidy A. Giraldo Martínez, Cesar O. Muñoz Cadavid',
-      year: '2026',
-      posterImage: '/posters/anaplasma-dirofilaria.jpg',
-      downloadUrl: '/posters/anaplasma-dirofilaria.pdf'
-    },
-    {
-      id: 'adn-osd',
-      category: 'Artículos',
-      title: 'El ADN de OSD: investigación en busca de transformar la medicina veterinaria.',
-      description: 'Publicación técnica sobre el impacto de la biología molecular en el pronóstico y tratamiento clínico temprano en Latinoamérica.',
-      actionLabel: 'LEER ARTÍCULO',
-      authors: 'OSD Research Communications',
-      year: '2025',
-      downloadUrl: 'https://osdiagnostic.com/noticias-veterinarias/investigacion-veterinaria/'
-    },
-    {
-      id: 'dpcr-veterinaria',
-      category: 'Artículos',
-      title: 'dPCR en Medicina Veterinaria: Proyecto pionero de OSD y ANNAR Technologies',
-      description: 'Publicación sobre la implementación de la PCR digital en Colombia, incrementando la sensibilidad analítica y evitando falsos negativos en bajas cargas genómicas.',
-      actionLabel: 'LEER ARTÍCULO',
-      authors: 'Equipo Científico OSD & ANNAR',
-      year: '2025',
-      downloadUrl: 'https://osdiagnostic.com/noticias-veterinarias/pcr-digital/'
-    },
-    {
-      id: 'microbiota-edad',
-      category: 'Artículos',
-      title: 'Microbiota intestinal en perros y gatos según su edad: Evidencia clínica',
-      description: 'Análisis detallado de cómo los patrones microbianos intestinales varían en cachorros, adultos y gerontes para fundamentar terapias digestivas personalizadas.',
-      actionLabel: 'LEER ARTÍCULO',
-      authors: 'Leidy Alejandra Giraldo, Equipo OSD Research',
-      year: '2025',
-      downloadUrl: 'https://osdiagnostic.com/noticias-veterinarias/microbiota-intestinal-en-perros-y-gatos-segun-su-edad/'
-    },
-    {
-      id: 'mdr1-reconocimiento',
-      category: 'Artículos',
-      title: 'OSD llevó el conocimiento veterinario colombiano a un escenario internacional',
-      description: 'Reconocimiento internacional a la investigación farmacogenética sobre la mutación del gen MDR1 en razas caninas colombianas.',
-      actionLabel: 'LEER ARTÍCULO',
-      authors: 'Cesar Muñoz, Dirección Científica OSD',
-      year: '2025',
-      downloadUrl: 'https://osdiagnostic.com/noticias-veterinarias/osd-llevo-el-conocimiento-veterinario-colombiano-a-un-escenario-internacional/'
-    },
-    {
-      id: 'coronavirus-felino',
-      category: 'Proyectos',
-      title: 'Identificación de mutaciones específicas y caracterización del perfil de mutaciones asociadas con Peritonitis Infecciosa Felina (PIF)',
-      description: 'El Coronavirus felino (FCoV) posee una alta capacidad de mutación, generando cuadros leves hasta desencadenar PIF tras un cambio de tropismo hacia monocitos y macrófagos. Este proyecto caracteriza el conjunto de mutaciones genéticas asociadas al cambio de patogenicidad y tropismo viral para permitir un diagnóstico precoz certero.',
-      actionLabel: 'CONOCER PROYECTO',
-      authors: 'Cesar Muñoz, Ángela Sánchez, Maria Paula Urián',
-      year: 'En desarrollo (Fase II)',
-      downloadUrl: 'https://osdiagnostic.com/proyectos-investigacion-laboratorio-biologia-molecular/'
-    },
-    {
-      id: 'qpcr-dpcr',
-      category: 'Proyectos',
-      title: 'Comparación de la sensibilidad analítica de qPCR vs dPCR para la detección de agentes hemotrópicos en caninos y felinos',
-      description: 'Iniciativa en colaboración con ANNAR Health Technologies e instituciones académicas para evaluar el desempeño analítico de la PCR digital (dPCR) frente a qPCR en muestras de sangre, permitiendo cuantificación absoluta de cargas bajas sin curvas estándar.',
-      actionLabel: 'CONOCER PROYECTO',
-      authors: 'Felipe Amador, Cesar Muñoz, OSD Lab',
-      year: 'En desarrollo (Fase I)',
-      downloadUrl: 'https://osdiagnostic.com/proyectos-investigacion-laboratorio-biologia-molecular/'
-    },
-    {
-      id: 'mir-126-perros',
-      category: 'Proyectos',
-      title: 'Evaluación de miR-126 como biomarcador para la glomerulonefritis inmunomediada en perros',
-      description: 'La glomerulonefritis inmunomediada es una patología renal de difícil diagnóstico temprano. Este proyecto evalúa la expresión del microARN miR-126 en muestras urinarias caninas con el fin de determinar su viabilidad como biomarcador no invasivo para el diagnóstico y monitoreo temprano antes de la falla renal crónica.',
-      actionLabel: 'CONOCER PROYECTO',
-      authors: 'Laura Alexandra Moreno, Cesar Muñoz, Valentina Zapata',
-      year: 'En desarrollo (Fase I)',
-      downloadUrl: 'https://osdiagnostic.com/proyectos-investigacion-laboratorio-biologia-molecular/'
-    },
-    {
-      id: 'felv-subtipo-oncogenico',
-      category: 'Proyectos',
-      title: 'Diferenciación del subtipo oncogénico del virus de la leucemia felina (FeLV-B) mediante diagnóstico molecular',
-      description: 'El subtipo FeLV-B se encuentra asociado a una mayor oncogenicidad y progresión a linfoma. Debido a que las pruebas diagnósticas convencionales no diferencian subtipos virales, este proyecto desarrolla y valida una estrategia de diagnóstico molecular para estratificar casos y permitir medidas terapéuticas de alta precisión.',
-      actionLabel: 'CONOCER PROYECTO',
-      authors: 'Maria Paula Urián, Farley Garavito Jaimes, Cesar Muñoz',
-      year: 'En desarrollo (Fase II)',
-      downloadUrl: 'https://osdiagnostic.com/proyectos-investigacion-laboratorio-biologia-molecular/'
-    }
-  ];
+
 
   const filteredItems = activeFilter === 'Todos'
     ? repositoryItems
@@ -561,15 +531,21 @@ export default function Investigacion() {
           {/* Central Floating Circular Card (Enlarged and refined with softer grey typography) */}
           <div 
             key={heroSlides[activeSlide].id}
-            className="w-[305px] h-[305px] xs:w-[340px] xs:h-[340px] sm:w-[440px] sm:h-[440px] md:w-[500px] md:h-[500px] lg:w-[530px] lg:h-[530px] rounded-full bg-white shadow-[0_25px_70px_rgba(43,1,124,0.18)] border border-gray-100 p-6 sm:p-12 md:p-14 flex flex-col items-center justify-center text-center relative z-10 transition-all duration-500 animate-fadeIn"
+            className="w-[305px] h-[305px] xs:w-[340px] xs:h-[340px] sm:w-[440px] sm:h-[440px] md:w-[500px] md:h-[500px] lg:w-[530px] lg:h-[530px] rounded-full bg-white shadow-[0_25px_70px_rgba(43,1,124,0.18)] border border-gray-100 p-6 sm:p-10 md:p-12 flex flex-col items-center justify-center text-center relative z-10 transition-all duration-500 animate-fadeIn"
           >
             {/* Pill Badge */}
-            <span className="inline-block px-4 py-1 rounded-full text-xs sm:text-sm font-bold text-[#6F2BCC] bg-[#F3E8FF] mb-3 sm:mb-4">
+            <span className="inline-block px-4 py-1 rounded-full text-xs sm:text-sm font-bold text-[#6F2BCC] bg-[#F3E8FF] mb-2 sm:mb-4 shadow-sm">
               {heroSlides[activeSlide].badge}
             </span>
 
-            {/* Central Title with refined grey tone */}
-            <h1 className="text-base xs:text-lg sm:text-2xl md:text-[26px] lg:text-[28px] font-bold text-[#374151] leading-snug tracking-tight max-w-[250px] xs:max-w-[280px] sm:max-w-[360px] md:max-w-[400px] mx-auto font-sans">
+            {/* Central Title with refined grey tone and adaptive sizing */}
+            <h1 className={`font-bold text-[#374151] leading-snug tracking-tight max-w-[250px] xs:max-w-[280px] sm:max-w-[360px] md:max-w-[420px] mx-auto font-sans px-2 ${
+              heroSlides[activeSlide].title.length > 95
+                ? 'text-xs xs:text-sm sm:text-lg md:text-xl lg:text-[22px]'
+                : heroSlides[activeSlide].title.length > 60
+                ? 'text-sm xs:text-base sm:text-xl md:text-2xl lg:text-[25px]'
+                : 'text-base xs:text-lg sm:text-2xl md:text-[26px] lg:text-[28px]'
+            }`}>
               {heroSlides[activeSlide].title}
             </h1>
 
@@ -589,9 +565,13 @@ export default function Investigacion() {
                   handleOpenItem(found);
                 }
               }}
-              className="mt-4 sm:mt-6 text-sm sm:text-base font-semibold text-[#6F2BCC] hover:text-[#2B017C] underline decoration-[#6F2BCC]/40 hover:decoration-[#2B017C] underline-offset-4 transition-colors cursor-pointer"
+              className="mt-3 sm:mt-5 text-sm sm:text-base font-semibold text-[#6F2BCC] hover:text-[#2B017C] underline decoration-[#6F2BCC]/40 hover:decoration-[#2B017C] underline-offset-4 transition-colors cursor-pointer"
             >
-              Ver aquí
+              {heroSlides[activeSlide].badge === 'Póster' 
+                ? 'Ver póster' 
+                : heroSlides[activeSlide].badge === 'Artículo' 
+                ? 'Leer artículo' 
+                : 'Conocer proyecto'}
             </button>
           </div>
 
@@ -607,7 +587,7 @@ export default function Investigacion() {
           </button>
 
           {/* Carousel Dots */}
-          <div className="absolute bottom-6 z-20 flex items-center space-x-2.5">
+          <div className="absolute bottom-4 sm:bottom-6 z-20 flex items-center justify-center flex-wrap gap-1.5 sm:gap-2 max-w-[90%] px-2">
             {heroSlides.map((slide, idx) => (
               <button
                 key={slide.id}
@@ -615,8 +595,8 @@ export default function Investigacion() {
                 aria-label={`Ir al slide ${idx + 1}`}
                 className={`transition-all duration-300 rounded-full cursor-pointer ${
                   activeSlide === idx
-                    ? 'w-3 h-3 bg-[#6F2BCC] scale-110'
-                    : 'w-2.5 h-2.5 bg-gray-300 hover:bg-gray-400'
+                    ? 'w-2.5 sm:w-3 h-2.5 sm:h-3 bg-[#6F2BCC] scale-110 shadow-sm'
+                    : 'w-1.5 sm:w-2 h-1.5 sm:h-2 bg-gray-300/80 hover:bg-gray-400'
                 }`}
               />
             ))}
@@ -1045,9 +1025,11 @@ export default function Investigacion() {
       {lightboxImage && (
         <div 
           className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-md flex flex-col justify-between p-2 sm:p-4 animate-fadeIn select-none overflow-hidden"
-          onClick={() => {
-            setLightboxImage(null);
-            setIsPosterZoomed(false);
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setLightboxImage(null);
+              setIsPosterZoomed(false);
+            }
           }}
         >
           {/* Top Floating Control Bar */}
@@ -1136,10 +1118,15 @@ export default function Investigacion() {
               <img
                 src={lightboxImage.url}
                 alt={lightboxImage.title}
-                onClick={() => setIsPosterZoomed(!isPosterZoomed)}
+                draggable={false}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsPosterZoomed((prev) => !prev);
+                }}
+                title={isPosterZoomed ? 'Clic para ajustar a pantalla' : 'Clic para ampliar y ver de cerca'}
                 className={`transition-all duration-300 rounded-lg sm:rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.6)] border border-white/15 bg-white select-none ${
                   isPosterZoomed
-                    ? 'w-[180%] xs:w-[150%] sm:w-[125%] md:w-[105%] min-w-[580px] sm:min-w-[850px] max-w-none h-auto cursor-zoom-out'
+                    ? 'w-[180%] xs:w-[150%] sm:w-[135%] md:w-[125%] lg:w-[115%] min-w-[580px] sm:min-w-[900px] lg:min-w-[1200px] max-w-none h-auto cursor-zoom-out'
                     : 'max-h-[72vh] sm:max-h-[80vh] w-auto max-w-full object-contain cursor-zoom-in'
                 }`}
               />
@@ -1153,8 +1140,8 @@ export default function Investigacion() {
           >
             <span>
               {isPosterZoomed 
-                ? '🔍 Modo lectura: Desliza para explorar todos los detalles • Toca la imagen o "Ajustar" para volver' 
-                : '💡 Toca la imagen o "Ampliar" para leer texto • Toca fuera o ✕ para cerrar'}
+                ? '🔍 Modo lectura: Desliza para explorar todos los detalles • Clic en la imagen o "Ajustar" para volver' 
+                : '💡 Haz clic sobre la imagen con la lupa para ampliar • Clic fuera o ✕ para cerrar'}
             </span>
           </div>
         </div>
