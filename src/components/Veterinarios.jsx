@@ -409,24 +409,24 @@ export default function Veterinarios() {
           position: relative;
           z-index: 2;
           width: 100%;
+          max-width: 1040px;
+          margin: 0 auto;
           display: grid;
-          grid-template-columns: 1fr 390px 1fr;
+          grid-template-columns: 1fr 1fr;
           align-items: center;
-          gap: 15px;
+          gap: 32px;
         }
         .doc-col-left {
           display: flex;
           align-items: center;
-          justify-content: flex-start;
+          justify-content: center;
           gap: 22px;
-          padding-left: 15px;
         }
         .doc-col-right {
           display: flex;
           align-items: center;
-          justify-content: flex-end;
+          justify-content: center;
           gap: 22px;
-          padding-right: 15px;
         }
         .doc-photo-frame {
           width: 165px;
@@ -480,30 +480,6 @@ export default function Veterinarios() {
           opacity: 0.92;
           transform: translateY(-1px);
         }
-        .center-card-box {
-          background-color: #BDBDBD;
-          border-radius: 38px;
-          padding: 42px 26px;
-          text-align: center;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          gap: 16px;
-          box-shadow: 0 8px 25px rgba(0,0,0,0.06);
-          z-index: 10;
-        }
-        .center-card-box img {
-          width: 95px;
-          height: auto;
-        }
-        .center-card-box p {
-          color: #111111;
-          font-size: 17.5px;
-          font-weight: 800;
-          line-height: 1.45;
-          margin: 0;
-        }
         @media (max-width: 1024px) {
           .team-banner-grid {
             grid-template-columns: 1fr;
@@ -532,15 +508,6 @@ export default function Veterinarios() {
           }
           .doc-text-box h2 {
             font-size: 28px;
-          }
-          .center-card-box {
-            padding: 30px 20px;
-            border-radius: 28px;
-            max-width: 320px;
-            margin: 0 auto;
-          }
-          .center-card-box p {
-            font-size: 15px;
           }
         }
         :root {
@@ -655,12 +622,12 @@ export default function Veterinarios() {
           
           {/* Main Title */}
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[52px] font-bold text-[#240068] tracking-tight leading-[1.15] max-w-4xl mx-auto">
-            Estamos contigo en cada desafío diagnóstico.
+            Somos el aliado estratégico que tu clínica necesita.
           </h2>
 
           {/* Subtitle / Intro text */}
           <p className="text-base sm:text-lg md:text-xl lg:text-[22px] text-[#222222] font-normal leading-relaxed max-w-4xl mx-auto mt-5 sm:mt-7">
-            Sabemos que detrás de cada caso clínico hay decisiones importantes. Por eso, más que ofrecerte soluciones diagnósticas, queremos ser ese aliado científico que te escucha, te orienta y respalda tu criterio profesional en cada paso.
+            Sabemos que tu clínica merece un aliado estratégico que te ayude a reducir la incertidumbre de tus procesos diagnósticos. Por eso, además de ofrecer pruebas diagnósticas, somos un equipo que te escucha, te orienta y respalda, para que puedas tomar decisiones clínicas mejor sustentadas.
           </p>
 
           {/* Purple Downward Arrow Indicator */}
@@ -1035,7 +1002,7 @@ export default function Veterinarios() {
         </div>
       </section>
 
-      {/* 7. Team & Advisory Section (Con tarjeta de equipo experto más grande y destacada) */}
+      {/* 7. Team & Advisory Section */}
       <section className="team-banner-section">
         <div className="team-banner-wrapper">
           <div className="banner-shape-left"></div>
@@ -1052,12 +1019,6 @@ export default function Veterinarios() {
                 <p>Médica Veterinaria</p>
                 <a href="https://wa.link/licxbp" target="_blank" rel="noreferrer" className="doc-btn-action">Agendar asesoría</a>
               </div>
-            </div>
-
-            {/* Center Card: Equipo Experto (Agrandado) */}
-            <div className="center-card-box">
-              <img src="https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/flaticon-expertos.png" alt="Expertos" />
-              <p>Contamos con un equipo experto para que puedas resolver tus dudas y garantizar un excelente servicio.</p>
             </div>
 
             {/* César Muñoz */}
