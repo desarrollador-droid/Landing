@@ -214,14 +214,14 @@ export default function TeamWaveCluster() {
 
           {/* Cohesive Connected Molecule (Unified SVG Circles + Bridges + Locked Portraits) */}
           <div className="absolute inset-0 animate-wave-float-gentle">
-            {/* Single Unified SVG: light purple (#8B5CF6) connectors behind dark purple (#320389) circles */}
+            {/* Single Unified SVG: subtle lighter purple (#4B259A) connectors behind dark purple (#320389) circles */}
             <svg
               viewBox={`0 0 ${STAGE_WIDTH} ${STAGE_HEIGHT}`}
               className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-visible"
               style={{ filter: 'drop-shadow(0 14px 28px rgba(43, 1, 124, 0.22))' }}
               aria-hidden="true"
             >
-              <g fill="#8B5CF6">
+              <g fill="#4B259A">
                 {METABALL_BRIDGES.map((bridge, idx) => (
                   <path
                     key={`bridge-${idx}`}
