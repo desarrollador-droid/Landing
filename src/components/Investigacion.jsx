@@ -169,6 +169,7 @@ const repositoryItems = [
 export default function Investigacion() {
   const [activeSlide, setActiveSlide] = useState(0);
   const [talentIndex, setTalentIndex] = useState(0);
+  const [failedTalentImages, setFailedTalentImages] = useState({});
   const [activeFilter, setActiveFilter] = useState('Póster');
   const [selectedItem, setSelectedItem] = useState(null);
   const [lightboxImage, setLightboxImage] = useState(null);
@@ -266,6 +267,7 @@ export default function Investigacion() {
       tag: 'DIRECTOR CIENTÍFICO',
       name: 'Cesar Orlando Muñoz',
       role: 'Genómica & Traslacional',
+      image: 'https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/staff-cesar-orlando.png',
       bgClass: 'bg-[#1A004C]',
       borderClass: 'border-[#2B017C]'
     },
@@ -274,6 +276,7 @@ export default function Investigacion() {
       tag: 'ANALISTA DE LABORATORIO',
       name: 'Maria Paula Urián',
       role: 'Oncología & Ensayos Clínicos',
+      image: 'https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/staff-maria-paula.png',
       bgClass: 'bg-[#6F2BCC]',
       borderClass: 'border-[#9506EE]'
     },
@@ -282,6 +285,7 @@ export default function Investigacion() {
       tag: 'ANALISTA DE LABORATORIO',
       name: 'Laura Alexandra Moreno',
       role: 'Bioestadística & Epidemiología',
+      image: 'https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/staff-laura.png',
       bgClass: 'bg-[#2B017C]',
       borderClass: 'border-[#6F2BCC]'
     },
@@ -298,6 +302,7 @@ export default function Investigacion() {
       tag: 'ANALISTA DE LABORATORIO',
       name: 'Farley Garavito Jaimes',
       role: 'Extracción & Ácidos Nucleicos',
+      image: 'https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/staff-farley.png',
       bgClass: 'bg-[#1A004C]',
       borderClass: 'border-[#2B017C]'
     },
@@ -306,6 +311,7 @@ export default function Investigacion() {
       tag: 'ANALISTA DE LABORATORIO',
       name: 'Anderson González',
       role: 'Control Analítico de Muestras',
+      image: 'https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/staff-anderson.png',
       bgClass: 'bg-[#2B017C]',
       borderClass: 'border-[#6F2BCC]'
     },
@@ -314,6 +320,7 @@ export default function Investigacion() {
       tag: 'ANALISTA DE LABORATORIO',
       name: 'Felipe Amador',
       role: 'Validación de Ensayos dPCR/qPCR',
+      image: 'https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/staff-felipe.png',
       bgClass: 'bg-[#6F2BCC]',
       borderClass: 'border-[#9506EE]'
     },
@@ -322,20 +329,22 @@ export default function Investigacion() {
       tag: 'ANALISTA DE LABORATORIO',
       name: 'Luna Valentina Viillarraga',
       role: 'Diagnóstico Microbiológico',
+      image: 'https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/staff-luna.png',
       bgClass: 'bg-[#4B109E]',
       borderClass: 'border-[#7C3AED]'
     },
     {
       initials: 'VC',
-      tag: 'ANALISTA DE LABORATORIO',
+      tag: 'COORDINADORA DE ALIANZAS',
       name: 'Valentina Castaño',
       role: 'Bioensayos & Casos Clínicos',
+      image: 'https://res.cloudinary.com/oiaig120/image/upload/v1793205178/osdiagnostic/staff-valentina-castano.png',
       bgClass: 'bg-[#1A004C]',
       borderClass: 'border-[#2B017C]'
     },
     {
       initials: 'VG',
-      tag: 'ANALISTA DE LABORATORIO',
+      tag: 'GESTORA DE ALIANZAS',
       name: 'Valentina Gutierrez',
       role: 'Validación de Datos Clínicos',
       bgClass: 'bg-[#2B017C]',
@@ -346,6 +355,8 @@ export default function Investigacion() {
       tag: 'ANALISTA DE LABORATORIO',
       name: 'María Helena Bonilla',
       role: 'Dermatología & Perfiles Moleculares',
+      image: 'https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_100/osdiagnostic/staff-maria-elena-new.jpg',
+      objectPosition: 'center 15%',
       bgClass: 'bg-[#6F2BCC]',
       borderClass: 'border-[#9506EE]'
     },
@@ -354,6 +365,8 @@ export default function Investigacion() {
       tag: 'ANALISTA DE LABORATORIO',
       name: 'Juan Esteban Lamprea',
       role: 'Validación de Controles qPCR',
+      image: 'https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_100/osdiagnostic/staff-juan-esteban-new.jpg',
+      objectPosition: 'center 22%',
       bgClass: 'bg-[#1A004C]',
       borderClass: 'border-[#2B017C]'
     },
@@ -362,6 +375,7 @@ export default function Investigacion() {
       tag: 'ANALISTA DE LABORATORIO',
       name: 'Ángela Sánchez',
       role: 'Bioestadística & Procesamiento',
+      image: 'https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/staff-angela.png',
       bgClass: 'bg-[#4B109E]',
       borderClass: 'border-[#7C3AED]'
     },
@@ -370,6 +384,7 @@ export default function Investigacion() {
       tag: 'LÍDER DE ALIANZAS',
       name: 'Diego Sanchez Àvila',
       role: 'Patología & Asesoría Clínica',
+      image: 'https://res.cloudinary.com/oiaig120/image/upload/b_white,f_auto,q_100/osdiagnostic/staff-diego.png',
       bgClass: 'bg-[#2B017C]',
       borderClass: 'border-[#6F2BCC]'
     }
@@ -677,9 +692,24 @@ export default function Investigacion() {
                 >
                   {/* Circular Node Badge with Glow Ring */}
                   <div className={`w-20 h-20 sm:w-24 sm:h-24 md:w-26 md:h-26 rounded-full p-1.5 border-2 ${node.borderClass} flex items-center justify-center bg-white shadow-md transition-all duration-300 hover:scale-105 mb-4 sm:mb-5 relative z-10`}>
-                    <div className={`w-full h-full rounded-full ${node.bgClass} flex items-center justify-center text-white font-black text-lg sm:text-xl tracking-wider select-none shadow-inner`}>
-                      {node.initials}
-                    </div>
+                    {node.image && !failedTalentImages[idx] ? (
+                      <div className="w-full h-full rounded-full overflow-hidden bg-slate-50 flex items-center justify-center shadow-inner">
+                        <img
+                          src={node.image}
+                          alt={node.name}
+                          loading="lazy"
+                          onError={() =>
+                            setFailedTalentImages((prev) => ({ ...prev, [idx]: true }))
+                          }
+                          className="w-full h-full object-cover"
+                          style={{ objectPosition: node.objectPosition || 'center 15%' }}
+                        />
+                      </div>
+                    ) : (
+                      <div className={`w-full h-full rounded-full ${node.bgClass} flex items-center justify-center text-white font-black text-lg sm:text-xl tracking-wider select-none shadow-inner`}>
+                        {node.initials}
+                      </div>
+                    )}
                   </div>
 
                   {/* Under Node Text Details */}

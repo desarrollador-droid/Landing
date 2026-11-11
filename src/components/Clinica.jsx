@@ -16,7 +16,7 @@ export default function Clinica() {
       overline: 'LABORATORIO CLÍNICO OSD',
       headline: (
         <h1 className="text-[26px] xs:text-[32px] sm:text-4xl md:text-[38px] lg:text-5xl xl:text-6xl font-black font-display text-gray-900 leading-[1.08] tracking-tight uppercase">
-          NO SUPONGAS.<br />
+          NO SOSPECHES,<br />
           <span className="text-[#2B017C]">DIAGNOSTICA.</span>
         </h1>
       ),

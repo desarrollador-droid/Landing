@@ -694,10 +694,10 @@ export default function Veterinarios() {
             </h2>
             <div className="text-gray-600 space-y-3.5 leading-relaxed text-base sm:text-lg">
               <p>
-                Sabemos que en la consulta diaria no se enfrentan enfermedades aisladas, sino casos complejos que requieren un enfoque más completo.
+                La práctica clínica exige comprender cada caso desde una perspectiva integral, considerando los distintos factores que pueden influir en la salud del paciente.
               </p>
               <p>
-                Por eso desarrollamos <span className="text-osd-purple font-bold">perfiles diagnósticos que agrupan múltiples agentes</span>, pensados para responder a necesidades clínicas reales desde el inicio.
+                Por eso desarrollamos <span className="text-osd-purple font-bold">perfiles diagnósticos que agrupan múltiples agentes</span>, favoreciendo la efectividad del proceso diagnóstico y el abordaje de cada caso.
               </p>
             </div>
             
