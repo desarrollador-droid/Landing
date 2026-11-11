@@ -784,7 +784,32 @@ export default function Veterinarios() {
         </div>
       </section>
 
-      {/* 6.2 Garantizamos Diagnósticos Precisos y Seguros */}
+      {/* 6.2 Detectamos Más de 500 Especies (Gran Espectro) */}
+      <section className="relative py-20 px-6 text-center text-white bg-cover bg-center overflow-hidden" style={{ backgroundImage: `url('https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/julia-koblitz-RlOAwXt2fEA-unsplash-1-scaled.jpg')` }}>
+        <div className="absolute inset-0 bg-osd-purple/55 backdrop-blur-[1px]"></div>
+        <div className="relative z-10 max-w-4xl mx-auto space-y-4">
+          <span className="text-osd-cyan font-bold tracking-widest text-xs uppercase block mb-1">Gran Espectro</span>
+          <h2 className="text-2xl md:text-4xl font-extrabold leading-tight">
+            DECTECTAMOS MÁS DE
+          </h2>
+          <h3 className="text-4xl md:text-6xl font-black leading-none my-2">
+            500 ESPECIES
+          </h3>
+          <p className="text-sm md:text-base text-gray-200 font-semibold tracking-wide uppercase">
+            LOGRANDO RESULTADOS CON ALTA ESPECIFICIDAD
+          </p>
+          <div className="pt-4">
+            <Link 
+              to="/biologia-molecular" 
+              className="inline-block bg-osd-cyan text-osd-dark hover:bg-white font-bold py-3 px-10 text-xs uppercase tracking-wider transition-all"
+            >
+              Descúbrelas
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* 6.3 Garantizamos Diagnósticos Precisos y Seguros */}
       <section className="py-16 px-6 bg-gray-50 border-t border-gray-100">
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-[0.95fr_1.05fr] gap-12 items-center">
           
@@ -829,31 +854,6 @@ export default function Veterinarios() {
             </div>
           </div>
 
-        </div>
-      </section>
-
-      {/* 6.3 Detectamos Más de 500 Especies (Gran Espectro) */}
-      <section className="relative py-20 px-6 text-center text-white bg-cover bg-center overflow-hidden" style={{ backgroundImage: `url('https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/julia-koblitz-RlOAwXt2fEA-unsplash-1-scaled.jpg')` }}>
-        <div className="absolute inset-0 bg-osd-purple/55 backdrop-blur-[1px]"></div>
-        <div className="relative z-10 max-w-4xl mx-auto space-y-4">
-          <span className="text-osd-cyan font-bold tracking-widest text-xs uppercase block mb-1">Gran Espectro</span>
-          <h2 className="text-2xl md:text-4xl font-extrabold leading-tight">
-            DECTECTAMOS MÁS DE
-          </h2>
-          <h3 className="text-4xl md:text-6xl font-black leading-none my-2">
-            500 ESPECIES
-          </h3>
-          <p className="text-sm md:text-base text-gray-200 font-semibold tracking-wide uppercase">
-            LOGRANDO RESULTADOS CON ALTA ESPECIFICIDAD
-          </p>
-          <div className="pt-4">
-            <Link 
-              to="/biologia-molecular" 
-              className="inline-block bg-osd-cyan text-osd-dark hover:bg-white font-bold py-3 px-10 text-xs uppercase tracking-wider transition-all"
-            >
-              Descúbrelas
-            </Link>
-          </div>
         </div>
       </section>
 
