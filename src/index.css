@@ -104,35 +104,57 @@
 
 @keyframes osdWaveFloat {
   0%, 100% {
-    transform: translate3d(0, 0px, 0);
+    transform: translate3d(0px, 0px, 0) scale(1);
   }
-  50% {
-    transform: translate3d(0, -10px, 0);
+  33% {
+    transform: translate3d(6px, -13px, 0) scale(1.03);
+  }
+  66% {
+    transform: translate3d(-5px, -6px, 0) scale(0.98);
+  }
+}
+
+@keyframes osdWaveFloatAlt {
+  0%, 100% {
+    transform: translate3d(0px, 0px, 0) scale(1);
+  }
+  33% {
+    transform: translate3d(-6px, -11px, 0) scale(0.98);
+  }
+  66% {
+    transform: translate3d(5px, -15px, 0) scale(1.03);
   }
 }
 
 @keyframes osdWaveFloatGentle {
   0%, 100% {
-    transform: translate3d(0, 0px, 0);
+    transform: translate3d(0px, 0px, 0);
   }
   50% {
-    transform: translate3d(2px, -6px, 0);
+    transform: translate3d(0px, -8px, 0);
   }
 }
 
 .animate-wave-float {
-  animation: osdWaveFloat 5.2s ease-in-out infinite;
+  animation-name: osdWaveFloat;
+  animation-duration: 4.2s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+
+.animate-wave-float-alt {
+  animation-name: osdWaveFloatAlt;
+  animation-duration: 4.6s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
   will-change: transform;
 }
 
 .animate-wave-float-gentle {
-  animation: osdWaveFloatGentle 5.8s ease-in-out infinite;
+  animation-name: osdWaveFloatGentle;
+  animation-duration: 4.8s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
   will-change: transform;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .animate-wave-float,
-  .animate-wave-float-gentle {
-    animation: none;
-  }
 }

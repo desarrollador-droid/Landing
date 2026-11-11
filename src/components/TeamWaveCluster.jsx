@@ -224,9 +224,9 @@ export default function TeamWaveCluster() {
               }}
             >
               <div
-                className={`w-full h-full rounded-full animate-wave-float ${
-                  accent.kind === 'dot' ? `${accent.bg} shadow-sm` : accent.border
-                }`}
+                className={`w-full aspect-square rounded-full ${
+                  idx % 2 === 0 ? 'animate-wave-float' : 'animate-wave-float-alt'
+                } ${accent.kind === 'dot' ? `${accent.bg} shadow-sm` : accent.border}`}
                 style={{
                   animationDelay: accent.floatDelay,
                   animationDuration: accent.duration
@@ -280,7 +280,13 @@ export default function TeamWaveCluster() {
 
         {/* Mobile Wavy Staggered Layout (< md) */}
         <div className="md:hidden relative py-6 px-2">
-          <div className="grid grid-cols-2 gap-x-5 gap-y-12 items-start">
+          {/* Decorative Floating Accents on Mobile */}
+          <div className="w-7 h-7 rounded-full bg-[#6D28D9] absolute top-2 left-2 animate-wave-float pointer-events-none" />
+          <div className="w-6 h-6 rounded-full border-[3px] border-[#4B5563] absolute top-4 right-4 animate-wave-float-alt pointer-events-none" style={{ animationDelay: '-1.4s' }} />
+          <div className="w-6 h-6 rounded-full border-[3px] border-[#262626] absolute bottom-6 left-4 animate-wave-float-alt pointer-events-none" style={{ animationDelay: '-2.2s' }} />
+          <div className="w-8 h-8 rounded-full bg-[#6D28D9] absolute bottom-3 right-3 animate-wave-float pointer-events-none" style={{ animationDelay: '-0.9s' }} />
+
+          <div className="grid grid-cols-2 gap-x-5 gap-y-12 items-start relative z-10">
             {WAVE_MEMBERS.map((member, idx) => {
               const isLowered = idx % 2 === 0;
               return (
