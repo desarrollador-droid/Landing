@@ -267,7 +267,7 @@ export default function Investigacion() {
       tag: 'DIRECTOR CIENTÍFICO',
       name: 'Cesar Orlando Muñoz',
       role: 'Genómica & Traslacional',
-      image: 'https://res.cloudinary.com/oiaig120/image/upload/c_thumb,g_face,w_320,h_320,z_0.9,f_auto,q_auto/osdiagnostic/staff-cesar-orlando.png',
+      image: 'https://res.cloudinary.com/oiaig120/image/upload/c_crop,g_center,w_0.77,h_0.77/w_320,h_320,c_fill,f_auto,q_auto/osdiagnostic/staff-cesar-orlando.png',
       bgClass: 'bg-[#1A004C]',
       borderClass: 'border-[#2B017C]'
     },
@@ -276,7 +276,7 @@ export default function Investigacion() {
       tag: 'ANALISTA DE LABORATORIO',
       name: 'Maria Paula Urián',
       role: 'Oncología & Ensayos Clínicos',
-      image: 'https://res.cloudinary.com/oiaig120/image/upload/c_thumb,g_face,w_320,h_320,z_0.9,f_auto,q_auto/osdiagnostic/staff-maria-paula.png',
+      image: 'https://res.cloudinary.com/oiaig120/image/upload/c_crop,g_center,w_0.77,h_0.77/w_320,h_320,c_fill,f_auto,q_auto/osdiagnostic/staff-maria-paula.png',
       bgClass: 'bg-[#6F2BCC]',
       borderClass: 'border-[#9506EE]'
     },
@@ -285,8 +285,7 @@ export default function Investigacion() {
       tag: 'ANALISTA DE LABORATORIO',
       name: 'Laura Alexandra Moreno',
       role: 'Bioestadística & Epidemiología',
-      image: 'https://res.cloudinary.com/oiaig120/image/upload/c_thumb,g_face,w_320,h_320,z_1.0,f_auto,q_auto/osdiagnostic/staff-laura.png',
-      imageScale: 'scale(1.12) translateY(4%)',
+      image: 'https://res.cloudinary.com/oiaig120/image/upload/c_crop,g_center,w_0.77,h_0.77/w_320,h_320,c_fill,f_auto,q_auto/osdiagnostic/staff-laura.png',
       bgClass: 'bg-[#2B017C]',
       borderClass: 'border-[#6F2BCC]'
     },
@@ -303,7 +302,7 @@ export default function Investigacion() {
       tag: 'ANALISTA DE LABORATORIO',
       name: 'Farley Garavito Jaimes',
       role: 'Extracción & Ácidos Nucleicos',
-      image: 'https://res.cloudinary.com/oiaig120/image/upload/c_thumb,g_face,w_320,h_320,z_0.9,f_auto,q_auto/osdiagnostic/staff-farley.png',
+      image: 'https://res.cloudinary.com/oiaig120/image/upload/c_crop,g_center,w_0.77,h_0.77/w_320,h_320,c_fill,f_auto,q_auto/osdiagnostic/staff-farley.png',
       bgClass: 'bg-[#1A004C]',
       borderClass: 'border-[#2B017C]'
     },
@@ -312,7 +311,7 @@ export default function Investigacion() {
       tag: 'ANALISTA DE LABORATORIO',
       name: 'Anderson González',
       role: 'Control Analítico de Muestras',
-      image: 'https://res.cloudinary.com/oiaig120/image/upload/c_thumb,g_face,w_320,h_320,z_0.9,f_auto,q_auto/osdiagnostic/staff-anderson.png',
+      image: 'https://res.cloudinary.com/oiaig120/image/upload/c_crop,g_center,w_0.77,h_0.77/w_320,h_320,c_fill,f_auto,q_auto/osdiagnostic/staff-anderson.png',
       bgClass: 'bg-[#2B017C]',
       borderClass: 'border-[#6F2BCC]'
     },
@@ -321,7 +320,7 @@ export default function Investigacion() {
       tag: 'ANALISTA DE LABORATORIO',
       name: 'Felipe Amador',
       role: 'Validación de Ensayos dPCR/qPCR',
-      image: 'https://res.cloudinary.com/oiaig120/image/upload/c_thumb,g_face,w_320,h_320,z_0.98,f_auto,q_auto/osdiagnostic/staff-felipe.png',
+      image: 'https://res.cloudinary.com/oiaig120/image/upload/c_crop,g_center,w_0.77,h_0.77/w_320,h_320,c_fill,f_auto,q_auto/osdiagnostic/staff-felipe.png',
       bgClass: 'bg-[#6F2BCC]',
       borderClass: 'border-[#9506EE]'
     },
@@ -330,7 +329,7 @@ export default function Investigacion() {
       tag: 'ANALISTA DE LABORATORIO',
       name: 'Luna Valentina Viillarraga',
       role: 'Diagnóstico Microbiológico',
-      image: 'https://res.cloudinary.com/oiaig120/image/upload/c_thumb,g_face,w_320,h_320,z_0.9,f_auto,q_auto/osdiagnostic/staff-luna.png',
+      image: 'https://res.cloudinary.com/oiaig120/image/upload/c_crop,g_center,w_0.77,h_0.77/w_320,h_320,c_fill,f_auto,q_auto/osdiagnostic/staff-luna.png',
       bgClass: 'bg-[#4B109E]',
       borderClass: 'border-[#7C3AED]'
     },
@@ -339,7 +338,7 @@ export default function Investigacion() {
       tag: 'COORDINADORA DE ALIANZAS',
       name: 'Valentina Castaño',
       role: 'Bioensayos & Casos Clínicos',
-      image: 'https://res.cloudinary.com/oiaig120/image/upload/c_thumb,g_face,w_320,h_320,z_0.85,f_auto,q_auto/v1793205178/osdiagnostic/staff-valentina-castano.png',
+      image: 'https://res.cloudinary.com/oiaig120/image/upload/c_thumb,g_face,w_320,h_320,z_0.58,f_auto,q_auto/v1793205178/osdiagnostic/staff-valentina-castano.png',
       bgClass: 'bg-[#1A004C]',
       borderClass: 'border-[#2B017C]'
     },
@@ -356,7 +355,7 @@ export default function Investigacion() {
       tag: 'ANALISTA DE LABORATORIO',
       name: 'María Helena Bonilla',
       role: 'Dermatología & Perfiles Moleculares',
-      image: 'https://res.cloudinary.com/oiaig120/image/upload/c_thumb,g_face,w_320,h_320,z_0.82,f_auto,q_auto/osdiagnostic/staff-maria-elena-new.jpg',
+      image: 'https://res.cloudinary.com/oiaig120/image/upload/c_thumb,g_face,w_320,h_320,z_0.55,f_auto,q_auto/osdiagnostic/staff-maria-elena-new.jpg',
       bgClass: 'bg-[#6F2BCC]',
       borderClass: 'border-[#9506EE]'
     },
@@ -365,7 +364,7 @@ export default function Investigacion() {
       tag: 'ANALISTA DE LABORATORIO',
       name: 'Juan Esteban Lamprea',
       role: 'Validación de Controles qPCR',
-      image: 'https://res.cloudinary.com/oiaig120/image/upload/c_thumb,g_face,w_320,h_320,z_0.82,f_auto,q_auto/osdiagnostic/staff-juan-esteban-new.jpg',
+      image: 'https://res.cloudinary.com/oiaig120/image/upload/c_thumb,g_face,w_320,h_320,z_0.55,f_auto,q_auto/osdiagnostic/staff-juan-esteban-new.jpg',
       bgClass: 'bg-[#1A004C]',
       borderClass: 'border-[#2B017C]'
     },
@@ -374,7 +373,7 @@ export default function Investigacion() {
       tag: 'ANALISTA DE LABORATORIO',
       name: 'Ángela Sánchez',
       role: 'Bioestadística & Procesamiento',
-      image: 'https://res.cloudinary.com/oiaig120/image/upload/c_thumb,g_face,w_320,h_320,z_0.9,f_auto,q_auto/osdiagnostic/staff-angela.png',
+      image: 'https://res.cloudinary.com/oiaig120/image/upload/c_crop,g_center,w_0.77,h_0.77/w_320,h_320,c_fill,f_auto,q_auto/osdiagnostic/staff-angela.png',
       bgClass: 'bg-[#4B109E]',
       borderClass: 'border-[#7C3AED]'
     },
@@ -383,7 +382,7 @@ export default function Investigacion() {
       tag: 'LÍDER DE ALIANZAS',
       name: 'Diego Sanchez Àvila',
       role: 'Patología & Asesoría Clínica',
-      image: 'https://res.cloudinary.com/oiaig120/image/upload/c_thumb,g_face,w_320,h_320,z_0.85,f_auto,q_auto/osdiagnostic/staff-diego.png',
+      image: 'https://res.cloudinary.com/oiaig120/image/upload/c_thumb,g_face,w_320,h_320,z_0.55,f_auto,q_auto/osdiagnostic/staff-diego.png',
       bgClass: 'bg-[#2B017C]',
       borderClass: 'border-[#6F2BCC]'
     }
@@ -701,7 +700,6 @@ export default function Investigacion() {
                             setFailedTalentImages((prev) => ({ ...prev, [idx]: true }))
                           }
                           className="w-full h-full object-cover object-center"
-                          style={node.imageScale ? { transform: node.imageScale } : undefined}
                         />
                       </div>
                     ) : (
