@@ -287,20 +287,20 @@ export default function Veterinarios() {
 
   const challengeCards = [
     {
-      title: "Asesoría científica para casos complejos",
+      title: "1. Formación en razonamiento clínico basado en evidencia",
+      description: "Cuando la complejidad de los casos clínicos dificulta integrar hallazgos, formular hipótesis y tomar decisiones que reduzcan la incertidumbre diagnóstica."
+    },
+    {
+      title: "2. Perfiles qPCR de amplio espectro",
+      description: "Cuando las pruebas seleccionadas no incluyen algunos de los agentes infecciosos clínicamente más probables, disminuyendo las posibilidades de identificar la causa de la enfermedad."
+    },
+    {
+      title: "3. Asesoría científica para casos complejos",
+      description: "Cuando la rápida evolución del conocimiento científico y las tecnologías diagnósticas dificulta mantenerse actualizado e incorporar nuevos avances a la práctica clínica."
+    },
+    {
+      title: "4. Actualización científica continua",
       description: "Cuando los casos clínicos complejos presentan hallazgos atípicos o contradictorios que requieren conocimiento científico especializado para orientar las decisiones diagnósticas."
-    },
-    {
-      title: "Perfiles qPCR de amplio espectro",
-      description: "Cuando las pruebas seleccionadas no incluyen algunos de los agentes infecciosos clínicamente más probables, disminuyendo las posibilidades de identificar la causa de la enfermedad"
-    },
-    {
-      title: "Formación en razonamiento clínico basado en evidencia",
-      description: "Cuando la complejidad de los casos clínicos dificulta integrar hallazgos, formular hipótesis y tomar decisiones que reduzcan la incertidumbre diagnóstica."
-    },
-    {
-      title: "Actualización científica continua",
-      description: "Cuando la complejidad de los casos clínicos dificulta integrar hallazgos, formular hipótesis y tomar decisiones que reduzcan la incertidumbre diagnóstica."
     }
   ];
 
