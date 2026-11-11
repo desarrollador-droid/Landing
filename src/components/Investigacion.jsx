@@ -259,6 +259,7 @@ export default function Investigacion() {
       tag: 'ORGANIZADOR / VALIDACIÓN',
       name: 'Leidy Alejandra Giraldo',
       role: 'Coordinación General & Casos',
+      image: '/team/leidy-alejandra.jpg',
       bgClass: 'bg-[#2B017C]',
       borderClass: 'border-[#6F2BCC]'
     },

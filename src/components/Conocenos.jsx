@@ -310,39 +310,6 @@ export default function Conocenos() {
 
       </section>
 
-      {/* 3. Misión y Visión Section */}
-      <section className="py-20 px-6 bg-[#F8F9FE]">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 text-left">
-          
-          {/* Misión Card */}
-          <div className="bg-white rounded-2xl p-8 md:p-10 shadow-sm border border-gray-100 space-y-5">
-            <div className="flex items-center space-x-3.5">
-              <div className="w-11 h-11 bg-[#6F2BCC]/10 text-[#6F2BCC] rounded-xl flex items-center justify-center font-bold text-xl">
-                🎯
-              </div>
-              <h2 className="text-2xl font-extrabold text-[#2B017C] font-sans">Misión</h2>
-            </div>
-            <p className="text-gray-600 text-sm md:text-base leading-relaxed font-medium font-sans">
-              OSD va a romper los paradigmas y dificultades de diagnóstico de enfermedades infecciosas en el ejercicio de los médicos veterinarios, a través de acompañamiento continuo, técnicas altamente confiables, precios competitivos y logística acertada para la atención oportuna y segura de los pacientes y el impacto de la calidad en sus propietarios.
-            </p>
-          </div>
-
-          {/* Visión Card */}
-          <div className="bg-white rounded-2xl p-8 md:p-10 shadow-sm border border-gray-100 space-y-5">
-            <div className="flex items-center space-x-3.5">
-              <div className="w-11 h-11 bg-[#00ebd2]/10 text-[#00ebd2] rounded-xl flex items-center justify-center font-bold text-xl">
-                👁
-              </div>
-              <h2 className="text-2xl font-extrabold text-[#2B017C] font-sans">Visión</h2>
-            </div>
-            <p className="text-gray-600 text-sm md:text-base leading-relaxed font-medium font-sans">
-              En menos de 4 años OSD será una compañía reconocida a nivel internacional, con capacidad para resolver las necesidades diagnósticas de los médicos veterinarios en toda Latinoamérica, con herramientas innovadoras para el diagnóstico de enfermedades infecciosas de cada país y zona geográfica. Liderará estrategias de transferencia tecnológica, innovando en estas para el diagnóstico humano y animal.
-            </p>
-          </div>
-
-        </div>
-      </section>
-
     </div>
   );
 }
