@@ -46,6 +46,32 @@ const repositoryItems = [
 
   // 2. Artículos Científicos
   {
+    id: 'hemotropic-vector-borne-colombia',
+    category: 'Artículos',
+    badgeLabel: 'Q1',
+    directRedirect: true,
+    title: 'Quantitative polymerase chain reaction detection of hemotropic and vector-borne pathogens in dogs and cats using blood and pooled blood–urine matrixes: A large-scale retrospective study in Colombia.',
+    doi: '10.14202/vetworld.2026.4259-4273',
+    description: 'Estudio retrospectivo a gran escala en Colombia sobre detección mediante qPCR de patógenos hemotrópicos y transmitidos por vectores en muestras sanguíneas y matrices combinadas sangre–orina en perros y gatos.',
+    actionLabel: 'IR A LA REVISTA',
+    authors: 'Veterinary World • Investigación Científica OSD',
+    year: '2026',
+    downloadUrl: 'https://veterinaryworld.org/Vol.19/October-2026/1.php'
+  },
+  {
+    id: 'canine-leishmaniasis-medellin',
+    category: 'Artículos',
+    badgeLabel: 'Q2',
+    directRedirect: true,
+    title: 'First report of canine leishmaniasis in an urban area of Medellín, Colombia',
+    doi: '10.5455/OVJ.2026.v16.i8.46',
+    description: 'Primer reporte de leishmaniasis canina en un área urbana de Medellín, Colombia.',
+    actionLabel: 'IR A LA REVISTA',
+    authors: 'Open Veterinary Journal • Investigación Científica OSD',
+    year: '2026',
+    downloadUrl: 'https://www.openveterinaryjournal.com/?mno=303917'
+  },
+  {
     id: 'adn-osd',
     category: 'Artículos',
     title: 'El ADN de OSD: investigación en busca de transformar la medicina veterinaria.',
@@ -212,7 +238,7 @@ export default function Investigacion() {
   // 1. Hero Carousel Slides (Video Background Carousel - Page 1) - Todos los Proyectos, Artículos y Pósters
   const heroSlides = repositoryItems.map((item, idx) => ({
     id: idx,
-    badge: item.category === 'Artículos' ? 'Artículo' : item.category === 'Proyectos' ? 'Proyecto' : 'Póster',
+    badge: item.badgeLabel || (item.category === 'Artículos' ? 'Artículo' : item.category === 'Proyectos' ? 'Proyecto' : 'Póster'),
     title: item.title,
     repoId: item.id,
     description: item.description
@@ -554,7 +580,9 @@ export default function Investigacion() {
 
             {/* Central Title with refined grey tone and adaptive sizing */}
             <h1 className={`font-bold text-[#374151] leading-snug tracking-tight max-w-[250px] xs:max-w-[280px] sm:max-w-[360px] md:max-w-[420px] mx-auto font-sans px-2 ${
-              heroSlides[activeSlide].title.length > 95
+              heroSlides[activeSlide].title.length > 140
+                ? 'text-[11px] xs:text-xs sm:text-base md:text-lg lg:text-[18px]'
+                : heroSlides[activeSlide].title.length > 95
                 ? 'text-xs xs:text-sm sm:text-lg md:text-xl lg:text-[22px]'
                 : heroSlides[activeSlide].title.length > 60
                 ? 'text-sm xs:text-base sm:text-xl md:text-2xl lg:text-[25px]'
@@ -575,6 +603,8 @@ export default function Investigacion() {
                     authors: found.authors,
                     year: found.year
                   });
+                } else if (found && found.directRedirect && found.downloadUrl) {
+                  window.open(found.downloadUrl, '_blank', 'noopener,noreferrer');
                 } else {
                   handleOpenItem(found);
                 }
@@ -583,6 +613,8 @@ export default function Investigacion() {
             >
               {heroSlides[activeSlide].badge === 'Póster' 
                 ? 'Ver póster' 
+                : heroSlides[activeSlide].badge === 'Q1' || heroSlides[activeSlide].badge === 'Q2'
+                ? 'Ir a la revista'
                 : heroSlides[activeSlide].badge === 'Artículo' 
                 ? 'Leer artículo' 
                 : 'Conocer proyecto'}
@@ -908,23 +940,32 @@ export default function Investigacion() {
                       downloadUrl: item.downloadUrl || item.posterImage,
                       id: item.id
                     });
+                  } else if (item.directRedirect && item.downloadUrl) {
+                    window.open(item.downloadUrl, '_blank', 'noopener,noreferrer');
                   } else {
                     handleOpenItem(item);
                   }
                 }}
                 className={`bg-white rounded-2xl border border-gray-200/80 p-6 sm:p-7 flex flex-col justify-between shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 text-left min-h-[280px] ${
-                  item.category === 'Póster' ? 'cursor-pointer hover:border-[#6F2BCC]/50 group/card' : ''
+                  item.category === 'Póster' || item.directRedirect
+                    ? 'cursor-pointer hover:border-[#6F2BCC]/50 group/card'
+                    : ''
                 }`}
               >
                 {/* Top Badge & Content */}
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
                     <span className="inline-block px-3 py-1 rounded-full text-xs font-bold text-[#6F2BCC] bg-[#F3E8FF]">
-                      {item.category}
+                      {item.badgeLabel || item.category}
                     </span>
                     {item.category === 'Póster' && (
                       <span className="text-[11px] font-semibold text-purple-700/70 bg-purple-50 px-2.5 py-0.5 rounded-full">
                         Clic para ver póster
+                      </span>
+                    )}
+                    {item.directRedirect && (
+                      <span className="text-[11px] font-semibold text-purple-700/70 bg-purple-50 px-2.5 py-0.5 rounded-full">
+                        Artículo en revista
                       </span>
                     )}
                   </div>
@@ -932,6 +973,12 @@ export default function Investigacion() {
                   <h3 className="text-base sm:text-lg font-bold text-[#374151] leading-snug tracking-tight font-sans group-hover/card:text-[#2B017C] transition-colors">
                     {item.title}
                   </h3>
+
+                  {item.doi && (
+                    <p className="text-[11px] sm:text-xs font-semibold text-[#6F2BCC] break-all">
+                      DOI: {item.doi}
+                    </p>
+                  )}
                   
                   <p className="text-gray-600 text-xs sm:text-sm leading-relaxed font-normal">
                     {item.description}
@@ -962,6 +1009,7 @@ export default function Investigacion() {
                       href={item.downloadUrl}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
                       className="text-xs sm:text-sm font-bold text-[#6F2BCC] hover:text-[#2B017C] uppercase tracking-wider inline-flex items-center space-x-1.5 transition-colors cursor-pointer group"
                     >
                       <span className="group-hover:underline">{item.actionLabel}</span>
@@ -1000,7 +1048,7 @@ export default function Investigacion() {
           >
             <div className="flex items-start justify-between">
               <span className="inline-block px-3.5 py-1 rounded-full text-xs font-bold text-[#6F2BCC] bg-[#F3E8FF]">
-                {selectedItem.category}
+                {selectedItem.badgeLabel || selectedItem.category}
               </span>
               <button
                 onClick={() => setSelectedItem(null)}

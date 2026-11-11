@@ -145,6 +145,7 @@ function MemberCirclePortrait({ member, showBackdrop = true }) {
 
 export default function TeamWaveCluster() {
   const sectionRef = useRef(null);
+  const scrollTrackRef = useRef(null);
   const [hasEntered, setHasEntered] = useState(false);
 
   useEffect(() => {
@@ -170,81 +171,134 @@ export default function TeamWaveCluster() {
     return () => observer.disconnect();
   }, []);
 
+  const handleScrollWave = (direction) => {
+    const track = scrollTrackRef.current;
+    if (!track) return;
+    const step = Math.max(240, track.clientWidth * 0.72);
+    track.scrollBy({ left: direction * step, behavior: 'smooth' });
+  };
+
   return (
     <section
       ref={sectionRef}
       aria-label="Equipo directivo y de alianzas OSD"
-      className="w-full bg-white py-12 sm:py-16 md:py-20 px-2 sm:px-6 overflow-hidden border-b border-gray-100"
+      className="w-full bg-white py-10 sm:py-16 md:py-20 px-2 sm:px-6 overflow-hidden border-b border-gray-100"
     >
-      <div className="max-w-[1400px] mx-auto">
-        {/* Desktop & Tablet Landscape Proportional Wave Stage */}
-        <div
-          className="hidden md:block relative w-full select-none"
-          style={{ aspectRatio: `${STAGE_WIDTH} / ${STAGE_HEIGHT}` }}
+      <div className="max-w-[1400px] mx-auto relative">
+        {/* Mobile Horizontal Navigation Arrows (< md) */}
+        <button
+          type="button"
+          onClick={() => handleScrollWave(-1)}
+          aria-label="Desplazar equipo a la izquierda"
+          className="md:hidden w-9 h-9 rounded-full bg-white/95 hover:bg-[#320389] text-[#320389] hover:text-white border border-purple-200 shadow-md flex items-center justify-center absolute left-1 top-1/2 -translate-y-1/2 z-30 transition-colors cursor-pointer"
         >
-          {/* Floating Solid Purple Dots & Gray Hollow Rings (Independent Multi-Axis Motion) */}
-          {FLOATING_ACCENTS.map((accent, idx) => (
-            <div
-              key={idx}
-              className="absolute -translate-x-1/2 -translate-y-1/2 pointer-events-none z-10"
-              style={{
-                left: `${(accent.x / STAGE_WIDTH) * 100}%`,
-                top: `${(accent.y / STAGE_HEIGHT) * 100}%`,
-                width: `${(accent.size / STAGE_WIDTH) * 100}%`,
-                aspectRatio: '1 / 1',
-                opacity: hasEntered ? 1 : 0,
-                transform: hasEntered
-                  ? 'translate3d(0, 0, 0) scale(1)'
-                  : 'translate3d(-42px, 32px, 0) scale(0.75)',
-                transition: 'opacity 700ms ease-out, transform 850ms cubic-bezier(0.22, 1, 0.36, 1)',
-                transitionDelay: `${accent.delayMs}ms`
-              }}
-            >
-              <div
-                className={`w-full aspect-square rounded-full ${
-                  idx % 2 === 0 ? 'animate-wave-float' : 'animate-wave-float-alt'
-                } ${accent.kind === 'dot' ? `${accent.bg} shadow-sm` : accent.border}`}
-                style={{
-                  animationDelay: accent.floatDelay,
-                  animationDuration: accent.duration
-                }}
-              />
-            </div>
-          ))}
+          <span className="font-black text-base leading-none">‹</span>
+        </button>
+        <button
+          type="button"
+          onClick={() => handleScrollWave(1)}
+          aria-label="Desplazar equipo a la derecha"
+          className="md:hidden w-9 h-9 rounded-full bg-white/95 hover:bg-[#320389] text-[#320389] hover:text-white border border-purple-200 shadow-md flex items-center justify-center absolute right-1 top-1/2 -translate-y-1/2 z-30 transition-colors cursor-pointer"
+        >
+          <span className="font-black text-base leading-none">›</span>
+        </button>
 
-          {/* Cohesive Connected Molecule (Unified SVG Circles + Bridges + Locked Portraits) */}
-          <div className="absolute inset-0 animate-wave-float-gentle">
-            {/* Single Unified SVG: subtle lighter purple (#4B259A) connectors behind dark purple (#320389) circles */}
-            <svg
-              viewBox={`0 0 ${STAGE_WIDTH} ${STAGE_HEIGHT}`}
-              className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-visible"
-              style={{ filter: 'drop-shadow(0 14px 28px rgba(43, 1, 124, 0.22))' }}
-              aria-hidden="true"
-            >
-              <g fill="#4B259A">
-                {METABALL_BRIDGES.map((bridge, idx) => (
-                  <path
-                    key={`bridge-${idx}`}
-                    d={bridge.path}
+        {/* Navigable Horizontal Scroll Track on Responsive (< md), Full-Width Stage on Desktop (md+) */}
+        <div
+          ref={scrollTrackRef}
+          className="overflow-x-auto md:overflow-visible scroll-smooth py-4 md:py-0 px-6 md:px-0"
+          style={{ scrollbarWidth: 'thin' }}
+        >
+          <div
+            className="relative w-full min-w-[860px] md:min-w-0 select-none"
+            style={{ aspectRatio: `${STAGE_WIDTH} / ${STAGE_HEIGHT}` }}
+          >
+            {/* Floating Solid Purple Dots & Gray Hollow Rings (Independent Multi-Axis Motion) */}
+            {FLOATING_ACCENTS.map((accent, idx) => (
+              <div
+                key={idx}
+                className="absolute -translate-x-1/2 -translate-y-1/2 pointer-events-none z-10"
+                style={{
+                  left: `${(accent.x / STAGE_WIDTH) * 100}%`,
+                  top: `${(accent.y / STAGE_HEIGHT) * 100}%`,
+                  width: `${(accent.size / STAGE_WIDTH) * 100}%`,
+                  aspectRatio: '1 / 1',
+                  opacity: hasEntered ? 1 : 0,
+                  transform: hasEntered
+                    ? 'translate3d(0, 0, 0) scale(1)'
+                    : 'translate3d(-42px, 32px, 0) scale(0.75)',
+                  transition: 'opacity 700ms ease-out, transform 850ms cubic-bezier(0.22, 1, 0.36, 1)',
+                  transitionDelay: `${accent.delayMs}ms`
+                }}
+              >
+                <div
+                  className={`w-full aspect-square rounded-full ${
+                    idx % 2 === 0 ? 'animate-wave-float' : 'animate-wave-float-alt'
+                  } ${accent.kind === 'dot' ? `${accent.bg} shadow-sm` : accent.border}`}
+                  style={{
+                    animationDelay: accent.floatDelay,
+                    animationDuration: accent.duration
+                  }}
+                />
+              </div>
+            ))}
+
+            {/* Cohesive Connected Molecule (Unified SVG Circles + Bridges + Locked Portraits) */}
+            <div className="absolute inset-0 animate-wave-float-gentle">
+              {/* Single Unified SVG: subtle lighter purple (#4B259A) connectors behind dark purple (#320389) circles */}
+              <svg
+                viewBox={`0 0 ${STAGE_WIDTH} ${STAGE_HEIGHT}`}
+                className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-visible"
+                style={{ filter: 'drop-shadow(0 14px 28px rgba(43, 1, 124, 0.22))' }}
+                aria-hidden="true"
+              >
+                <g fill="#4B259A">
+                  {METABALL_BRIDGES.map((bridge, idx) => (
+                    <path
+                      key={`bridge-${idx}`}
+                      d={bridge.path}
+                      style={{
+                        opacity: hasEntered ? 1 : 0,
+                        transform: hasEntered
+                          ? 'translate3d(0, 0, 0)'
+                          : 'translate3d(-36px, 24px, 0)',
+                        transition: 'opacity 700ms ease-out, transform 850ms cubic-bezier(0.22, 1, 0.36, 1)',
+                        transitionDelay: `${bridge.delayMs}ms`
+                      }}
+                    />
+                  ))}
+                </g>
+                <g fill="#320389">
+                  {WAVE_MEMBERS.map((member) => (
+                    <circle
+                      key={`circle-${member.id}`}
+                      cx={member.cx}
+                      cy={member.cy}
+                      r={member.r}
+                      style={{
+                        opacity: hasEntered ? 1 : 0,
+                        transform: hasEntered
+                          ? 'translate3d(0, 0, 0)'
+                          : 'translate3d(-36px, 24px, 0)',
+                        transition: 'opacity 700ms ease-out, transform 850ms cubic-bezier(0.22, 1, 0.36, 1)',
+                        transitionDelay: `${member.delayMs}ms`
+                      }}
+                    />
+                  ))}
+                </g>
+              </svg>
+
+              {/* 4 Team Member Portraits & Captions aligned pixel-perfect over the unified SVG circles */}
+              {WAVE_MEMBERS.map((member) => {
+                const widthPct = ((member.r * 2) / STAGE_WIDTH) * 100;
+                return (
+                  <div
+                    key={member.id}
+                    className="absolute -translate-x-1/2 z-20 flex flex-col items-center text-center"
                     style={{
-                      opacity: hasEntered ? 1 : 0,
-                      transform: hasEntered
-                        ? 'translate3d(0, 0, 0)'
-                        : 'translate3d(-36px, 24px, 0)',
-                      transition: 'opacity 700ms ease-out, transform 850ms cubic-bezier(0.22, 1, 0.36, 1)',
-                      transitionDelay: `${bridge.delayMs}ms`
-                    }}
-                  />
-                ))}
-              </g>
-              <g fill="#320389">
-                {WAVE_MEMBERS.map((member) => (
-                  <circle
-                    key={`circle-${member.id}`}
-                    cx={member.cx}
-                    cy={member.cy}
-                    r={member.r}
-                    style={{
+                      left: `${(member.cx / STAGE_WIDTH) * 100}%`,
+                      top: `${((member.cy - member.r) / STAGE_HEIGHT) * 100}%`,
+                      width: `${widthPct}%`,
                       opacity: hasEntered ? 1 : 0,
                       transform: hasEntered
                         ? 'translate3d(0, 0, 0)'
@@ -252,93 +306,29 @@ export default function TeamWaveCluster() {
                       transition: 'opacity 700ms ease-out, transform 850ms cubic-bezier(0.22, 1, 0.36, 1)',
                       transitionDelay: `${member.delayMs}ms`
                     }}
-                  />
-                ))}
-              </g>
-            </svg>
-
-            {/* 4 Team Member Portraits & Captions aligned pixel-perfect over the unified SVG circles */}
-            {WAVE_MEMBERS.map((member) => {
-              const widthPct = ((member.r * 2) / STAGE_WIDTH) * 100;
-              return (
-                <div
-                  key={member.id}
-                  className="absolute -translate-x-1/2 z-20 flex flex-col items-center text-center"
-                  style={{
-                    left: `${(member.cx / STAGE_WIDTH) * 100}%`,
-                    top: `${((member.cy - member.r) / STAGE_HEIGHT) * 100}%`,
-                    width: `${widthPct}%`,
-                    opacity: hasEntered ? 1 : 0,
-                    transform: hasEntered
-                      ? 'translate3d(0, 0, 0)'
-                      : 'translate3d(-36px, 24px, 0)',
-                    transition: 'opacity 700ms ease-out, transform 850ms cubic-bezier(0.22, 1, 0.36, 1)',
-                    transitionDelay: `${member.delayMs}ms`
-                  }}
-                >
-                  <MemberCirclePortrait member={member} showBackdrop={false} />
-
-                  {/* Member Caption directly beneath each circle */}
-                  <div className="mt-3.5 sm:mt-4 px-1 whitespace-nowrap">
-                    <h3 className="text-[13px] lg:text-[15px] font-bold text-[#1F2937] leading-tight">
-                      {member.name}
-                    </h3>
-                    <p className="text-[11.5px] lg:text-[13.5px] font-semibold text-[#374151] leading-snug mt-0.5">
-                      {member.role}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Mobile Wavy Staggered Layout (< md) */}
-        <div className="md:hidden relative py-6 px-2">
-          {/* Decorative Floating Accents on Mobile */}
-          <div className="w-7 h-7 rounded-full bg-[#6D28D9] absolute top-2 left-2 animate-wave-float pointer-events-none" />
-          <div className="w-6 h-6 rounded-full border-[3px] border-[#4B5563] absolute top-4 right-4 animate-wave-float-alt pointer-events-none" style={{ animationDelay: '-1.4s' }} />
-          <div className="w-6 h-6 rounded-full border-[3px] border-[#262626] absolute bottom-6 left-4 animate-wave-float-alt pointer-events-none" style={{ animationDelay: '-2.2s' }} />
-          <div className="w-8 h-8 rounded-full bg-[#6D28D9] absolute bottom-3 right-3 animate-wave-float pointer-events-none" style={{ animationDelay: '-0.9s' }} />
-
-          <div className="grid grid-cols-2 gap-x-5 gap-y-12 items-start relative z-10">
-            {WAVE_MEMBERS.map((member, idx) => {
-              const isLowered = idx % 2 === 0;
-              return (
-                <div
-                  key={member.id}
-                  className={`flex flex-col items-center text-center ${isLowered ? 'mt-10' : ''}`}
-                  style={{
-                    opacity: hasEntered ? 1 : 0,
-                    transform: hasEntered
-                      ? 'translate3d(0, 0, 0) scale(1)'
-                      : 'translate3d(-28px, 28px, 0) scale(0.88)',
-                    transition: 'opacity 700ms ease-out, transform 800ms cubic-bezier(0.22, 1, 0.36, 1)',
-                    transitionDelay: `${idx * 150}ms`
-                  }}
-                >
-                  <div
-                    className="w-36 sm:w-44 max-w-full animate-wave-float-gentle"
-                    style={{
-                      animationDelay: member.floatDelay,
-                      animationDuration: member.floatDuration
-                    }}
                   >
-                    <MemberCirclePortrait member={member} />
+                    <MemberCirclePortrait member={member} showBackdrop={false} />
+
+                    {/* Member Caption directly beneath each circle */}
+                    <div className="mt-3 sm:mt-4 px-1 whitespace-nowrap">
+                      <h3 className="text-[12px] sm:text-[13px] lg:text-[15px] font-bold text-[#1F2937] leading-tight">
+                        {member.name}
+                      </h3>
+                      <p className="text-[10.5px] sm:text-[11.5px] lg:text-[13.5px] font-semibold text-[#374151] leading-snug mt-0.5">
+                        {member.role}
+                      </p>
+                    </div>
                   </div>
-                  <div className="mt-3.5">
-                    <h3 className="text-sm sm:text-base font-bold text-[#1F2937] leading-tight">
-                      {member.name}
-                    </h3>
-                    <p className="text-xs sm:text-sm font-medium text-[#374151] leading-snug mt-0.5">
-                      {member.role}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </div>
+
+        {/* Subtle Mobile Swipe Hint (< md) */}
+        <p className="md:hidden text-center text-[11px] font-medium text-gray-400 mt-1 select-none">
+          Desliza horizontalmente o usa las flechas para explorar el equipo
+        </p>
       </div>
     </section>
   );
