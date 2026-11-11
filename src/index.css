@@ -102,5 +102,37 @@
   animation: scaleUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+@keyframes osdWaveFloat {
+  0%, 100% {
+    transform: translate3d(0, 0px, 0);
+  }
+  50% {
+    transform: translate3d(0, -10px, 0);
+  }
+}
 
+@keyframes osdWaveFloatGentle {
+  0%, 100% {
+    transform: translate3d(0, 0px, 0);
+  }
+  50% {
+    transform: translate3d(2px, -6px, 0);
+  }
+}
 
+.animate-wave-float {
+  animation: osdWaveFloat 5.2s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-wave-float-gentle {
+  animation: osdWaveFloatGentle 5.8s ease-in-out infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-wave-float,
+  .animate-wave-float-gentle {
+    animation: none;
+  }
+}

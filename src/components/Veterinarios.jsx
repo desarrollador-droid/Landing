@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import FloatingRecoleccionButton from './FloatingRecoleccionButton';
+import TeamWaveCluster from './TeamWaveCluster';
 
 function AnimatedCounter({ target, prefix = "", suffix = "", duration = 2000 }) {
   const [count, setCount] = useState(0);
@@ -470,6 +471,9 @@ export default function Veterinarios() {
           </svg>
         </button>
       </section>
+
+      {/* 1.5 Equipo Directivo & Alianzas - Animación en Ola al Hacer Scroll */}
+      <TeamWaveCluster />
 
       {/* 2. Desafíos Diagnósticos Section (PDF Pages 5, 6, 7) */}
       <section className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 bg-white relative z-10 border-b border-gray-100">

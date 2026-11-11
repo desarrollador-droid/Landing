@@ -285,7 +285,6 @@ export default function Investigacion() {
       tag: 'ANALISTA DE LABORATORIO',
       name: 'Laura Alexandra Moreno',
       role: 'Bioestadística & Epidemiología',
-      image: 'https://res.cloudinary.com/oiaig120/image/upload/c_crop,g_center,w_0.77,h_0.77/w_320,h_320,c_fill,f_auto,q_auto/osdiagnostic/staff-laura.png',
       bgClass: 'bg-[#2B017C]',
       borderClass: 'border-[#6F2BCC]'
     },
@@ -347,6 +346,7 @@ export default function Investigacion() {
       tag: 'GESTORA DE ALIANZAS',
       name: 'Valentina Gutierrez',
       role: 'Validación de Datos Clínicos',
+      image: 'https://res.cloudinary.com/oiaig120/image/upload/c_thumb,g_face,w_320,h_320,z_0.55,f_auto,q_auto/osdiagnostic/staff-valentina.png',
       bgClass: 'bg-[#2B017C]',
       borderClass: 'border-[#6F2BCC]'
     },
