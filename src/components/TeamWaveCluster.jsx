@@ -72,11 +72,10 @@ const FLOATING_ACCENTS = [
 ];
 
 /**
- * Builds a G1-tangent concave metaball bridge path connecting two circles in SVG space.
- * Anchors right along the circle perimeter (0.992 * r) with exact circle-tangent handles
- * so the silhouette merges seamlessly with zero kink or protruding edge.
+ * Builds a smooth concave metaball bridge path connecting two circles in SVG space.
+ * Anchors endpoints inside both circle interiors so connectors tuck cleanly behind circles.
  */
-function buildMetaballBridge(a, b) {
+function buildMetaballBridge(a, b, waistRatio = 0.25) {
   const dx = b.cx - a.cx;
   const dy = b.cy - a.cy;
   const dist = Math.hypot(dx, dy) || 1;
@@ -85,46 +84,32 @@ function buildMetaballBridge(a, b) {
   const nx = -uy;
   const ny = ux;
 
-  const theta = (42 * Math.PI) / 180;
-  const cosT = Math.cos(theta);
-  const sinT = Math.sin(theta);
+  const ax = a.cx + 0.54 * a.r * ux;
+  const ay = a.cy + 0.54 * a.r * uy;
+  const sa = 0.72 * a.r;
 
-  const ra = a.r * 0.992;
-  const rb = b.r * 0.992;
+  const bx = b.cx - 0.54 * b.r * ux;
+  const by = b.cy - 0.54 * b.r * uy;
+  const sb = 0.72 * b.r;
 
-  const p1ax = a.cx + ra * (cosT * ux + sinT * nx);
-  const p1ay = a.cy + ra * (cosT * uy + sinT * ny);
-  const p1bx = a.cx + ra * (cosT * ux - sinT * nx);
-  const p1by = a.cy + ra * (cosT * uy - sinT * ny);
+  const p1a = `${(ax + sa * nx).toFixed(1)},${(ay + sa * ny).toFixed(1)}`;
+  const p1b = `${(ax - sa * nx).toFixed(1)},${(ay - sa * ny).toFixed(1)}`;
+  const p2a = `${(bx + sb * nx).toFixed(1)},${(by + sb * ny).toFixed(1)}`;
+  const p2b = `${(bx - sb * nx).toFixed(1)},${(by - sb * ny).toFixed(1)}`;
 
-  const p2ax = b.cx + rb * (-cosT * ux + sinT * nx);
-  const p2ay = b.cy + rb * (-cosT * uy + sinT * ny);
-  const p2bx = b.cx + rb * (-cosT * ux - sinT * nx);
-  const p2by = b.cy + rb * (-cosT * uy - sinT * ny);
+  const rim1x = a.cx + a.r * ux;
+  const rim1y = a.cy + a.r * uy;
+  const rim2x = b.cx - b.r * ux;
+  const rim2y = b.cy - b.r * uy;
+  const midX = (rim1x + rim2x) / 2;
+  const midY = (rim1y + rim2y) / 2;
+  const wMid = Math.min(a.r, b.r) * waistRatio;
+  const handleDist = dist * 0.14;
 
-  const chord = Math.hypot(p2ax - p1ax, p2ay - p1ay);
-  const handle = chord * 0.54;
-
-  // Tangent directions pointing from each circle rim inward toward the bridge waist
-  const taTopX = sinT * ux - cosT * nx;
-  const taTopY = sinT * uy - cosT * ny;
-  const tbTopX = -sinT * ux - cosT * nx;
-  const tbTopY = -sinT * uy - cosT * ny;
-
-  const taBotX = sinT * ux + cosT * nx;
-  const taBotY = sinT * uy + cosT * ny;
-  const tbBotX = -sinT * ux + cosT * nx;
-  const tbBotY = -sinT * uy + cosT * ny;
-
-  const cp1a = `${(p1ax + handle * taTopX).toFixed(1)},${(p1ay + handle * taTopY).toFixed(1)}`;
-  const cp2a = `${(p2ax + handle * tbTopX).toFixed(1)},${(p2ay + handle * tbTopY).toFixed(1)}`;
-  const cp2b = `${(p2bx + handle * tbBotX).toFixed(1)},${(p2by + handle * tbBotY).toFixed(1)}`;
-  const cp1b = `${(p1bx + handle * taBotX).toFixed(1)},${(p1by + handle * taBotY).toFixed(1)}`;
-
-  const p1a = `${p1ax.toFixed(1)},${p1ay.toFixed(1)}`;
-  const p2a = `${p2ax.toFixed(1)},${p2ay.toFixed(1)}`;
-  const p2b = `${p2bx.toFixed(1)},${p2by.toFixed(1)}`;
-  const p1b = `${p1bx.toFixed(1)},${p1by.toFixed(1)}`;
+  const cp1a = `${(midX - ux * handleDist + nx * wMid * 0.55).toFixed(1)},${(midY - uy * handleDist + ny * wMid * 0.55).toFixed(1)}`;
+  const cp2a = `${(midX + ux * handleDist + nx * wMid * 0.55).toFixed(1)},${(midY + uy * handleDist + ny * wMid * 0.55).toFixed(1)}`;
+  const cp2b = `${(midX + ux * handleDist - nx * wMid * 0.55).toFixed(1)},${(midY + uy * handleDist - ny * wMid * 0.55).toFixed(1)}`;
+  const cp1b = `${(midX - ux * handleDist - nx * wMid * 0.55).toFixed(1)},${(midY - uy * handleDist - ny * wMid * 0.55).toFixed(1)}`;
 
   return `M ${p1a} C ${cp1a} ${cp2a} ${p2a} L ${p2b} C ${cp2b} ${cp1b} ${p1b} Z`;
 }
@@ -229,14 +214,14 @@ export default function TeamWaveCluster() {
 
           {/* Cohesive Connected Molecule (Unified SVG Circles + Bridges + Locked Portraits) */}
           <div className="absolute inset-0 animate-wave-float-gentle">
-            {/* Single Unified SVG for both Circles & Metaball Bridges -> 100% identical fill & shadow */}
+            {/* Single Unified SVG: light purple (#8B5CF6) connectors behind dark purple (#320389) circles */}
             <svg
               viewBox={`0 0 ${STAGE_WIDTH} ${STAGE_HEIGHT}`}
               className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-visible"
               style={{ filter: 'drop-shadow(0 14px 28px rgba(43, 1, 124, 0.22))' }}
               aria-hidden="true"
             >
-              <g fill="#320389">
+              <g fill="#8B5CF6">
                 {METABALL_BRIDGES.map((bridge, idx) => (
                   <path
                     key={`bridge-${idx}`}
@@ -251,6 +236,8 @@ export default function TeamWaveCluster() {
                     }}
                   />
                 ))}
+              </g>
+              <g fill="#320389">
                 {WAVE_MEMBERS.map((member) => (
                   <circle
                     key={`circle-${member.id}`}
