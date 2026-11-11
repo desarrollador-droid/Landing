@@ -282,7 +282,7 @@ export default function Investigacion() {
   const talentNodes = [
     {
       initials: 'LAG',
-      tag: 'ORGANIZADOR / VALIDACIÓN',
+      tag: 'COORDINADORA DE INVESTIGACIÓN',
       name: 'Leidy Alejandra Giraldo',
       role: 'Coordinación General & Casos',
       image: '/team/leidy-alejandra.jpg',

@@ -291,11 +291,11 @@ export default function Veterinarios() {
       description: "Cuando la complejidad de los casos clínicos dificulta integrar hallazgos, formular hipótesis y tomar decisiones que reduzcan la incertidumbre diagnóstica."
     },
     {
-      title: "2. Perfiles qPCR de amplio espectro",
+      title: "3. Perfiles qPCR de amplio espectro",
       description: "Cuando las pruebas seleccionadas no incluyen algunos de los agentes infecciosos clínicamente más probables, disminuyendo las posibilidades de identificar la causa de la enfermedad."
     },
     {
-      title: "3. Asesoría científica para casos complejos",
+      title: "2. Asesoría científica para casos complejos",
       description: "Cuando la rápida evolución del conocimiento científico y las tecnologías diagnósticas dificulta mantenerse actualizado e incorporar nuevos avances a la práctica clínica."
     },
     {
