@@ -61,15 +61,15 @@ export default function Clinica() {
       headline: (
         <div className="flex items-baseline space-x-2">
           <span className="text-5xl xs:text-6xl sm:text-7xl md:text-6xl lg:text-7xl xl:text-8xl font-black font-display text-gray-900 tracking-tighter leading-none">
-            15
+            1
           </span>
           <span className="text-xl xs:text-2xl sm:text-3xl md:text-2xl lg:text-3xl xl:text-4xl font-black font-display text-[#2B017C] uppercase tracking-wider">
-            MIN
+            HORA
           </span>
         </div>
       ),
       description:
-        'En urgencias, cada minuto cuenta. Resultados preliminares en 15 minutos exclusivos para pruebas de Coagulación Específicas (Dímero D, PT, PTT, TT, PRACT)',
+        'Preliminares para toma de decisiones en menos de 1 hora.',
       cta: {
         text: 'SOLICITAR ASESORÍA',
         link: 'https://wa.me/573005143727?text=Hola%20OSD,%20deseo%20solicitar%20asesor%C3%ADa%20sobre%20pruebas%20de%20coagulaci%C3%B3n%20en%2015%20minutos',

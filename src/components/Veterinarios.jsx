@@ -126,6 +126,7 @@ function InteractiveCapsule() {
 function InteractiveChallengeCard({ title, description, index = 0 }) {
   const [isTriggered, setIsTriggered] = useState(false);
   const [isSwapped, setIsSwapped] = useState(false);
+  const [isMobileDeployed, setIsMobileDeployed] = useState(false);
   const [showDesc, setShowDesc] = useState(true);
   const [shifts, setShifts] = useState({ titleX: 0, descX: 0, titleY: 0, descY: 0, isMobile: false });
   const cardRef = useRef(null);
@@ -140,12 +141,11 @@ function InteractiveChallengeCard({ title, description, index = 0 }) {
       const descRect = descRef.current.getBoundingClientRect();
 
       if (isMobile) {
-        const gap = 12;
         setShifts({
           titleX: 0,
           descX: 0,
-          titleY: descRect.height + gap,
-          descY: titleRect.height + gap,
+          titleY: 0,
+          descY: 0,
           isMobile: true
         });
       } else {
@@ -175,6 +175,8 @@ function InteractiveChallengeCard({ title, description, index = 0 }) {
     if (typeof IntersectionObserver === 'undefined') {
       setIsTriggered(true);
       setIsSwapped(true);
+      setIsMobileDeployed(true);
+      setShowDesc(true);
       return;
     }
 
@@ -183,26 +185,31 @@ function InteractiveChallengeCard({ title, description, index = 0 }) {
         entries.forEach((entry) => {
           if (entry.isIntersecting && !isTriggered) {
             setIsTriggered(true);
-            const staggerDelay = (index % 2) * 120;
+            const isMobile = window.innerWidth < 640;
+            const staggerDelay = (index % 2) * 140;
 
-            setTimeout(() => {
-              // 1. Fade out description text first so the moving title badge NEVER overlaps it
-              setShowDesc(false);
-
-              // 2. Once description is faded out, smoothly glide the purple title badge across
+            if (isMobile) {
+              // Mobile animation: Purple on top, text deploys downwards with downward arrows
               setTimeout(() => {
-                setIsSwapped(true);
-
-                // 3. Once title badge arrives in place, smoothly fade in description on the left
+                setIsMobileDeployed(true);
+                setShowDesc(true);
+              }, staggerDelay);
+            } else {
+              // Desktop animation: Left-to-right horizontal swap
+              setTimeout(() => {
+                setShowDesc(false);
                 setTimeout(() => {
-                  setShowDesc(true);
-                }, 600);
-              }, 180);
-            }, staggerDelay);
+                  setIsSwapped(true);
+                  setTimeout(() => {
+                    setShowDesc(true);
+                  }, 600);
+                }, 180);
+              }, staggerDelay);
+            }
           }
         });
       },
-      { threshold: 0.2, rootMargin: '0px 0px -40px 0px' }
+      { threshold: 0.15, rootMargin: '0px 0px -30px 0px' }
     );
 
     observer.observe(cardRef.current);
@@ -210,51 +217,161 @@ function InteractiveChallengeCard({ title, description, index = 0 }) {
   }, [isTriggered, index]);
 
   const titleTransform = shifts.isMobile
-    ? isSwapped ? `translateY(${shifts.titleY}px)` : 'translateY(0)'
+    ? 'none'
     : isSwapped ? `translateX(${shifts.titleX}px)` : 'translateX(0)';
 
   const descTransform = shifts.isMobile
-    ? isSwapped ? `translateY(-${shifts.descY}px)` : 'translateY(0)'
+    ? 'none'
     : isSwapped ? `translateX(-${shifts.descX}px)` : 'translateX(0)';
 
   return (
-    <div 
-      ref={cardRef}
-      className="w-full bg-[#ECEFF2] rounded-[32px] sm:rounded-full p-2.5 sm:p-3 relative overflow-hidden flex flex-col sm:flex-row items-stretch shadow-sm hover:shadow-md transition-shadow duration-300 min-h-[145px] sm:min-h-[160px] md:min-h-[170px] border border-gray-200/80"
-    >
-      {/* Purple Rolling Title Badge: "el circulo morado con texto" */}
+    <>
+      {/* Dynamic Keyframes for downward arrow animation on mobile */}
+      <style>{`
+        @keyframes osdArrowFall {
+          0% {
+            top: 0%;
+            opacity: 0;
+            transform: translateY(-4px) scale(0.85);
+          }
+          15% {
+            opacity: 0.85;
+            transform: translateY(0) scale(1);
+          }
+          80% {
+            opacity: 0.8;
+            transform: translateY(0) scale(1);
+          }
+          100% {
+            top: calc(100% - 18px);
+            opacity: 0;
+            transform: translateY(4px) scale(0.85);
+          }
+        }
+        .osd-arrow-item {
+          position: absolute;
+          top: 0%;
+          animation: osdArrowFall 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+        .osd-arrow-delay-0 { animation-delay: 0s; }
+        .osd-arrow-delay-1 { animation-delay: 0.6s; }
+        .osd-arrow-delay-2 { animation-delay: 1.2s; }
+        .osd-arrow-delay-3 { animation-delay: 1.8s; }
+      `}</style>
+
       <div 
-        ref={titleRef}
-        className="w-full sm:w-[36%] md:w-[35%] lg:w-[34%] bg-gradient-to-r from-[#6014CA] to-[#6E1FD8] text-white rounded-[26px] sm:rounded-full py-5 px-5 sm:px-6 md:py-6 flex items-center justify-center text-center shadow-md flex-shrink-0 z-20 select-none will-change-transform"
-        style={{
-          transform: titleTransform,
-          transition: 'transform 0.6s cubic-bezier(0.22, 1, 0.36, 1)'
+        ref={cardRef}
+        onClick={() => {
+          if (shifts.isMobile) {
+            setIsMobileDeployed((prev) => !prev);
+          }
         }}
+        className="w-full bg-[#ECEFF2] rounded-[32px] sm:rounded-full p-2.5 sm:p-3 relative overflow-hidden flex flex-col sm:flex-row items-stretch shadow-sm hover:shadow-md transition-shadow duration-300 min-h-[145px] sm:min-h-[160px] md:min-h-[170px] border border-gray-200/80 cursor-default"
       >
-        <span className="font-extrabold text-base sm:text-lg md:text-[19px] lg:text-[20px] leading-snug tracking-tight text-white drop-shadow-sm">
-          {title}
-        </span>
-      </div>
-
-      {/* Description Area: smoothly swaps position with purple title badge upon scrolling into view */}
-      <div
-        ref={descRef}
-        className="w-full sm:w-[64%] md:w-[65%] lg:w-[66%] relative flex items-center py-4 px-4 sm:py-5 sm:px-6 md:px-8 select-none z-10 will-change-transform"
-        style={{
-          transform: descTransform,
-          transition: 'transform 0.6s cubic-bezier(0.22, 1, 0.36, 1)'
-        }}
-      >
-        <p 
-          className={`text-[#1e1e1e] font-normal text-xs sm:text-sm md:text-[15px] lg:text-[15.5px] leading-relaxed transition-opacity duration-200 ${
-            showDesc ? 'opacity-100' : 'opacity-0'
-          }`}
+        {/* Purple Rolling Title Badge: Always on top on mobile */}
+        <div 
+          ref={titleRef}
+          className="w-full sm:w-[36%] md:w-[35%] lg:w-[34%] bg-gradient-to-r from-[#6014CA] to-[#6E1FD8] text-white rounded-[24px] sm:rounded-full py-4 sm:py-5 px-5 sm:px-6 md:py-6 flex items-center justify-center text-center shadow-md flex-shrink-0 z-20 select-none will-change-transform"
+          style={{
+            transform: titleTransform,
+            transition: 'transform 0.6s cubic-bezier(0.22, 1, 0.36, 1)'
+          }}
         >
-          {description}
-        </p>
-      </div>
+          <span className="font-extrabold text-base sm:text-lg md:text-[19px] lg:text-[20px] leading-snug tracking-tight text-white drop-shadow-sm">
+            {title}
+          </span>
+        </div>
 
-    </div>
+        {/* Description Area: Placed underneath on mobile, deploying downwards with cascading downward arrows */}
+        <div
+          ref={descRef}
+          className={`w-full sm:w-[64%] md:w-[65%] lg:w-[66%] relative flex items-center select-none z-10 will-change-transform ${
+            shifts.isMobile
+              ? `overflow-hidden transition-all duration-700 ease-out ${
+                  isMobileDeployed 
+                    ? 'max-h-96 opacity-100 py-4 px-4 mt-1' 
+                    : 'max-h-0 opacity-0 py-0 px-4 mt-0'
+                }`
+              : 'py-4 px-4 sm:py-5 sm:px-6 md:px-8'
+          }`}
+          style={{
+            transform: descTransform,
+            transition: shifts.isMobile 
+              ? 'max-height 0.6s ease-out, opacity 0.5s ease-out, padding 0.5s ease-out' 
+              : 'transform 0.6s cubic-bezier(0.22, 1, 0.36, 1)'
+          }}
+        >
+          {/* Mobile Downward Arrows Effect (ONLY on mobile / celular) */}
+          {shifts.isMobile && isMobileDeployed && (
+            <div 
+              className="absolute inset-0 pointer-events-none overflow-hidden z-0" 
+              aria-hidden="true"
+            >
+              {/* Left arrow stream */}
+              <div className="absolute left-2.5 top-0 bottom-0 w-5 overflow-hidden flex flex-col items-center">
+                <div className="osd-arrow-item osd-arrow-delay-0">
+                  <svg className="w-3.5 h-3.5 text-[#6014CA]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                  </svg>
+                </div>
+                <div className="osd-arrow-item osd-arrow-delay-1">
+                  <svg className="w-3.5 h-3.5 text-[#6014CA]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                  </svg>
+                </div>
+                <div className="osd-arrow-item osd-arrow-delay-2">
+                  <svg className="w-3.5 h-3.5 text-[#6014CA]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                  </svg>
+                </div>
+              </div>
+
+              {/* Center subtle stream */}
+              <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-6 overflow-hidden flex flex-col items-center opacity-20">
+                <div className="osd-arrow-item osd-arrow-delay-1">
+                  <svg className="w-4 h-4 text-[#6014CA]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                  </svg>
+                </div>
+                <div className="osd-arrow-item osd-arrow-delay-3">
+                  <svg className="w-4 h-4 text-[#6014CA]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                  </svg>
+                </div>
+              </div>
+
+              {/* Right arrow stream */}
+              <div className="absolute right-2.5 top-0 bottom-0 w-5 overflow-hidden flex flex-col items-center">
+                <div className="osd-arrow-item osd-arrow-delay-0">
+                  <svg className="w-3.5 h-3.5 text-[#6014CA]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                  </svg>
+                </div>
+                <div className="osd-arrow-item osd-arrow-delay-1">
+                  <svg className="w-3.5 h-3.5 text-[#6014CA]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                  </svg>
+                </div>
+                <div className="osd-arrow-item osd-arrow-delay-2">
+                  <svg className="w-3.5 h-3.5 text-[#6014CA]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          )}
+
+          <p 
+            className={`text-[#1e1e1e] font-normal text-xs sm:text-sm md:text-[15px] lg:text-[15.5px] leading-relaxed transition-opacity duration-300 relative z-10 px-6 sm:px-0 text-center sm:text-left ${
+              showDesc ? 'opacity-100' : 'opacity-0'
+            }`}
+          >
+            {description}
+          </p>
+        </div>
+
+      </div>
+    </>
   );
 }
 

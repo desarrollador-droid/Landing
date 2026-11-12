@@ -59,7 +59,7 @@ export default function FloatingRecoleccionButton() {
               <div className="flex flex-col text-left leading-tight pr-1">
                 <span className="text-[9px] uppercase tracking-wider font-extrabold text-[#2B017C] flex items-center gap-1.5 whitespace-nowrap">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#2B017C] animate-pulse"></span>
-                  Recolección Gratuita · Bogotá
+                  Recolección Gratuita
                 </span>
                 <span className="text-[12px] font-bold text-[#1E1E1E] tracking-tight drop-shadow-2xs whitespace-nowrap">
                   Solicitud de Recolección de Muestras
