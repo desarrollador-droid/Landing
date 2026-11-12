@@ -67,6 +67,14 @@ const teamMembers = [
     bio: "Microbiología y control analítico. Encargada del procesamiento técnico y control de calidad analítico en el laboratorio clínico.",
     objectPosition: "center 20%",
     scale: "scale-100"
+  },
+  {
+    name: "Laura Alexandra Moreno",
+    role: "Analista de laboratorio",
+    image: "/team/laura-moreno.jpg",
+    bio: "Bioestadística y epidemiología veterinaria. Estandarización de modelos analíticos y aseguramiento de calidad en pruebas de diagnóstico.",
+    objectPosition: "center 20%",
+    scale: "scale-100"
   }
 ];
 

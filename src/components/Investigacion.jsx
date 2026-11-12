@@ -312,6 +312,8 @@ export default function Investigacion() {
       tag: 'ANALISTA DE LABORATORIO',
       name: 'Laura Alexandra Moreno',
       role: 'Bioestadística & Epidemiología',
+      image: '/team/laura-moreno.jpg',
+      objectPosition: 'center 20%',
       bgClass: 'bg-[#2B017C]',
       borderClass: 'border-[#6F2BCC]'
     },
