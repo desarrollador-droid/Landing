@@ -317,9 +317,11 @@ export default function Investigacion() {
     },
     {
       initials: 'VZ',
-      tag: 'ANALISTA DE LABORATORIO',
+      tag: 'LABORATORIO CLÍNICO',
       name: 'Valentina Zapata',
       role: 'Microbiología & Control Analítico',
+      image: '/team/valentina-zapata.jpg',
+      objectPosition: 'center 20%',
       bgClass: 'bg-[#4B109E]',
       borderClass: 'border-[#7C3AED]'
     },
@@ -732,7 +734,8 @@ export default function Investigacion() {
                           onError={() =>
                             setFailedTalentImages((prev) => ({ ...prev, [idx]: true }))
                           }
-                          className="w-full h-full object-cover object-center"
+                          style={{ objectPosition: node.objectPosition || 'center center' }}
+                          className="w-full h-full object-cover"
                         />
                       </div>
                     ) : (

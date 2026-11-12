@@ -59,6 +59,14 @@ const teamMembers = [
     role: "Analista de laboratorio",
     image: "https://res.cloudinary.com/oiaig120/image/upload/f_auto,q_auto/osdiagnostic/staff-maria-paula.png",
     bio: "Analista de laboratorio brindando soporte técnico en el procesamiento molecular."
+  },
+  {
+    name: "Valentina Zapata",
+    role: "Analista de laboratorio",
+    image: "/team/valentina-zapata.jpg",
+    bio: "Microbiología y control analítico. Encargada del procesamiento técnico y control de calidad analítico en el laboratorio clínico.",
+    objectPosition: "center 20%",
+    scale: "scale-100"
   }
 ];
 

@@ -7,7 +7,7 @@ const WAVE_MEMBERS = [
   {
     id: 'valentina-gutierrez',
     name: 'Valentina Gutierrez',
-    role: 'M.V.Z Gestora de alianzas',
+    role: 'M.V.Z Gestora de Alianzas',
     image: '/team/valentina-gutierrez.png',
     cx: 235,
     cy: 400,
