@@ -146,7 +146,52 @@ function MemberCirclePortrait({ member, showBackdrop = true }) {
 export default function TeamWaveCluster() {
   const sectionRef = useRef(null);
   const scrollTrackRef = useRef(null);
+  const userScrolledRef = useRef(false);
   const [hasEntered, setHasEntered] = useState(false);
+
+  const centerOnMobile = (smooth = false) => {
+    const track = scrollTrackRef.current;
+    if (!track) return;
+    if (window.innerWidth >= 768) return; // Only on mobile/tablet responsive
+
+    const scrollWidth = track.scrollWidth;
+    const clientWidth = track.clientWidth;
+    if (scrollWidth <= clientWidth) return;
+
+    // Center on César Muñoz & the center ring (X ≈ 506 out of STAGE_WIDTH 1200)
+    const centerSVGX = 506;
+    const centerRatio = centerSVGX / STAGE_WIDTH;
+    const targetScrollLeft = (scrollWidth * centerRatio) - (clientWidth / 2);
+    const scrollPos = Math.max(0, targetScrollLeft);
+
+    if (smooth) {
+      track.scrollTo({ left: scrollPos, behavior: 'smooth' });
+    } else {
+      track.scrollLeft = scrollPos;
+    }
+  };
+
+  useEffect(() => {
+    // Initial centering immediately and after layout settles
+    centerOnMobile(false);
+    const t1 = setTimeout(() => {
+      if (!userScrolledRef.current) centerOnMobile(false);
+    }, 80);
+    const t2 = setTimeout(() => {
+      if (!userScrolledRef.current) centerOnMobile(false);
+    }, 300);
+
+    const handleResize = () => {
+      if (!userScrolledRef.current) centerOnMobile(false);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     if (typeof IntersectionObserver === 'undefined') {
@@ -160,6 +205,10 @@ export default function TeamWaveCluster() {
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries.some((entry) => entry.isIntersecting)) {
+          // As user scrolls down and section enters the viewport, ensure it starts centered
+          if (!userScrolledRef.current) {
+            centerOnMobile(false);
+          }
           setHasEntered(true);
           observer.disconnect();
         }
@@ -172,6 +221,7 @@ export default function TeamWaveCluster() {
   }, []);
 
   const handleScrollWave = (direction) => {
+    userScrolledRef.current = true;
     const track = scrollTrackRef.current;
     if (!track) return;
     const step = Math.max(240, track.clientWidth * 0.72);
@@ -206,6 +256,8 @@ export default function TeamWaveCluster() {
         {/* Navigable Horizontal Scroll Track on Responsive (< md), Full-Width Stage on Desktop (md+) */}
         <div
           ref={scrollTrackRef}
+          onTouchStart={() => { userScrolledRef.current = true; }}
+          onMouseDown={() => { userScrolledRef.current = true; }}
           className="overflow-x-auto md:overflow-visible scroll-smooth py-4 md:py-0 px-6 md:px-0"
           style={{ scrollbarWidth: 'thin' }}
         >

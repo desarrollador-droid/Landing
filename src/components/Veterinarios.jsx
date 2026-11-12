@@ -251,7 +251,8 @@ function InteractiveChallengeCard({ title, description, index = 0 }) {
         .osd-arrow-item {
           position: absolute;
           top: 0%;
-          animation: osdArrowFall 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+          opacity: 0;
+          animation: osdArrowFall 2.4s cubic-bezier(0.4, 0, 0.2, 1) 1 forwards;
         }
         .osd-arrow-delay-0 { animation-delay: 0s; }
         .osd-arrow-delay-1 { animation-delay: 0.6s; }
