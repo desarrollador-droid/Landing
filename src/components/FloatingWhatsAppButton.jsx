@@ -1,6 +1,7 @@
 import React from 'react';
 
-const DIEGO_WHATSAPP_URL = 'https://wa.me/573005143727?text=Hola%20Diego,%20me%20comunico%20desde%20la%20p%C3%A1gina%20web%20de%20OSD';
+const PREWRITTEN_MESSAGE = 'Hola, soy médico veterinario y quiero recibir información sobre su portafolio de pruebas diagnósticas y cómo acceder a sus servicios.';
+const DIEGO_WHATSAPP_URL = `https://wa.me/573005143727?text=${encodeURIComponent(PREWRITTEN_MESSAGE)}`;
 
 export default function FloatingWhatsAppButton() {
   return (
