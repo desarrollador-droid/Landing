@@ -23,7 +23,7 @@ export default function FloatingRecoleccionButton() {
         className="block md:hidden fixed bottom-4 left-1/2 -translate-x-1/2 z-40 max-w-[95vw] w-auto transition-all duration-300 select-none"
       >
         {isMinimized ? (
-          <div className="fixed bottom-4 right-4 z-40 animate-fadeIn">
+          <div className="fixed bottom-4 left-4 z-40 animate-fadeIn">
             <button
               onClick={() => setIsMinimized(false)}
               title="Abrir Solicitud de Recolección de Muestras"

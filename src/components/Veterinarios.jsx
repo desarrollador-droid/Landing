@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import FloatingRecoleccionButton from './FloatingRecoleccionButton';
+import FloatingWhatsAppButton from './FloatingWhatsAppButton';
 import TeamWaveCluster from './TeamWaveCluster';
 
 function AnimatedCounter({ target, prefix = "", suffix = "", duration = 2000 }) {
@@ -481,6 +482,9 @@ export default function Veterinarios() {
       
       {/* Floating Sample Collection CTA (Sleek Bottom-Center Pill Dock) */}
       <FloatingRecoleccionButton />
+
+      {/* Floating WhatsApp CTA (Direct Contact with Diego in Bottom-Right Corner) */}
+      <FloatingWhatsAppButton />
 
       {/* Responsive capsule CSS variables */}
       <style dangerouslySetInnerHTML={{__html: `
